@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <table border="1" style="width: 100%">
+      <tr>
+        <td>
+          左右排列： <b>display: flex</b>
+          <div style="display: flex">
+            <div style="width: 150px; height: 50px; background-color: salmon">
+              div1
+            </div>
+            <div style="width: 150px; height: 50px; background-color: bisque">
+              div2
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <b>absolute</b
+          >:元素会<b>脱离文档流</b>,原本的位置不保留,后面的元素会把位置补上去;
+          <div style="position: relative">
+            <div
+              style="
+                width: 150px;
+                height: 50px;
+                background-color: salmon;
+                position: absolute;
+              "
+            >
+              div1
+            </div>
+            <div style="width: 200px; height: 70px; background-color: bisque">
+              div2
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <br />
+  </body>
+</html>

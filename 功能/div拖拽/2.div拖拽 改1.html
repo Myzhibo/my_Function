@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+  </head>
+  <body>
+    <!--题目：动态创建一个div，大小随意，挂在body上，实现鼠标拖拽效果-->
+    <!--需要用到的鼠标事件：鼠标按下（onmousedown），鼠标移动（onmousemove）和鼠标抬起（onmouseup）-->
+    <div
+      id="box"
+      style="
+        width: 200px;
+        height: 200px;
+        background-color: bisque;
+        position: absolute;
+      "
+    ></div>
+    <script type="text/javascript">
+      //获取到box
+      let box = document.getElementById('box')
+
+      //为box绑定一个鼠标按下事件
+      box.onmousedown = function (event) {
+        event = event || window.event //解决浏览器兼容问题
+
+        //div的左偏移量=鼠标.clientX-元素.ofsetLeft
+        let boxLeft = event.clientX - box.offsetLeft
+
+        //div的上偏移量=鼠标.clientY-元素.ofsetTop
+        let boxTop = event.clientY - box.offsetTop
+
+        //为document绑定一个onmousemove事件
+        document.onmousemove = function (event) {
+          event = event || window.event //解决浏览器兼容问题
+
+          //获取鼠标的坐标
+          let left = event.clientX - boxLeft
+          let top = event.clientY - boxTop
+
+          //盒子移动的最大偏移量=浏览器宽度-盒子宽度
+          let moveLeft = document.documentElement.clientWidth - box.offsetWidth
+          // let moveLeft = 0           // 水平方向上锁住不动
+          let moveTop = document.documentElement.clientHeight - box.offsetHeight
+          // let moveTop = 0            // 垂直方向上锁住不动
+
+          //让盒子不超出浏览器范围
+          if (left <= 0) {
+            left = 0
+          } else if (left > moveLeft) {
+            left = moveLeft
+          } else {
+            box.style.left = left + 'px'
+          }
+
+          if (top <= 0) {
+            top = 0
+          } else if (top > moveTop) {
+            top = moveTop
+          } else {
+            box.style.top = top + 'px'
+          }
+        }
+
+        //为document绑定一个鼠标抬起事件，鼠标松开时，将box固定在当前位置
+        document.onmouseup = function () {
+          //取消document的onmousemove事件
+          document.onmousemove = null
+
+          //取消document的onmouseup事件
+          document.onmouseup = null
+        }
+      }
+    </script>
+  </body>
+</html>

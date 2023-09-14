@@ -1,0 +1,9 @@
+<div class="content" >
+   <div class="content-left" ref="mytree">
+       。。。
+   </div>
+   <DragDiv box="content" left="content-left" right="content-right"/>
+   <div class="content-right">
+       。。。
+   </div>
+</div>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* 重点是filter属性:   filter 属性定义了元素的可视效果*/
+      .css1 {
+        filter: invert(20%);
+      }
+      .css2 {
+        filter: hue-rotate(180deg);
+      }
+      .css3 {
+        filter: brightness(400%);
+      }
+      .css4 {
+        filter: blur(2px);
+      }
+      .css44 {
+        /* filter: blur(2px); */
+        backdrop-filter: blur(2px);
+      }
+      .css5 {
+        filter: contrast(100%);
+      }
+      .css6 {
+        filter: grayscale(100%);
+      }
+      .css7 {
+        filter: opacity(50%);
+      }
+      .css8 {
+        filter: saturate(50%);
+      }
+      .css9 {
+        filter: sepia(50%);
+      }
+      .css10 {
+        filter: drop-shadow(180deg);
+        /* filter: drop-shadow(5px 5px 300px orange); */
+      }
+    </style>
+  </head>
+  <body style="background-color: rgba(0, 0, 0, 0.1)">
+    <button id="btn" style="position: fixed; z-index: 999">切换</button>
+    <br /><br />
+    <div
+      id="div1"
+      style="width: 150px; height: 50px; background-color: yellow"
+      class=""
+      title="反转输入图像。值定义转换的比例。100%的价值是完全反转。值为0%则图像无变化。值在0%和100%之间，则是效果的线性乘子。 若值未设置，值默认是0。"
+    >
+      invert(20%)
+    </div>
+    <br />
+    <div
+      id="div2"
+      style="width: 150px; height: 50px; background-color: yellow"
+      class=""
+      title="给图像应用色相旋转。'angle'一值设定图像会被调整的色环角度值。值为0deg，则图像无变化。若值未设置，默认值是0deg。该值虽然没有最大值，超过360deg的值相当于又绕一圈。"
+    >
+      hue-rotate(180deg)
+    </div>
+    <br />
+    <div
+      id="div3"
+      style="width: 150px; height: 50px; background-color: yellow"
+      class=""
+      title="给图片应用一种线性乘法，使其看起来更亮或更暗。如果值是0%，图像会全黑。值是100%，则图像无变化。其他的值对应线性乘数效果。值超过100%也是可以的，图像会比原来更亮。如果没有设定值，默认是1"
+    >
+      brightness(400%)
+    </div>
+    <br />
+    <div style="display: flex">
+      <div
+        id="div4"
+        style="width: 150px; height: 50px; background-color: yellow"
+        class=""
+        title="模糊:  单位可为px或rem，值越大，越模糊"
+      >
+        blur(2px);
+      </div>
+      &nbsp;
+      <div style="position: relative">
+        <div style="position: absolute; top: 40px; font-size: 8px">
+          测试磨砂玻璃效果
+        </div>
+        <div
+          id="div44"
+          style="
+            width: 150px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.4);
+          "
+          class=""
+          title="磨砂玻璃"
+        >
+          <span style="font-size: 8px">backdrop-filter: blur(2px);</span>
+        </div>
+        <div
+          style="position: absolute; bottom: 4px; color: blue; font-size: 8px"
+        >
+          写在下面的无法覆盖
+        </div>
+      </div>
+    </div>
+    <br />
+    <div
+      id="div5"
+      style="width: 150px; height: 50px; background-color: yellow"
+      class=""
+      title="调整图像的对比度。值是0%的话，图像会全黑。值是100%，图像不变。值可以超过100%，意味着会运用更低的对比。若没有设置值，默认是1。"
+    >
+      contrast(600%)
+    </div>
+    <br />
+    <div
+      id="div6"
+      style="width: 150px; height: 50px; background-color: yellow"
+      class=""
+      title="调整图像的对比度。值是0%的话，图像会全黑。值是100%，图像不变。值可以超过100%，意味着会运用更低的对比。若没有设置值，默认是1。"
+    >
+      grayscale(60%)
+    </div>
+    <br />
+    <div
+      id="div7"
+      style="width: 150px; height: 50px; background-color: yellow"
+      class=""
+      title="转化图像的透明程度。值定义转换的比例。值为0%则是完全透明，值为100%则图像无变化。值在0%和100%之间，则是效果的线性乘子，也相当于图像样本乘以数量。 若值未设置，值默认是1。该函数与已有的opacity属性很相似，不同之处在于通过filter，一些浏览器为了提升性能会提供硬件加速。"
+    >
+      opacity(50%)
+    </div>
+    <br />
+    <div
+      id="div8"
+      style="width: 150px; height: 50px; background-color: yellow"
+      class=""
+      title="转换图像饱和度。值定义转换的比例。值为0%则是完全不饱和，值为100%则图像无变化。其他值，则是效果的线性乘子。超过100%的值是允许的，则有更高的饱和度。 若值未设置，值默认是1。"
+    >
+      saturate(50%)
+    </div>
+    <br />
+    <div
+      id="div9"
+      style="width: 150px; height: 50px; background-color: yellow"
+      class=""
+      title="将图像转换为深褐色。值定义转换的比例。值为100%则完全是深褐色的，值为0%图像无变化。值在0%到100%之间，则是效果的线性乘子。若未设置，值默认是0；"
+    >
+      sepia(50%)
+    </div>
+    <br />
+    <div
+      id="div10"
+      style="width: 150px; height: 50px; background-color: yellow"
+      class=""
+      title="给图像设置一个阴影效果。阴影是合成在图像下面，可以有模糊度的，可以以特定颜色画出的遮罩图的偏移版本。 函数接受<shadow>(在CSS3背景中定义)类型的值，除了'inset'关键字是不允许的。该函数与已有的box-shadow box-shadow属性很相似；不同之处在于，通过滤镜，一些浏览器为了更好的性能会提供硬件加速。"
+    >
+      drop-shadow(180deg)
+    </div>
+
+    <script>
+      function changeStyle() {
+        const div1 = document.getElementById('div1')
+        const div2 = document.getElementById('div2')
+        const div3 = document.getElementById('div3')
+        const div4 = document.getElementById('div4')
+        const div44 = document.getElementById('div44')
+        const div5 = document.getElementById('div5')
+        const div6 = document.getElementById('div6')
+        const div7 = document.getElementById('div7')
+        const div8 = document.getElementById('div8')
+        const div9 = document.getElementById('div9')
+        const div10 = document.getElementById('div10')
+        div1.classList.toggle('css1')
+        div2.classList.toggle('css2')
+        div3.classList.toggle('css3')
+        div4.classList.toggle('css4')
+        div44.classList.toggle('css44')
+        div5.classList.toggle('css5')
+        div6.classList.toggle('css6')
+        div7.classList.toggle('css7')
+        div8.classList.toggle('css8')
+        div9.classList.toggle('css9')
+        div10.classList.toggle('css10')
+      }
+
+      const btn = document.getElementById('btn')
+      btn.addEventListener('click', function (event) {
+        changeStyle()
+      })
+    </script>
+  </body>
+</html>
