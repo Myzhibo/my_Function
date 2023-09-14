@@ -1,0 +1,316 @@
+@import './vars.scss';
+
+// 这里的主色调继承自自定义的颜色变量
+$color-primary: $c;
+$color-warning: $c_warning;
+$color-danger: $c_danger;
+$color-success: $c_success;
+$color-border: $c_border;
+
+.el-button {
+    min-width: 104px;
+    padding: 12px 24px;
+    font-size: 14px;
+    border-radius: 4px
+}
+.el-button--mini, .el-button--mini.is-round {
+    padding: 7px 10px;
+    min-width: 80px;
+}
+
+.el-button+.el-button {
+    margin-left: 10px
+}
+
+.el-button:focus,
+.el-button:hover {
+    color: #fff;
+    border-color: #c6e2ff;
+    background-color: rgba($color-primary, .9);
+    border-color: $color-primary;
+}
+
+.el-button--warning:focus,
+.el-button--warning:hover {
+    border-color: #ebb563;
+    background-color: rgba($color-warning, .8)
+}
+
+.el-button--danger:focus,
+.el-button--danger:hover {
+    border-color: #f78989;
+    background-color: rgba($color-danger, .8)
+}
+
+.el-button.is-plain:focus,
+.el-button.is-plain:hover {
+    background: #FFF;
+    border-color: $color-primary;
+    color: $color-primary
+}
+
+.el-button--primary {
+    color: #FFF;
+    background-color: $color-primary;
+    border-color: $color-primary
+}
+
+.el-button--primary.is-disabled,
+.el-button--primary.is-disabled:active,
+.el-button--primary.is-disabled:focus,
+.el-button--primary.is-disabled:hover {
+    color: #FFF;
+    background-color: $color-primary;
+    border-color: $color-primary;
+    opacity: 0.5;
+}
+
+.el-button--primary.is-plain {
+    color: $color-primary;
+    background: transparent;
+    border-color: $color-primary
+}
+
+.el-button--primary.is-plain:focus,
+.el-button--primary.is-plain:hover {
+    background: rgba($color-primary, .2);
+    border-color: $color-primary;
+}
+
+.el-button--warning {
+    color: #FFF;
+    background-color: $color-warning;
+    border-color: $color-warning
+}
+
+.el-button--warning.is-disabled,
+.el-button--warning.is-disabled:active,
+.el-button--warning.is-disabled:focus,
+.el-button--warning.is-disabled:hover {
+    color: #FFF;
+    background-color: #f3d19e;
+    border-color: #f3d19e
+}
+
+.el-button--warning.is-plain {
+    color: $color-warning;
+    background: transparent;
+    border-color: #f5dab1
+}
+
+.el-button--warning.is-plain:focus,
+.el-button--warning.is-plain:hover {
+    background: rgba($color: $color-warning, $alpha: .2);
+    border-color: $color-warning;
+    color: $color-warning;
+}
+
+.el-button--danger {
+    color: #FFF;
+    background-color: $color-danger;
+    border-color: $color-danger
+}
+
+.el-button--danger.is-plain {
+    color: $color-danger;
+    background: transparent;
+    border-color: #fbc4c4
+}
+
+.el-button--danger.is-plain:focus,
+.el-button--danger.is-plain:hover {
+    background: rgba($color-danger, .2);
+    border-color: $color-danger;
+    color: $color-danger
+}
+
+.el-button--text {
+    color: $color-primary;
+}
+.el-button--small, .el-button--small.is-round {
+  min-width: 80px;
+  padding: 8px 16px;
+}
+.el-menu-item.is-active {
+  position: relative;
+  background: rgba($c,0.08);
+  color: inherit;
+  &::before {
+  content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+    background: $color-primary;
+  }
+}
+.el-submenu.is-opened>.el-submenu__title .el-submenu__icon-arrow {
+  transform: rotate(0);
+}
+.el-submenu__icon-arrow {
+  margin-top: -3px;
+  transform: rotate(-90deg);
+}
+.el-menu-item,
+.el-submenu__title {
+    $h: 48px;
+    height: $h;
+    line-height: $h;
+    &:hover{
+      background-color: rgba($c,0.05);
+    }
+}
+.el-table {
+  border-top: 1px solid $color-border;
+}
+
+.el-table td,
+.el-table th.is-leaf {
+    border-color: $c_border;
+}
+.el-table__header,
+.el-table__body {
+  width: 100% !important;
+}
+
+.el-radio {
+    margin-right: 40px;
+}
+
+.el-radio__label {
+    display: inline-block;
+    min-width: 64px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1;
+    vertical-align: top;
+}
+
+.el-radio__inner {
+    background: transparent;
+    &::after {
+        width: 6px;
+        height: 6px;
+        background: $color-primary;
+    }
+}
+
+.el-radio__input.is-checked .el-radio__inner {
+    background: transparent;
+}
+
+.el-checkbox {
+    margin-right: 40px;
+}
+
+.el-checkbox-group {
+    .el-checkbox {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+// .el-checkbox__label {
+//     width: 94px;
+//     white-space: pre-wrap;
+//     line-height: 16px;
+//     vertical-align: top;
+// }
+
+.el-input__inner {
+    // background: #f0f2f5;
+    color: #919699;
+}
+
+.el-input.is-active .el-input__inner,
+.el-input__inner:focus {
+    color: #18191a;
+}
+
+.el-input__inner[error] {
+    background: transparent;
+    border: 1px solid $color-danger;
+}
+
+.el-select-dropdown__item.hover,
+.el-select-dropdown__item:hover {
+    background: #e5f4ff;
+}
+
+.el-select-dropdown__item.selected {
+    background: #e5f4ff;
+    color: #18191a,
+}
+
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected {
+    color: $color-primary;
+}
+
+.el-tag.el-tag--info {
+    background: #cdeaff;
+    color: #18191a;
+}
+
+.el-tag--small {
+    height: 28px;
+    padding: 0 8px;
+    line-height: 26px;
+}
+
+.el-collapse-item__header {
+  height: auto;
+  line-height: 1.2;
+  border-bottom: none;
+}
+
+.el-collapse {
+  border: none;
+}
+.el-collapse-item__content {
+  padding-bottom: 0;
+}
+
+$iconSize: 16px;
+@mixin icon ($url) {
+  display: inline-block;
+  height: $iconSize;
+  background: url($url) no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+.el-icon-workbench {
+  @include icon("../assets/img/workbench.png")
+}
+
+.el-icon-platform {
+  @include icon("../assets/img/platform.png")
+}
+
+.el-icon-content {
+  @include icon("../assets/img/folder.png")
+}
+
+.el-dialog__header {
+  padding: 13px 24px;
+  font-weight: bold;
+}
+.el-dialog__headerbtn {
+    top: 15px;
+}
+.el-dialog__body {
+  padding: 17px 24px;
+}
+.el-dropdown-menu {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.el-popover{
+  min-width: 0px;
+}
+
+.el-loading-mask{
+  background-color: rgba(255,255,255,.4);
+}

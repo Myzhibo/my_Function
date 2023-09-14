@@ -1,0 +1,53 @@
+/* theme */
+@import './vars.scss';
+
+$themes: (
+  default: (
+    // color variables
+    bg: #F5F6F7,
+    normal: #eee,
+    // primary: #198cff,
+    primary: $c,
+    // primary-light: rgba($c, .1),
+    primary-light: rgba($c, .1),
+    warning: #e7a828,
+    danger: #be3333,
+    success: #2cad78,
+    disable: #dfe5eb,
+    // text
+    dark: #18191a,
+    default: #616366,
+    light: #919599,
+    // border
+    border: $c_border,
+    // bg
+    white: #fff,
+    black: #000
+  )
+);
+
+
+@each $theme, $list in $themes {
+  @if $theme == 'default' {
+    @each $key, $val in $list {
+      @each $item, $name in (bg: background, text: color) {
+        @if $key == 'border' {
+          .border-color {
+            border-color: $val
+          }
+          .border {
+            border: 1px solid $val;
+          }
+        } @else if $key == 'bg' {
+          .bg {
+            background: $val
+          }
+        } @else {
+          .#{$item}-#{$key} {
+            #{$name}: $val
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,179 @@
+@import '~@/styles/_vars.scss';
+
+body{
+  width: 100vw;
+}
+
+// --el-- elment 样式的重置
+body{
+  // icon 给宽度
+  i[class^="el-icon"]{
+    display: inline-block;
+    min-width: 16px;
+  }
+
+  .el-icon-loading{
+    // sp- 代表 special，代表一些特殊处理
+    // 修复迷你loading图标旋转中心点歪了的问题
+    &.sp-fix-center{
+      height: 16px;
+      width: 16px;
+      text-align: center;
+      line-height: 16px;
+    }
+  }
+  .el-menu-item-group__title:empty{
+    // 左侧菜单：空的标题菜单项不显示
+    display: none;
+  }
+  .el-submenu .el-menu-item{
+    // 左侧菜单：没必要留右侧padding
+    padding-right: 0px;
+  }
+}
+
+// boot reset
+body{
+  button{
+    &:not([class*="button"]):not([class*="btn"]):not([type*="button"]) {
+      border-radius: 4px !important;
+      height: 25px;
+      appearance: none;
+      border: 1px solid rgba(0,0,0,0.1);
+      outline: none;
+      font-size: 12px !important;
+    }
+  }
+  select{
+    &:not([class="select"]):not([type*="select"]){
+      height: 25px;
+      appearance: none;
+      border: 1px solid rgba(0,0,0,0.1);
+      outline: none;
+      padding-right: 20px;
+      padding-left: 5px;
+      background: url('/static/img/icon_arrow_down.svg') right 5px center no-repeat;
+      background-color: #fff;
+      &:focus {
+        border-color: #bbb;
+      }
+    }
+    // &:not([style*="width"]) {
+    //   min-width: 80px;
+    // }
+  } 
+  input[type="text"],
+  input[type="number"]
+  {
+    &:not([class*="input"]){
+      background-color: #fff;
+      height: 25px;
+      appearance: none;
+      border: 1px solid rgba(0,0,0,0.1);
+      outline: none;
+      padding-left: 8px;
+      padding-right: 8px;
+
+      &:focus{
+        border-color: #bbb;
+      }
+    }
+    
+    // &:not([style*="width"]){
+    //   min-width: 80px;
+    // }
+  }
+  
+  // &:not([style*="width"]){
+  //   min-width: 80px;
+  // }
+
+  .text-muted{
+    color: #aaa !important;
+  }
+}
+
+// bootstrap reset
+
+// elementui reset
+body{
+  .el-breadcrumb{
+    font-size: 1.15em;
+    user-select: none;
+  }
+
+  .el-loading-mask{
+    transition: none;
+  }
+
+  [role="tab"]{
+    user-select: none;
+  }
+}
+// elementui reset end
+
+
+// frame reset
+// 解释：.pagee-main-box 是除了 上、左导航的，右下角的主体部分
+// 有的新页面用到了
+.page-main-box{
+  overflow: auto;
+}
+
+// 工具样式，用来限制高度
+.page-flexbox-auto{
+  height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  &>div{
+    height: 100%;
+    overflow: auto;
+  }
+}
+.layout-header~.layout-content .layout-main .layout-view .page-flexbox-auto{
+  height: calc(100vh - #{$h_header + $h_bread});
+  max-height: calc(100vh - #{$h_header + $h_bread});
+}
+// 以下样式暂时废弃
+// .page-flexbox-after-topnav{
+//   height: calc(100vh - #{$h_header});
+//   max-height: calc(100vh - #{$h_header});
+//   display: flex;
+//   &>div{
+//     height: 100%;
+//     overflow: auto;
+//   }
+// }
+// .layout-bread~div .page-flexbox-after-topnav{
+//   // h_header 是 header 高度， h_bread 是面包屑高度
+//   height: calc(100vh - #{$h_header} - #{$h_bread});
+//   max-height: calc(100vh - #{$h_header} - #{$h_bread});
+// }
+// frame reset end
+
+
+// 顶部固定
+.sticky-top{
+  position: sticky;
+  top: 0px;
+  z-index: 8 !important;
+}
+
+// 解释：只有在用了 use-boot 类的容器中，bootstrap的样式才生效
+.use-boot{
+  a.text-primary {
+    &:hover{
+      opacity: 0.8;
+    }
+  }
+}
+
+
+// 补丁--
+// cmyk 4个方框，去除padding，避免拥挤
+.style-tool-cmyk-box{
+  .el-input__inner{
+    padding-left: 2px !important;
+    padding-right: 0 !important;
+  }
+}
