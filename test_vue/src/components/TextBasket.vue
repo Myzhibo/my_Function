@@ -106,7 +106,7 @@ export default {
         // 取消document的onmouseup事件
         document.onmouseup = null;
 
-        console.log('是否有拖拽操作-', that._data.draging); 
+        console.log('是否有拖拽操作--', that._data.draging); 
 
         if (that._data.draging === false) {
           that._data.drawerVisible = !that._data.drawerVisible;
