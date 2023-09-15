@@ -1,7 +1,8 @@
 <template>
   <div>
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-          <el-menu-item index="1">处理中心</el-menu-item>
+          <el-menu-item index="home">HelloWorld</el-menu-item>
+          <el-menu-item index="table">Table</el-menu-item>
           <el-submenu index="2">
             <template slot="title">我的工作台</template>
             <el-menu-item index="2-1">选项1</el-menu-item>
@@ -25,13 +26,15 @@
   export default {
     data() {
       return {
-        activeIndex: '1',
-        activeIndex2: '1'
+        activeIndex: 'home',
       };
     },
     methods: {
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
+        console.log(this.$route.path);
+        // 跳转router
+        this.$route.path === ('/'+key) ? '' : this.$router.push('/'+key);
       }
     }
   }

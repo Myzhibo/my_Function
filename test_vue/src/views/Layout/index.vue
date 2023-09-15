@@ -1,7 +1,7 @@
 <template>
   <div class="Layout">
     <!-- 头部 -->
-    123
+    内容
     <Header class="Layout-header" />
     <!-- 内容 -->
     <Content class="Layout-content">
