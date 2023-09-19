@@ -69,7 +69,7 @@ export default {
   },
   data(){
     return{
-      // FUNCTION: 表单弹窗 - 相关
+      // FUNCTION: table组件假分页 - 相关
       ListData:[
     {
         "uid": "i-uf6escxsuu828ael9x35",

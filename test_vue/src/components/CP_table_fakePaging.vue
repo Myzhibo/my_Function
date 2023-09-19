@@ -9,7 +9,7 @@
       <td>到期时间</td>
       <td>ip</td>
     </tr>
-    <tr v-for="(item,index) of showMechineList" :key="index"  style="height:40px; text-align:center ;">
+    <tr v-for="(item,index) of showData" :key="index"  style="height:40px; text-align:center ;">
       <td v-for="(i,index) of item" :key="index">
         {{i}}
       </td>
@@ -17,7 +17,7 @@
   </table>  -->
                     <el-table
                       v-loading="expanding" element-loading-text="正在扩容..." 
-                      :data="showMechineList"
+                      :data="showData"
                       style="width: 100%; z-index: 99">
                           <el-table-column
                             prop="id"
@@ -61,6 +61,14 @@
                             width="200">
                           </el-table-column>
                           <el-table-column
+                            prop="remainder"
+                            label="剩余时间"
+                            width="120">
+                              <template slot-scope="{row}">
+                                <span>{{ Math.ceil((new Date(row.auto_release_time).getTime() - new Date().getTime()) / 1000 / 60)+ ' mins'}}</span>
+                              </template>
+                          </el-table-column>
+                          <el-table-column
                             prop="ip"
                             label="ip"
                             width="170">
@@ -75,7 +83,7 @@
                       :current-page="currentPage"
                       @current-change="handleCurrentChange"
                       >
-                      <!-- v-show="showMechineList.length"  -->
+                      <!-- v-show="showData.length"  -->
                     </el-pagination>
   </div>
 </template>
@@ -87,7 +95,7 @@ export default {
       currentPage: 1,
       pagesize: 5,
       total: 0,
-      showMechineList: []
+      showData: []
     }
   },
   props:['ListData','expanding'],
@@ -106,11 +114,11 @@ export default {
   methods:{
     // 初始化showData
     initShowData(allData){
-      this.showMechineList = allData.slice((this.currentPage-1) * this.pagesize, this.currentPage*this.pagesize);
+      this.showData = allData.slice((this.currentPage-1) * this.pagesize, this.currentPage*this.pagesize);
       this.total = allData.length;
 
       /* 给每个对象添加id */
-      this.showMechineList.forEach((item, index) => {
+      this.showData.forEach((item, index) => {
         item.id = (this.currentPage-1) * this.pagesize + (index + 1);
       });
     },
