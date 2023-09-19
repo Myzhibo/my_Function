@@ -22,6 +22,11 @@ export default new VueRouter({
           name: 'table',
           component: () => import('../components/Table.vue'),
         },
+        {
+          path: '/form',
+          name: 'form',
+          component: () => import('../views/MyElementUI/MyForm.vue'),
+        },
       ],
     },
     //配置404
