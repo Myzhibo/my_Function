@@ -65,7 +65,12 @@
                             label="剩余时间"
                             width="120">
                               <template slot-scope="{row}">
-                                <span>{{ Math.ceil((new Date(row.auto_release_time).getTime() - new Date().getTime()) / 1000 / 60)+ ' mins'}}</span>
+                                <span v-if="Math.ceil((new Date(row.auto_release_time).getTime() - new Date().getTime()) / 1000 / 60) > -1">
+                                  {{ Math.ceil((new Date(row.auto_release_time).getTime() - new Date().getTime()) / 1000 / 60)+ ' mins'}}
+                                </span>
+                                <span v-else>
+                                  已过期
+                                </span>
                               </template>
                           </el-table-column>
                           <el-table-column

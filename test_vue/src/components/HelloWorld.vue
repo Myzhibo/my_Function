@@ -42,6 +42,25 @@
                             <br><br><br>
                             <el-button  size="mini" style="width:295px;margin-left: 5px;" type="primary" >开始扩容</el-button>
                             <br><br>
+                            <img v-if="fileList[0].url" :src="fileList[0].url" style="width: 100px;height: 100px;" >
+                            <i v-if="fileList[0].url" style="font-size: 16px;margin-left: 10px;cursor: pointer;" class="el-icon-delete" 
+                                    @click="deleteImg"></i>
+                            <div v-if="fileList.length ===0 " style="margin-top: 10px;" >无封面</div>
+                            <el-upload
+                              
+                            multiple 
+                            class="upload-demo"
+                                      action="https://jsonplaceholder.typicode.com/posts/"
+                                      :on-preview="handlePreview"
+                                      :on-remove="handleRemove"
+                                      :before-remove="beforeRemove"
+                                      :limit="3"
+                                      :on-exceed="handleExceed"
+                                      :file-list="fileList">
+                                      <el-button size="small" type="primary">点击上传</el-button>
+                                      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                                    </el-upload>
+                            <br><br>
                         </div>
                     </div>
                   </div>
@@ -65,18 +84,18 @@ export default {
     TestSass,
     TextBasket,
     CP_table_fakePaging,
-    CP_MyForm
+    CP_MyForm,
   },
   data(){
     return{
-      // FUNCTION: table组件假分页 - 相关
+      /* FUNCTION: table组件假分页 - 相关 */
       ListData:[
     {
         "uid": "i-uf6escxsuu828ael9x35",
         "name": "ali-PPT_AUTO_VBA_J2PPT",
         "cpu_mem": "cpu: 2  |  mem: 4096",
         "instance_type": "ecs.c7.large",
-        "auto_release_time": "2023-09-19 16:49 ",
+        "auto_release_time": "2024-09-19 14:49 ",
         "ip": "192.168.8.224",
         "id": 1
     },
@@ -85,7 +104,7 @@ export default {
         "name": "ali-CONTENT_SERVER_NODE",
         "cpu_mem": "cpu: 2  |  mem: 4096",
         "instance_type": "ecs.c7.large",
-        "auto_release_time": "2023-09-19 16:49 ",
+        "auto_release_time": "2023-09-19 16:23 ",
         "ip": "192.168.8.221",
         "id": 2
     },
@@ -94,7 +113,7 @@ export default {
         "name": "ali-CONTENT_SERVER_NODE",
         "cpu_mem": "cpu: 2  |  mem: 4096",
         "instance_type": "ecs.c7.large",
-        "auto_release_time": "2023-09-19 16:49 ",
+        "auto_release_time": "2023-09-19 16:34 ",
         "ip": "192.168.8.223",
         "id": 3
     },
@@ -103,7 +122,7 @@ export default {
         "name": "ali-PPT_AUTO_VBA_J2PPT",
         "cpu_mem": "cpu: 2  |  mem: 4096",
         "instance_type": "ecs.c7.large",
-        "auto_release_time": "2023-09-19 16:49 ",
+        "auto_release_time": "2023-09-19 16:33 ",
         "ip": "192.168.8.225",
         "id": 4
     },
@@ -112,7 +131,7 @@ export default {
         "name": "ali-CONTENT_SERVER_NODE",
         "cpu_mem": "cpu: 2  |  mem: 4096",
         "instance_type": "ecs.c7.large",
-        "auto_release_time": "2023-09-19 16:49 ",
+        "auto_release_time": "2023-09-19 16:33 ",
         "ip": "192.168.8.226",
         "id": 5
     },
@@ -121,7 +140,7 @@ export default {
         "name": "ali-PPT_AUTO_VBA_J2PPT",
         "cpu_mem": "cpu: 2  |  mem: 4096",
         "instance_type": "ecs.c7.large",
-        "auto_release_time": "2023-09-19 16:49 ",
+        "auto_release_time": "2023-09-19 16:56 ",
         "ip": "192.168.8.217",
         "id": 6
     },
@@ -130,7 +149,7 @@ export default {
         "name": "ali-PPT_AUTO_VBA_W2PPT",
         "cpu_mem": "cpu: 2  |  mem: 4096",
         "instance_type": "ecs.c7.large",
-        "auto_release_time": "2023-09-19 16:49 ",
+        "auto_release_time": "2023-09-19 16:21 ",
         "ip": "192.168.8.219",
         "id": 7
     },
@@ -139,7 +158,7 @@ export default {
         "name": "ali-PPT_AUTO_VBA_W2PPT",
         "cpu_mem": "cpu: 2  |  mem: 4096",
         "instance_type": "ecs.c7.large",
-        "auto_release_time": "2023-09-19 16:49 ",
+        "auto_release_time": "2023-09-19 16:22 ",
         "ip": "192.168.8.218",
         "id": 8
     },
@@ -148,7 +167,7 @@ export default {
         "name": "ali-PPT_AUTO_VBA_W2PPT",
         "cpu_mem": "cpu: 2  |  mem: 4096",
         "instance_type": "ecs.c7.large",
-        "auto_release_time": "2023-09-19 16:49 ",
+        "auto_release_time": "2023-09-19 16:32 ",
         "ip": "192.168.8.220",
         "id": 9
     },
@@ -157,7 +176,7 @@ export default {
         "name": "ali-PPT_AUTO_VBA_J2PPT",
         "cpu_mem": "cpu: 2  |  mem: 4096",
         "instance_type": "ecs.c7.large",
-        "auto_release_time": "2023-09-19 16:49 ",
+        "auto_release_time": "2023-09-19 16:34 ",
         "ip": "192.168.8.222",
         "id": 10
     },
@@ -166,25 +185,48 @@ export default {
         "name": "ali-PPT_AUTO_VBA_W2PPT",
         "cpu_mem": "cpu: 2  |  mem: 4096",
         "instance_type": "ecs.c7.large",
-        "auto_release_time": "2023-09-19 16:47 ",
+        "auto_release_time": "2023-09-19 18:22 ",
         "ip": "192.168.8.216",
         "id": 11
     },
       ],
-      // FUNCTION: 表单弹窗 - 相关
+      /* FUNCTION: 表单弹窗 - 相关 */
       isShows: false,
       dynamicExpansion:{
         type:'PPT_AUTO_VBA_J2PPT',
         time: '1',
         num: '1'
       },
-      expanding:false
+      expanding:false,
+      // 上传相关
+      fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+      
     }
   },
   methods:{
+    // 获取关闭弹窗变量
     getShow(val){
       this.isShows = val
+    },
+    // 计数器
+    handleChange(val){
+      console.log(val);
+    },
+
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
+    beforeRemove(file, fileList) {
+      console.log(fileList);
+      return this.$confirm(`确定移除 ${ file.name }？`);
     }
+    
   }
 }
 </script>
