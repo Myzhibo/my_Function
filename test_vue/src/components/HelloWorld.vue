@@ -42,7 +42,7 @@
                             <br><br><br>
                             <el-button  size="mini" style="width:295px;margin-left: 5px;" type="primary" >开始扩容</el-button>
                             <br><br>
-                            <img v-if="fileList[0].url" :src="fileList[0].url" style="width: 100px;height: 100px;" >
+                            <!-- <img v-if="fileList[0].url" :src="fileList[0].url" style="width: 100px;height: 100px;" >
                             <i v-if="fileList[0].url" style="font-size: 16px;margin-left: 10px;cursor: pointer;" class="el-icon-delete" 
                                     @click="deleteImg"></i>
                             <div v-if="fileList.length ===0 " style="margin-top: 10px;" >无封面</div>
@@ -60,7 +60,7 @@
                                       <el-button size="small" type="primary">点击上传</el-button>
                                       <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                                     </el-upload>
-                            <br><br>
+                            <br><br> -->
                         </div>
                     </div>
                   </div>
