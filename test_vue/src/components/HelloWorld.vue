@@ -14,7 +14,7 @@
     <!-- FUNCTION: 表单弹窗 -->
     表单弹窗组件
     <el-button  size="mini" type="primary"  @click="isShows=true">打开弹窗</el-button>
-    <CP_MyForm :isShows="isShows" title="添加机器" @getShow="getShow">
+    <CP_MyDialog :isShows="isShows" title="添加机器" @getShow="getShow">
         <!-- 向子组件的插槽中插入 -->
         <div slot="option">
                     <div style="display: flex ;align-items: center; justify-content: center;">
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                   </div>
-    </CP_MyForm>
+    </CP_MyDialog>
     
   </div>
 </template>
@@ -73,7 +73,7 @@
 import TestSass from './TestSass.vue'
 import TextBasket from './TextBasket.vue';
 import CP_table_fakePaging from './CP_table_fakePaging.vue';
-import CP_MyForm from './CP_MyForm.vue'
+import CP_MyDialog from './CP_MyDialog.vue'
 
 export default {
   name: 'HelloWorld',
@@ -84,7 +84,7 @@ export default {
     TestSass,
     TextBasket,
     CP_table_fakePaging,
-    CP_MyForm,
+    CP_MyDialog,
   },
   data(){
     return{
