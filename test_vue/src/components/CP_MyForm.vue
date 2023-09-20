@@ -69,6 +69,12 @@
         startExpand(){
           this.$emit('getShow',false)
           console.log(this.dynamicExpansion);
+          // 初始化数据
+          this.dynamicExpansion = {
+            type:'PPT_AUTO_VBA_J2PPT',
+            time: '1',
+            num: '1'
+          }
         },
         /** upload相关 */
         handleRemove(file, fileList) {

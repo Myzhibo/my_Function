@@ -3,6 +3,9 @@
     <el-dialog
       ref="myDialog"
       @open="open"
+      @opened="opened"
+      @close="close"
+      @closed="closed"
       :modal="true"
       :append-to-body="true"
       :modal-append-to-body="true"
@@ -47,6 +50,7 @@ export default {
       type: String,
       default: '1000px',
     },
+    // 是否可换行
     ifWrap: {
       type: Boolean,
       default: false,
@@ -66,7 +70,25 @@ export default {
   },
   methods: {
     // 打开
-    open() { },
+    open() { 
+      console.log('我打开了');
+      this.$emit('open')
+    },
+    // 打开结束时
+    opened(){
+      console.log('打开结束的回调');
+      this.$emit('opened')
+    },
+    // 关闭
+    close() { 
+      console.log('我关闭了');
+      this.$emit('close')
+    },
+    // 关闭结束时
+    closed(){
+      console.log('关闭结束的回调');
+      this.$emit('closed')
+    },
     // // 右上角退出
     handleClose() {
       this.isShow = false;

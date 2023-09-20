@@ -12,7 +12,7 @@
     <CP_table_fakePaging :ListData="ListData" />
     <hr>
     <!-- FUNCTION: 弹窗 -->
-    表单弹窗组件
+    弹窗组件
     <el-button  size="mini" type="primary"  @click="isShows=true">打开弹窗</el-button>
     <CP_MyDialog :isShows="isShows" title="添加机器" @getShow="getShow">
         <!-- 向子组件的插槽中插入 -->
@@ -22,7 +22,44 @@
           </div>
         </div>
     </CP_MyDialog>
-    
+    <hr>
+    <!-- FUNCTION: 卡片 -->
+    卡片组件
+    <div v-if="card_listData.length>0">
+      <div v-for="(text, index) of card_listData" :key="'lib' + index">
+
+        <!-- 
+          :mode="displayMode"
+              :abstractHidden="abstractHidden"
+              :keyword="conditions.search"
+              :multiDelete="multiDelete"
+              :cancelSelected="cancelSelected"
+              :changePage="changePage"
+              @getHidden="getHidden"
+              @getId="getId"
+              @handle-delete="handleDelete(text._id)"
+              :key="'lib' + index"
+              :subscribe="text.subscribe_status"
+              :unfit="text.unfit"
+              :deleteHidden="text._id === cardId ? deleteHidden : true"
+              :serial_num="serial_num + index + 1"
+        
+        -->
+          <CP_MyCard
+              :data="text"
+              :unfit="text.unfit"
+            >
+              <!-- 向子组件TextCard的插槽中插入 -->
+              <div slot="option"  style="margin-top:2px">
+                <!-- 为父组件放置一个插槽 -->
+                <slot name="button_option" :text="text"></slot>
+              </div>
+          </CP_MyCard>
+      </div>
+    </div>
+    <div v-if="card_listData.length === 0" class="flex-center">
+      <el-empty description="暂无数据"></el-empty>
+    </div>
   </div>
 </template>
 
@@ -32,6 +69,7 @@ import TextBasket from './TextBasket.vue';
 import CP_table_fakePaging from './CP_table_fakePaging.vue';
 import CP_MyDialog from './CP_MyDialog.vue'
 import CP_MyForm from './CP_MyForm.vue'
+import CP_MyCard from './CP_MyCard.vue'
 
 export default {
   name: 'HelloWorld',
@@ -43,11 +81,12 @@ export default {
     TextBasket,
     CP_table_fakePaging,
     CP_MyDialog,
-    CP_MyForm
+    CP_MyForm,
+    CP_MyCard
   },
   data(){
     return{
-      /* FUNCTION: table组件假分页 - 相关 */
+      /************** FUNCTION: table组件假分页 - 相关 **************/
       ListData:[
     {
         "uid": "i-uf6escxsuu828ael9x35",
@@ -149,14 +188,119 @@ export default {
         "id": 11
     },
       ],
-      /* FUNCTION: 弹窗 - 相关 */
+      /************** FUNCTION: 弹窗 - 相关 **************/
       isShows: false,
+      /************** FUNCTION: 卡片 - 相关 **************/
+      card_listData:[
+          {
+              "_id": "64e2e6df73bfa9f92410ab27",
+              "title_en": "'Crawling to my seat': Some travel experiences can be avoided with better technology",
+              "title_ch": "爬行到我的座位",
+              "summary_en": "Smartphones and technology have alleviated some of the stress of transportation for disabled travelers. Google and Microsoft are among the top apps.",
+              "summary_ch": "智能手机和技术为残疾旅行者减轻了一些交通压力。谷歌和微软是最受欢迎的应用程序。",
+              "url": "http://rssfeeds.usatoday.com/~/687252790/0/usatodaycomtravel-topstories~Crawling-to-my-seat-Some-travel-experiences-can-be-avoided-with-better-technology/",
+              "article_type": "说明文",
+              "receive_time": "2022-03-23",
+              "published": "2022-03-23 00:00:00",
+              "summary_en_md5": "932fa2655ca9479d61e444445cd8fb71",
+              "available": true,
+              "create_at": "2023-08-21 12:23:59",
+              "customer_id": 2,
+              "subscribe_status": 0,
+              "source_id": "64e2e6df73bfa9f92410ab26",
+              "unfit": null,
+              "article_source": "USATODAY - Travel Top Stories",
+              "tags": [
+                  "科技工程",
+                  "其他"
+              ]
+          },
+          {
+              "_id": "64e2e6df73bfa9f92410ab20",
+              "title_en": "RBI Guv Das launches advanced supervisory monitoring system DAKSH",
+              "title_ch": "印度央行行长达斯推出先进的监督监控系统DAKSH",
+              "summary_en": "Reserve Bank Governor Shaktikanta Das on Thursday launched a new 'SupTech' initiative DAKSH - the bank's Advanced Supervisory Monitoring System, which is expected to make the supervisory processes more robust. In a statement, the Reserve Bank of India (RBI) said it has been taking various initiatives in strengthening supervision, which among other initiatives include adoption of latest data and an",
+              "summary_ch": "印度储备银行行长沙克蒂坎塔·达斯于周四推出了一项名为DAKSH的新的“监管科技”倡议 - 该银行的先进监督监控系统，预计将使监督过程更加健全。印度储备银行在一份声明中表示，他们一直在采取各种举措来加强监督，其中包括采用最新数据和",
+              "url": "https://www.business-standard.com/article/finance/rbi-guv-das-launches-advanced-supervisory-monitoring-system-daksh-122100601120_1.html",
+              "article_type": "说明文",
+              "receive_time": "2022-10-07",
+              "published": "2022-10-07 00:00:00",
+              "summary_en_md5": "925347a03b2ab9b091d9ac7eb7fb4282",
+              "available": true,
+              "create_at": "2023-08-21 12:23:59",
+              "customer_id": 2,
+              "subscribe_status": 0,
+              "source_id": "64e2e6df73bfa9f92410ab1f",
+              "unfit": null,
+              "article_source": "Finance",
+              "tags": [
+                  "金融理财"
+              ]
+          },
+          {
+              "_id": "64e2e6df73bfa9f92410ab04",
+              "title_en": "October 2021 Opportunities: Open Calls, Residencies, and Grants for Artists",
+              "title_ch": "2021年10月机遇：艺术家的公开征集、驻留和资助",
+              "summary_en": "Image © Tatsuya Tanka Every month, Colossal shares a selection of opportunities for artists and designers, including open calls, grants, fellowships, and residencies. If you’d like to list an opportunity here, please get in touch at hello@colossal.art . You can also join our monthly Opportunities Newsletter . Open Calls Climate Woke from The Center for Cultural Power The Center for Cultural Power",
+              "summary_ch": "每个月，Colossal分享一系列针对艺术家和设计师的机遇，包括公开征集、资助金、研究员职位和驻留项目。如果您想在这里列出一个机会，请通过hello@colossal.art与我们联系。您还可以加入我们的月度机会快讯。公开征集来自文化力量中心的“气候觉醒”。",
+              "url": "https://www.thisiscolossal.com/2021/10/october-2021-opportunities/",
+              "article_type": "说明文",
+              "receive_time": "2021-10-05",
+              "published": "2021-10-05 00:00:00",
+              "summary_en_md5": "18aa73068c899419164c875818c70e76",
+              "available": true,
+              "create_at": "2023-08-21 12:23:58",
+              "customer_id": 2,
+              "subscribe_status": 0,
+              "source_id": "64e2e6de73bfa9f92410ab03",
+              "unfit": null,
+              "article_source": "Colossa",
+              "tags": [
+                  "艺术作品"
+              ]
+          },
+      ],
+      // 卡片序号
+      serial_num: 0 ,
+      // 删除卡片相关
+      deleteHidden: true,
+      cardId:'',
+      // 批量删除卡片相关
+      multiDelete: false,
+      mutiSelected: [],
+      cancelSelected: false,
+      changePage: 0,
     }
+  },
+  mounted(){
+    this.initCardId()
   },
   methods:{
     // 获取关闭弹窗变量
     getShow(val){
       this.isShows = val
+    },
+    // 卡片初始化动态标记序号
+    initCardId(){
+        this.serial_num = 0;
+        // for (const [index, item] of this.catalog.entries()) {
+        //   if (data.node_name === item.node_name) {
+        //     // console.log(item.text_count, index);
+        //     if (index > 0) {
+        //       for (let i = 0; i < index; i++) {
+        //         this.serial_num = this.serial_num + this.catalog[i].text_count;
+        //       }
+        //     } else { this.serial_num = 0; }
+        //   } else {
+        //     for (const [ind, child] of item.children.entries()) {
+        //       if (data.node_name === child.node_name) {
+        //         for (let i = 0; i < ind; i++) {
+        //           this.serial_num = this.serial_num + item.children[i].text_count;
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
     }
   }
 }
