@@ -55,32 +55,32 @@ export default {
     };
   },
   methods: {
-    // 表头部重新渲染
+    // 自定义表头样式  ---   列宽自适应
     renderHeader(h, { column }) {
-      let opts =[] 
-      // this.$nextTick(()=>{
-      // 获取操作按钮组的元素
-      opts = document.getElementsByClassName('optionDiv');
-      let widthArr = [];
-      // 取操作组的最大宽度
-      Array.prototype.forEach.call(opts, function (item) {
-        if (item.innerText) {
-          widthArr.push(item.offsetWidth);
-        }
-      });
-      // 重新设置列标题及宽度属性
-      if (widthArr.length > 0) {
-        column.width = Math.max(...widthArr) + 24;
-          // // 刷新一下表格
-          // this.$nextTick(() => {
-          //   this.$refs.myTable.doLayout();
-          // });
-        return h('span', column.label);
-      } else {
-        column.width = 0;
-        return h('span', column.label);
-      }
-    // });
+      this.$nextTick(()=>{      //防止getElementsByClassName拿不到值
+          // 获取该列的行内元素
+          const opts = document.getElementsByClassName('optionDiv');
+          // 取该列的最大宽度
+          let widthArr = [];
+          Array.prototype.forEach.call(opts, function (item) {
+            if (item.innerText) {
+              widthArr.push(item.offsetWidth);
+            }
+          });
+          // 重新设置列标题及宽度属性
+          if (widthArr.length > 0) {
+            column.width = Math.max(...widthArr) + 24;
+            // 刷新一下表格
+            this.$nextTick(() => {
+              this.$refs.myTable.doLayout();
+            });
+            return h('span', column.label);
+          } else {
+            column.width = 0;
+            return h('span', column.label);
+          }
+      })
+      return h('span', column.label);
     },
 
     // 测试删除后表头重新渲染
@@ -97,9 +97,7 @@ export default {
       }
       // 主要为了测一下刷新表格重新渲染列宽
       this.$nextTick(() => {
-        console.log(1);
         this.$refs.myTable.doLayout();
-      this.renderHeader()
       });
     }
   }

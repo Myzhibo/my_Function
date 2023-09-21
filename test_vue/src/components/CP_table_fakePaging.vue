@@ -93,8 +93,7 @@
                               <el-table-column
                                 prop="test_renderHeader"
                                 label="测试列宽自适应"
-                                :render-header="renderHeader"
-                                min-width="200"
+                                :render-header="renderHeader" :key="Math.random()" min-width="200"
                               >
                                 <template slot-scope="{row}">
                                   <div class="optionDiv" style="white-space: nowrap; display: inline-block">

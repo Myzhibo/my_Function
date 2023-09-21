@@ -4,7 +4,7 @@
     <hr>
     <!-- FUNCTION: fixed组件 -->
     fixed组件
-    <TextBasket style="z-index: 999"/>
+    <CP_MyTextBasket style="z-index: 999"/>
     <hr>
     <!-- FUNCTION: table组件 + 假分页 -->
     table组件 + 假分页  <el-button size="mini" @click="other_table=!other_table">{{other_table ? '切换为全列表格': '切换为表格2'}}</el-button>
@@ -24,9 +24,23 @@
     </CP_MyDialog>
     <hr>
     <!-- FUNCTION: 卡片组 -->
-    <!-- 卡片组件
+    卡片组件
+    <span
+      style="
+        position: relative;
+        left: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      "
+    >
+      <el-button v-if="mutiSelected.length === 0" size="mini" type="danger" @click="allDelete"
+        >批量删除</el-button
+      >
+      <el-button v-else @click="handleAllDelete" size="mini" type="danger">确认删除</el-button>
+    </span>
     <div v-if="card_listData.length>0">
-      <div v-for="(text, index) of card_listData" :key="'lib' + index"> -->
+      <div v-for="(text, index) of card_listData" :key="'lib' + index">
 
         <!-- 
           :mode="displayMode"
@@ -35,31 +49,30 @@
               :multiDelete="multiDelete"
               :cancelSelected="cancelSelected"
               :changePage="changePage"
-              @getHidden="getHidden"
               @getId="getId"
               @handle-delete="handleDelete(text._id)"
               :key="'lib' + index"
-              :subscribe="text.subscribe_status"
               :unfit="text.unfit"
               :deleteHidden="text._id === cardId ? deleteHidden : true"
               :serial_num="serial_num + index + 1"
         
         -->
-          <!-- <CP_MyCard
+          <CP_MyCard
               :data="text"
-              :unfit="text.unfit"
-            > -->
+              @getHidden="getHidden"
+            >
+            {{ text }}
               <!-- 向子组件TextCard的插槽中插入 -->
-              <!-- <div slot="option"  style="margin-top:2px"> -->
+              <div slot="option"  style="margin-top:2px">
                 <!-- 为父组件放置一个插槽 -->
-                <!-- <slot name="button_option" :text="text"></slot>
+                <slot name="button_option" :text="text"></slot>
               </div>
           </CP_MyCard>
       </div>
     </div>
     <div v-if="card_listData.length === 0" class="flex-center">
       <el-empty description="暂无数据"></el-empty>
-    </div> -->
+    </div>
     <hr>
     <!-- FUNCTION: 下载 -->
     下载<br>
@@ -70,12 +83,12 @@
 
 <script>
 import TestSass from './TestSass.vue'
-import TextBasket from './TextBasket.vue';
+import CP_MyTextBasket from './CP_MyTextBasket.vue';
 import CP_table_fakePaging from './CP_table_fakePaging.vue';
 import CP_table from './CP_table.vue';
 import CP_MyDialog from './CP_MyDialog.vue'
 import CP_MyForm from './CP_MyForm.vue'
-// import CP_MyCard from './CP_MyCard.vue'
+import CP_MyCard from './CP_MyCard.vue'
 
 export default {
   name: 'HelloWorld',
@@ -84,12 +97,12 @@ export default {
   },
   components: {
     TestSass,
-    TextBasket,
+    CP_MyTextBasket,
     CP_table_fakePaging,
     CP_table,
     CP_MyDialog,
     CP_MyForm,
-    // CP_MyCard
+    CP_MyCard
   },
   data(){
     return{
@@ -219,9 +232,7 @@ export default {
               "available": true,
               "create_at": "2023-08-21 12:23:59",
               "customer_id": 2,
-              "subscribe_status": 0,
               "source_id": "64e2e6df73bfa9f92410ab26",
-              "unfit": null,
               "article_source": "USATODAY - Travel Top Stories",
               "tags": [
                   "科技工程",
@@ -242,9 +253,7 @@ export default {
               "available": true,
               "create_at": "2023-08-21 12:23:59",
               "customer_id": 2,
-              "subscribe_status": 0,
               "source_id": "64e2e6df73bfa9f92410ab1f",
-              "unfit": null,
               "article_source": "Finance",
               "tags": [
                   "金融理财"
@@ -267,10 +276,12 @@ export default {
     this.initCardId()
   },
   methods:{
+    /************** FUNCTION: 弹窗 - 相关 **************/
     // 获取关闭弹窗变量
     getShow(val){
       this.isShows = val
     },
+    /************** FUNCTION: 卡片 - 相关 **************/
     // 卡片初始化动态标记序号
     initCardId(){
         this.serial_num = 0;
@@ -293,7 +304,15 @@ export default {
         //   }
         // }
     },
-    /** 下载相关 */
+    getHidden(val){
+      console.log(val);
+    },
+
+
+
+
+    
+    /************** FUNCTION: 下载 - 相关 **************/
     // 下载
     async realDownload(path,name){
       var image = new Image()

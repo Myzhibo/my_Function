@@ -2,8 +2,8 @@
   <div>
     <div
       slot="signal"
-      class="text-card-container m-b-10"
-      style="position: relative"
+      class="text-card-container"
+      style="position: relative; margin-bottom: 10px"
       :class="{ 'select-mode': selectMode }"
     >
       <!-- 是否可选模式 -->
@@ -16,15 +16,10 @@
         @mouseleave.native="leaveCard"
         @click.native="handleCardClick"
         :class="[
-          // data.inBasket ? 'in-basket' : '',
-          data.inBasket ?  ($route.path !=='/propositionConfig' ?'in-basket' : '') : '',
-          unfit ? 'unfit' : '',
-          subscribe ? 'subscribe' : '',
-          // data.content && [0, 1].includes(data.content.rewrite_status) ? 'disabled' : '',
-          // data.content && [0, 1].includes(data.content.proposition_status) ? 'disabled' : ''
+          data.inBasket ? 'in-basket' : '',
         ]"
       >
-
+          {{ data }}
       </el-card>
     </div>
   </div>
@@ -38,7 +33,6 @@ export default {
     // serial_num,   // 卡片序号
     // keyword,      // 高亮关键词
     // subscribe,
-    // unfit,
     // headerHidden,
     // footerHidden,
     // source,
@@ -81,7 +75,8 @@ export default {
   mounted(){
     console.log(this.data);
   },
-  method:{
+  methods:{
+
     // 关键字高亮
     highlight(html) {
       if (!this.keyword) {
@@ -101,6 +96,7 @@ export default {
     },
     // 鼠标移入卡片
     hoverCard() {
+      console.log(this.data._id);
       this.$emit('getHidden', false, this.data._id);
     },
     // 鼠标移出卡片
@@ -119,6 +115,19 @@ export default {
       }
       return this.clickCard(this.$route.path);
     },
+    // 点击事件
+    clickCard(router) {
+      console.log(this.$route.path);
+      if (router === '/fullTextLib') {
+        this.$router.push({
+          path: '/editFullText',
+          name: 'editFullText',
+          params: this.data,
+          query: { id: this.data._id },
+        });
+      }
+      console.log(this.data);
+    }
     
   },
 
