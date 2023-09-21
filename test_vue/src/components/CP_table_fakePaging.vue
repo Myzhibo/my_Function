@@ -125,7 +125,7 @@
                                 prop="operate"
                                 label="操作"
                                 width="170"
-                                :render-header="renderHeader2"  :key="Math.random()"
+                                :render-header="renderHeader2"
                               >
                                   <template slot-scope="{row}">
                                     <el-button size="mini" @click="deleteRow(row)" element-loading-spinner="el-icon-loading">删除</el-button>
@@ -201,28 +201,29 @@ export default {
     // 自定义表头样式  ---   列名内加icon
     renderHeader2(h, { column }) {
       return h(
-      'el-tooltip',  //  标签的名称
+        'el-tooltip',  //  标签的名称
       {
       props: {  //标签的参数 通过不同的标签 显示不同的文字
-      content: (function() {
-      //如何拿到 label的文字  通过column.label来拿
-      let label = column.label
-      switch (label) {
-        case '拦截状态':
-          return '我是提示文字'
-        case '提示2':
-          return '提示文字2'
-        case '提示3':
-          return '提示文字3'
-      }
-      })(),
-      placement: 'top',
-      // effect: "light",     // tip主题
+          content: (function() {
+              //如何拿到 label的文字  通过column.label来拿
+              let label = column.label
+              console.log(column.label);
+              switch (label) {
+                case label:
+                  return "这是操作列"
+                case '提示2':
+                  return '提示文字2'
+                case '提示3':
+                  return '提示文字3'
+              }
+          })(),
+          placement: 'top',
+          // effect: "light",     // tip主题
       },
       ///下面的意思是往el-tooltip  标签里面添加内容  column.label(拿到自己定义的显示内容: 拦截状态)
       domProps: {
-        innerHTML: column.label +     '<span class="el-icon-question" style="color: #409eff;margin-left:10px "></span>'
-        }
+          innerHTML: column.label + '<span class="el-icon-question" style="color: #409eff;margin-left:10px "></span>'
+          }
       },
       [h('span')]
       )
