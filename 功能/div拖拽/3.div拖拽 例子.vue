@@ -1,5 +1,5 @@
 <template>
-  <div ref="textBasket" @mousedown="dragMe">
+  <div ref="CP_MyTextBasket" @mousedown="dragMe">
     。。。
   </div>
 </template>
@@ -10,11 +10,11 @@ import { Getter, Action } from 'vuex-class';
 import TextCard from './TextCard.vue';
 
 @Component({ components: { TextCard } })
-export default class TextBasket extends Vue {
+export default class CP_MyTextBasket extends Vue {
 
   dragMe(event) {
     console.log(event);
-    const box = this.$refs.textBasket;
+    const box = this.$refs.CP_MyTextBasket;
     console.log(box);
 
     event = event || window.event; // 解决浏览器兼容问题

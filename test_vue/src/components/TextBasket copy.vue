@@ -1,5 +1,5 @@
 <template>
-  <div ref="textBasket" id="textBasket"
+  <div ref="CP_MyTextBasket" id="CP_MyTextBasket"
         class="text-basket-container m-b-10"
         @mousedown="dragMe"
   >
@@ -55,13 +55,13 @@ import { Getter, Action } from 'vuex-class';
 import TextCard from './TextCard.vue';
 
 @Component({ components: { TextCard } })
-export default class TextBasket extends Vue {
-  @Action('setRewriteTextBasket') setRewriteTextBasket: any;
-  @Getter('rewriteTextBasket') rewriteTextBasket: any;
-  @Action('setPropositionTextBasket') setPropositionTextBasket: any;
-  @Getter('propositionTextBasket') propositionTextBasket: any;
-  @Getter('textBasket') textBasket: any;
-  @Action('setTextBasket') setTextBasket: any;
+export default class CP_MyTextBasket extends Vue {
+  @Action('setRewriteCP_MyTextBasket') setRewriteCP_MyTextBasket: any;
+  @Getter('rewriteCP_MyTextBasket') rewriteCP_MyTextBasket: any;
+  @Action('setPropositionCP_MyTextBasket') setPropositionCP_MyTextBasket: any;
+  @Getter('propositionCP_MyTextBasket') propositionCP_MyTextBasket: any;
+  @Getter('CP_MyTextBasket') CP_MyTextBasket: any;
+  @Action('setCP_MyTextBasket') setCP_MyTextBasket: any;
   @Prop({ default: () => [] }) data?: any;
   @Prop() myPlaceholder?: any;
   @Prop() selected?: any;
@@ -86,8 +86,8 @@ export default class TextBasket extends Vue {
   }
 
   handleOpened() {
-    if (this.$refs.textBasket) {
-      (this.$refs.textBasket as any).style.right = '30%';
+    if (this.$refs.CP_MyTextBasket) {
+      (this.$refs.CP_MyTextBasket as any).style.right = '30%';
     }
     this.$emit('open');
   }
@@ -102,43 +102,43 @@ export default class TextBasket extends Vue {
   }
 
   handleClose() {
-    if (this.$refs.textBasket) {
-      (this.$refs.textBasket as any).style.right = '0%';
+    if (this.$refs.CP_MyTextBasket) {
+      (this.$refs.CP_MyTextBasket as any).style.right = '0%';
     }
     this.$emit('close');
   }
 
   handleClose_hideen() {
-    if (this.$refs.textBasket) {
-      (this.$refs.textBasket as any).style.right = '-20px';
+    if (this.$refs.CP_MyTextBasket) {
+      (this.$refs.CP_MyTextBasket as any).style.right = '-20px';
     }
   }
 
   handleDelete(text: any) {
     if (this.$route.path === '/fullTextLib' || this.$route.path === '/editFullText' || this.$route.path === '/readingsetDetail') {
-      const newRewriteTextBasket = [...this.rewriteTextBasket];
-      newRewriteTextBasket.splice(
-        newRewriteTextBasket.findIndex((r) => r._id === text._id),
+      const newRewriteCP_MyTextBasket = [...this.rewriteCP_MyTextBasket];
+      newRewriteCP_MyTextBasket.splice(
+        newRewriteCP_MyTextBasket.findIndex((r) => r._id === text._id),
         1
       );
-      this.setRewriteTextBasket(newRewriteTextBasket);
-      (this as any).$localForage.setItem('rewriteTextBasket', newRewriteTextBasket);
+      this.setRewriteCP_MyTextBasket(newRewriteCP_MyTextBasket);
+      (this as any).$localForage.setItem('rewriteCP_MyTextBasket', newRewriteCP_MyTextBasket);
     } else if (this.$route.path === '/rewriteLib' || this.$route.path === '/editRewriteResult') {
-      const newPropositionTextBasket = [...this.propositionTextBasket];
-      newPropositionTextBasket.splice(
-        newPropositionTextBasket.findIndex((r) => r._id === text._id),
+      const newPropositionCP_MyTextBasket = [...this.propositionCP_MyTextBasket];
+      newPropositionCP_MyTextBasket.splice(
+        newPropositionCP_MyTextBasket.findIndex((r) => r._id === text._id),
         1
       );
-      this.setPropositionTextBasket(newPropositionTextBasket);
-      (this as any).$localForage.setItem('propositionTextBasket', newPropositionTextBasket);
+      this.setPropositionCP_MyTextBasket(newPropositionCP_MyTextBasket);
+      (this as any).$localForage.setItem('propositionCP_MyTextBasket', newPropositionCP_MyTextBasket);
     } else if (this.$route.path === '/propositionLib' || this.$route.path === '/editPropositionResult') {
-      const newTextBasket = [...this.textBasket];
-      newTextBasket.splice(
-        newTextBasket.findIndex((r) => r._id === text._id),
+      const newCP_MyTextBasket = [...this.CP_MyTextBasket];
+      newCP_MyTextBasket.splice(
+        newCP_MyTextBasket.findIndex((r) => r._id === text._id),
         1
       );
-      this.setTextBasket(newTextBasket);
-      (this as any).$localForage.setItem('textBasket', newTextBasket);
+      this.setCP_MyTextBasket(newCP_MyTextBasket);
+      (this as any).$localForage.setItem('CP_MyTextBasket', newCP_MyTextBasket);
     }
     this.$emit('delete', text);
   }
@@ -151,13 +151,13 @@ export default class TextBasket extends Vue {
   handleSelect(data: any) {
     this.$emit(
       'select',
-      this.rewriteTextBasket.filter((i: { checked: any }) => Boolean(i.checked))
+      this.rewriteCP_MyTextBasket.filter((i: { checked: any }) => Boolean(i.checked))
     );
   }
 
   // 拖拽
   dragMe(event) {
-    const box = this.$refs.textBasket;
+    const box = this.$refs.CP_MyTextBasket;
     const that = this;
 
     /** 拖拽div */

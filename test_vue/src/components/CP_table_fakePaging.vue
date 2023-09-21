@@ -207,10 +207,10 @@ export default {
           content: (function() {
               //如何拿到 label的文字  通过column.label来拿
               let label = column.label
-              console.log(column.label);
+              console.log('renderHeader啦', column.label);
               switch (label) {
                 case label:
-                  return "这是操作列"
+                  return "这是操作列~~"
                 case '提示2':
                   return '提示文字2'
                 case '提示3':
