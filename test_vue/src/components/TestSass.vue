@@ -19,8 +19,8 @@ export default {
 <style lang="scss" scoped>
 .export-status {
     font-size: 12px;
-    margin-right: 10px;
-    text-align: center;
+    // margin-right: 10px;
+    // text-align: center;
     
     & span {
       display: inline-block;

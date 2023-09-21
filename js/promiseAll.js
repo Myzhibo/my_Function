@@ -32,7 +32,7 @@ async function getData3() {
   console.log(result)
 }
 
-// 循环调用接口 示例
+// 循环调用接口(在getList函数里有接口函数) 示例
 // const res2 = await Promise.all(
 //   res.list.map((item, index) => {
 //     return this.getList(item.text_id)

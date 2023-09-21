@@ -1,6 +1,5 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
     <TestSass/>
     <hr>
     <!-- FUNCTION: fixed组件 -->
@@ -8,8 +7,9 @@
     <TextBasket style="z-index: 999"/>
     <hr>
     <!-- FUNCTION: table组件 + 假分页 -->
-    table组件 + 假分页
-    <CP_table_fakePaging :ListData="ListData" />
+    table组件 + 假分页  <el-button size="mini" @click="other_table=!other_table">{{other_table ? '切换为全列表格': '切换为表格2'}}</el-button>
+    <CP_table_fakePaging v-if="!other_table" :ListData="ListData" />
+    <CP_table v-if="other_table" />
     <hr>
     <!-- FUNCTION: 弹窗 -->
     弹窗组件
@@ -23,10 +23,10 @@
         </div>
     </CP_MyDialog>
     <hr>
-    <!-- FUNCTION: 卡片 -->
-    卡片组件
+    <!-- FUNCTION: 卡片组 -->
+    <!-- 卡片组件
     <div v-if="card_listData.length>0">
-      <div v-for="(text, index) of card_listData" :key="'lib' + index">
+      <div v-for="(text, index) of card_listData" :key="'lib' + index"> -->
 
         <!-- 
           :mode="displayMode"
@@ -45,21 +45,26 @@
               :serial_num="serial_num + index + 1"
         
         -->
-          <CP_MyCard
+          <!-- <CP_MyCard
               :data="text"
               :unfit="text.unfit"
-            >
+            > -->
               <!-- 向子组件TextCard的插槽中插入 -->
-              <div slot="option"  style="margin-top:2px">
+              <!-- <div slot="option"  style="margin-top:2px"> -->
                 <!-- 为父组件放置一个插槽 -->
-                <slot name="button_option" :text="text"></slot>
+                <!-- <slot name="button_option" :text="text"></slot>
               </div>
           </CP_MyCard>
       </div>
     </div>
     <div v-if="card_listData.length === 0" class="flex-center">
       <el-empty description="暂无数据"></el-empty>
-    </div>
+    </div> -->
+    <hr>
+    <!-- FUNCTION: 下载 -->
+    下载<br>
+    <img style="width: 100px;height:100px" src="https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100" alt="">
+    <el-button @click="download" size="mini" type="primary" >下载</el-button>
   </div>
 </template>
 
@@ -67,9 +72,10 @@
 import TestSass from './TestSass.vue'
 import TextBasket from './TextBasket.vue';
 import CP_table_fakePaging from './CP_table_fakePaging.vue';
+import CP_table from './CP_table.vue';
 import CP_MyDialog from './CP_MyDialog.vue'
 import CP_MyForm from './CP_MyForm.vue'
-import CP_MyCard from './CP_MyCard.vue'
+// import CP_MyCard from './CP_MyCard.vue'
 
 export default {
   name: 'HelloWorld',
@@ -80,9 +86,10 @@ export default {
     TestSass,
     TextBasket,
     CP_table_fakePaging,
+    CP_table,
     CP_MyDialog,
     CP_MyForm,
-    CP_MyCard
+    // CP_MyCard
   },
   data(){
     return{
@@ -95,7 +102,8 @@ export default {
         "instance_type": "ecs.c7.large",
         "auto_release_time": "2024-09-19 14:49 ",
         "ip": "192.168.8.224",
-        "id": 1
+        "id": 1,
+        "test_renderHeader": '11111111111111111111111111111111111111111111'
     },
     {
         "uid": "i-uf6escxsuu828ael9x32",
@@ -104,7 +112,8 @@ export default {
         "instance_type": "ecs.c7.large",
         "auto_release_time": "2023-09-19 16:23 ",
         "ip": "192.168.8.221",
-        "id": 2
+        "id": 2,
+        "test_renderHeader": '22222222222222222222'
     },
     {
         "uid": "i-uf6escxsuu828ael9x36",
@@ -113,7 +122,8 @@ export default {
         "instance_type": "ecs.c7.large",
         "auto_release_time": "2023-09-19 16:34 ",
         "ip": "192.168.8.223",
-        "id": 3
+        "id": 3,
+        "test_renderHeader": '333333333333333'
     },
     {
         "uid": "i-uf6escxsuu828ael9x31",
@@ -122,7 +132,8 @@ export default {
         "instance_type": "ecs.c7.large",
         "auto_release_time": "2023-09-19 16:33 ",
         "ip": "192.168.8.225",
-        "id": 4
+        "id": 4,
+        "test_renderHeader": '4444444444'
     },
     {
         "uid": "i-uf6escxsuu828ael9x2z",
@@ -131,7 +142,8 @@ export default {
         "instance_type": "ecs.c7.large",
         "auto_release_time": "2023-09-19 16:33 ",
         "ip": "192.168.8.226",
-        "id": 5
+        "id": 5,
+        "test_renderHeader": '55'
     },
     {
         "uid": "i-uf6escxsuu828ael9x33",
@@ -188,6 +200,7 @@ export default {
         "id": 11
     },
       ],
+      other_table: false,
       /************** FUNCTION: 弹窗 - 相关 **************/
       isShows: false,
       /************** FUNCTION: 卡片 - 相关 **************/
@@ -236,29 +249,7 @@ export default {
               "tags": [
                   "金融理财"
               ]
-          },
-          {
-              "_id": "64e2e6df73bfa9f92410ab04",
-              "title_en": "October 2021 Opportunities: Open Calls, Residencies, and Grants for Artists",
-              "title_ch": "2021年10月机遇：艺术家的公开征集、驻留和资助",
-              "summary_en": "Image © Tatsuya Tanka Every month, Colossal shares a selection of opportunities for artists and designers, including open calls, grants, fellowships, and residencies. If you’d like to list an opportunity here, please get in touch at hello@colossal.art . You can also join our monthly Opportunities Newsletter . Open Calls Climate Woke from The Center for Cultural Power The Center for Cultural Power",
-              "summary_ch": "每个月，Colossal分享一系列针对艺术家和设计师的机遇，包括公开征集、资助金、研究员职位和驻留项目。如果您想在这里列出一个机会，请通过hello@colossal.art与我们联系。您还可以加入我们的月度机会快讯。公开征集来自文化力量中心的“气候觉醒”。",
-              "url": "https://www.thisiscolossal.com/2021/10/october-2021-opportunities/",
-              "article_type": "说明文",
-              "receive_time": "2021-10-05",
-              "published": "2021-10-05 00:00:00",
-              "summary_en_md5": "18aa73068c899419164c875818c70e76",
-              "available": true,
-              "create_at": "2023-08-21 12:23:58",
-              "customer_id": 2,
-              "subscribe_status": 0,
-              "source_id": "64e2e6de73bfa9f92410ab03",
-              "unfit": null,
-              "article_source": "Colossa",
-              "tags": [
-                  "艺术作品"
-              ]
-          },
+          }
       ],
       // 卡片序号
       serial_num: 0 ,
@@ -301,6 +292,36 @@ export default {
         //     }
         //   }
         // }
+    },
+    /** 下载相关 */
+    // 下载
+    async realDownload(path,name){
+      var image = new Image()
+    // 解决跨域 Canvas 污染问题
+    image.setAttribute('crossOrigin', 'anonymous')
+    image.onload = function() {
+        var canvas = document.createElement('canvas')
+        canvas.width = image.width
+        canvas.height = image.height
+
+        var context = canvas.getContext('2d')
+        context.drawImage(image, 0, 0, image.width, image.height)
+        var url = canvas.toDataURL('image/png')
+        var a = document.createElement('a')
+        // 创建一个单击事件
+        var event = new MouseEvent('click')
+        a.download = name
+        a.href = url
+
+        // 触发a的单击事件
+        a.dispatchEvent(event)
+    }
+    image.src = path;
+    this.$Message.success('下载成功');
+    },
+    // 下载图片
+    download(){
+        this.realDownload('https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100', '我的图片' +'.jpg')
     }
   }
 }

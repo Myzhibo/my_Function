@@ -79,7 +79,6 @@ export default {
   components: {
   },
   mounted(){
-    console.log(1);
     console.log(this.data);
   },
   method:{
