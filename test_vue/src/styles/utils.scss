@@ -142,7 +142,7 @@
 }
 
 .bg-soft{
-  background-color: $bg_soft;
+  // background-color: $bg_soft;
 }
 
 .o-hidden {
@@ -276,27 +276,27 @@ span {
   text-decoration: none;
 }
 .c{
-  color: $c;
+  // color: $c;
 }
 .hover-c{
   &:hover{
-    color: $c;
+    // color: $c;
   }
 }
 .bg-c{
-  background-color: $c;
+  // background-color: $c;
 }
 .bg-c-focus{
-  background-color: $c_focus;
+  // background-color: $c_focus;
 }
 .text-small,.t-small{
   font-size: 12px;
 }
 .text-link,.t-link{
-  color: $c;
+  // color: $c;
   cursor: pointer;
   &:hover{
-    color: $c_focus;
+    // color: $c_focus;
   }
 }
 .text-gray,.t-gray{

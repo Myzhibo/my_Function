@@ -6,8 +6,9 @@
 
 ## sass
 
-- 1 npm i -D sass-loader@8.x // 安装
-  2 npm i node-sass@4.14.1 // 安装
+- 1 npm i sass -D
+  2 npm i -D sass-loader@8.x
+  3 npm i node-sass@4.14.1
 
 ## elementUI
 
