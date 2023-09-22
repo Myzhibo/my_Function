@@ -271,14 +271,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// ******************滚动条样式******************
-// 滚动条的宽度
-/deep/ .el-table__body-wrapper::-webkit-scrollbar {
+// ******************滚动条样式*******************/
+// 滚动条的宽度 */
+::v-deep .el-table__body-wrapper::-webkit-scrollbar {
 width: 6px;   // 横向滚动条
 height: 6px;  // 纵向滚动条 必写
 }
 // 滚动条的滑块
-/deep/ .el-table__body-wrapper::-webkit-scrollbar-thumb {
+::v-deep .el-table__body-wrapper::-webkit-scrollbar-thumb {
 background-color: #ddd;
 border-radius: 3px;
 }
