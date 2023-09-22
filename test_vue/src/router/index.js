@@ -4,6 +4,9 @@ import VueRouter from 'vue-router'
 //2. 引入路由组件
 import Layout from '../views/Layout/index.vue'
 
+//4. 模块化引入外部路由
+import edits from './modules/edits'
+
 //3. 创建并暴露一个路由器
 export default new VueRouter({
   routes: [
@@ -22,6 +25,7 @@ export default new VueRouter({
           name: 'form',
           component: () => import('../views/MyElementUI/MyForm.vue'),
         },
+        ...edits,
       ],
     },
     //配置404

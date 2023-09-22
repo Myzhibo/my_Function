@@ -91,7 +91,7 @@
               <!-- 插槽: 卡片按钮 -->
               <template #button_option="{ text }">          <!-- 接收、 插入 -->
                 <el-button size="mini" type="primary"
-                  @click.stop="$router.push({ path: `/CP_MyEditPage`, name: 'CP_MyEditPage', params: text, query: { id: text._id }})"
+                  @click.stop="$router.push({ path: `/cp_myeditpage`, name: 'cp_myeditpage', params: text, query: { id: text._id }})"
                 >进入编辑</el-button>
                 <!-- <el-button v-if="text.inBasket" size="mini" type="danger" @click.stop="removeTextBasket(text)">移出文章篮</el-button>
                 <el-button v-else size="mini" type="success" @click.stop="joinTextBasket(text)">加入文章篮</el-button> -->
