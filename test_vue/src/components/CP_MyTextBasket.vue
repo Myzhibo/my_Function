@@ -140,7 +140,7 @@ export default {
 <style scoped lang="scss">
 .text-basket-container {
   position: fixed;
-  top: 50%;
+  top: 20%;
   right: 0px;
   .basket-icon-box {
     cursor: pointer;

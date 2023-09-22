@@ -2,6 +2,8 @@
   <div class="hello">
     <TestSass/>
     <hr>
+    <span>debug模式下才能看见后面: </span> <span v-if="isDebug" style="color: rgba(0, 217, 255, 0.664);">~~在debug模式里~~</span>
+    <hr>
     <!-- FUNCTION: fixed组件 -->
     fixed组件
     <CP_MyTextBasket style="z-index: 999"/>
@@ -25,6 +27,7 @@
     <hr>
     <!-- FUNCTION: 卡片组 -->
     卡片组件
+        <!-- 批量删除按钮 -->
     <span
       style="
         position: relative;
@@ -39,6 +42,20 @@
       >
       <el-button v-else @click="handleAllDelete" size="mini" type="danger">确认删除</el-button>
     </span>
+    <span
+        v-if="mutiSelected.length > 0"
+        style="
+          position: relative;
+          left: 20px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        "
+        ><el-button size="mini" style="color: rgb(145, 138, 138)" @click="cancelAllDelete">
+          <span>取消</span>
+        </el-button></span
+      >
+        <!-- 卡片组件 -->
     <div v-if="card_listData.length>0">
       <div v-for="(text, index) of card_listData" :key="'lib' + index">
 
@@ -46,20 +63,23 @@
           :mode="displayMode"
               :abstractHidden="abstractHidden"
               :keyword="conditions.search"
-              :multiDelete="multiDelete"
-              :cancelSelected="cancelSelected"
               :changePage="changePage"
-              @getId="getId"
-              @handle-delete="handleDelete(text._id)"
               :key="'lib' + index"
               :unfit="text.unfit"
-              :deleteHidden="text._id === cardId ? deleteHidden : true"
               :serial_num="serial_num + index + 1"
         
         -->
           <CP_MyCard
               :data="text"
+
+              :deleteHidden="text._id === cardId ? deleteHidden : true"
+              :cancelSelected="cancelSelected"    
+              :multiDelete="multiDelete"
               @getHidden="getHidden"
+              @deleteSingleData="deleteSingleData(text._id)"
+              @getId="getId"
+
+
             >
             {{ text }}
               <!-- 向子组件TextCard的插槽中插入 -->
@@ -258,22 +278,49 @@ export default {
               "tags": [
                   "金融理财"
               ]
+          },
+          {
+              "_id": "64e2e6de73bfa9f92410aacc",
+              "title_en": "Newly named Artemis 2 crew to notch many firsts on historic moon mission",
+              "title_ch": "新任命的阿尔忒弥斯2号机组将在历史性的月球任务中取得许多首次突破",
+              "summary_en": "The astronauts who will fly on NASA's Artemis 2 mission are set to break records and establish a number of firsts. But for one crew member, being first is less important than what will come next.",
+              "summary_ch": "NASA阿尔忒弥斯2号任务的宇航员们即将打破纪录，创造许多第一次。但对于其中一名机组成员来说，比起第一次，更重要的是接下来会发生什么。",
+              "url": "https://www.space.com/artemis-2-moon-crew-firsts-records",
+              "article_type": "说明文",
+              "receive_time": "2023-04-04",
+              "published": "2023-04-04 00:00:00",
+              "summary_en_md5": "d4800eb8803ca052428d43b414903177",
+              "available": true,
+              "create_at": "2023-08-21 12:23:58",
+              "customer_id": 2,
+              "subscribe_status": 0,
+              "source_id": "64e2e6de73bfa9f92410aacb",
+              "unfit": null,
+              "article_source": "Space",
+              "tags": [
+                  "宇宙探索"
+              ]
           }
       ],
       // 卡片序号
       serial_num: 0 ,
       // 删除卡片相关
-      deleteHidden: true,
+      deleteHidden: true,       // 是否隐藏删除icon
       cardId:'',
       // 批量删除卡片相关
-      multiDelete: false,
+      multiDelete: false,      // 是否开启批量删除模式
       mutiSelected: [],
-      cancelSelected: false,
+      cancelSelected: false,   // 是否取消批量删除选中的卡片
       changePage: 0,
     }
   },
   mounted(){
     this.initCardId()
+  },
+  computed:{
+    isDebug(){
+      return Object.hasOwnProperty.call(this.$route.query, ['debug'])
+    }
   },
   methods:{
     /************** FUNCTION: 弹窗 - 相关 **************/
@@ -304,8 +351,94 @@ export default {
         //   }
         // }
     },
-    getHidden(val){
-      console.log(val);
+    /**** 卡片删除相关 ****/
+    // 接收子组件传值: TextCard组件右上角删除icon -  显示、隐藏
+    getHidden(bool, id) {
+      console.log(bool, id);
+      this.deleteHidden = bool;
+      this.cardId = id;
+    },
+    // 接收子组件传值: TextCard组件 -  被选择要删除的id
+    async deleteSingleData(id) {
+      await this.deleteCard(id);
+    },
+    // 删除卡片
+    async deleteCard(beDelete_id) {
+      this.$confirm('确认删除文章？'+beDelete_id, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(async () => {
+
+          // 正常要拿到这个beDelete_id调用删除数据的接口
+          // await deleteText({
+          //   text_ids: [{ _id: beDelete_id }]
+          // });
+          // await this.getList();   // 删完再调用一次getList接口，视具体项目而定
+
+          //假删(删除数组中指定的元素)   
+          const ids = this.card_listData.map(item => {
+            return item._id
+          })
+          const index = ids.indexOf(beDelete_id);
+          if (index !== -1) {
+            this.card_listData.splice(index, 1);
+          }
+          this.$message({ type: 'success', message: '删除成功!' });
+        })
+        .catch(() => {});
+    },
+    /**** 卡片批量删除相关 ****/
+    // 点击红色[批量删除]按钮
+    allDelete() {
+      this.cancelSelected = false;
+      this.multiDelete = !this.multiDelete;
+    },
+    // 点击红色[确认删除]按钮
+    handleAllDelete() {
+      const arr = [];
+      for (const id of this.mutiSelected) {
+        arr.push(id);
+      }
+      console.log(arr);
+
+      this.$confirm('确认删除文章？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(async () => {
+
+          // 正常要拿到这个arr调用删除数据的接口
+          // await deleteText({
+          //   text_ids: arr
+          // });
+          // await this.getList();   // 删完再调用一次getList接口，视具体项目而定
+
+          //假删(删除数组中指定的元素)
+          this.card_listData = this.card_listData.filter(item =>{
+            return arr.includes(item._id) === false
+          })
+          this.$message({ type: 'success', message: '删除成功!' });
+          this.cancelAllDelete();
+        })
+        .catch(() => {});
+    },
+    // 点击灰色[取消]按钮
+    cancelAllDelete() {
+      this.cancelSelected = true;
+      this.multiDelete = !this.multiDelete;
+      this.mutiSelected = [];
+    },
+    // 接收子组件传值: TextCard组件 -被选择要删除的id
+    getId(id) {
+      if (this.mutiSelected.every(val => val !== id)) {
+        this.mutiSelected.push(id);
+      } else if (this.mutiSelected.some(val => val === id)) {
+        this.mutiSelected.splice(this.mutiSelected.indexOf(id), 1);
+      }
+      // console.log(this.mutiSelected);
     },
 
 

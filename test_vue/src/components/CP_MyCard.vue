@@ -20,6 +20,25 @@
         ]"
       >
           {{ data }}
+          
+          <!-- 删除文章篮图标显隐 -->
+          <div
+            v-if="!deleteHidden"
+            class="text-card-container-left"
+            style="position: absolute; top: 0px; right: 0px; cursor: pointer"
+          >
+            <i
+              class="el-icon-error"
+              style="color: rgba(190, 32, 32, 0.822); font-size: 23px"
+              @click.stop="deleteSingleData" />
+          </div>
+          <div
+            v-show="multiDelete"
+            :class="{ active: isActive }"
+            style="position: absolute; top: 0px; right: 0px; cursor: pointer"
+          >
+            <i class="el-icon-error" style="font-size: 23px" />
+          </div>
       </el-card>
     </div>
   </div>
@@ -28,6 +47,11 @@
 <script>
 export default {
   name: 'CP_MyCard',
+  data(){
+    return {
+      isActive: false,
+    }
+  },
   props: {
     data: Object,
     // serial_num,   // 卡片序号
@@ -47,15 +71,15 @@ export default {
     },
     deleteHidden: {
       type: Boolean,
-      default: true,
+      default: true,    // 是否隐藏删除icon
     },
     multiDelete: {
       type: Boolean,
-      default: false,
+      default: false,   // 是否开启批量删除模式
     },
     cancelSelected: {
       type: Boolean,
-      default: false,
+      default: false,   // 是否取消批量删除选中的卡片
     },
     mode: {
       type: Number,
@@ -75,8 +99,16 @@ export default {
   mounted(){
     console.log(this.data);
   },
+  watch: {
+    cancelSelected() {
+        if (this.cancelSelected === false) {
+          this.isActive = false;
+        } else {
+          this.isActive = true;
+        }
+    }
+  },
   methods:{
-
     // 关键字高亮
     highlight(html) {
       if (!this.keyword) {
@@ -103,6 +135,9 @@ export default {
     leaveCard() {
       this.$emit('getHidden', true, '');
     },
+    deleteSingleData() {
+      this.$emit('deleteSingleData', this.data)
+    },
     // 鼠标点击卡片
     handleCardClick() {
       if (this.selectMode) {
@@ -115,7 +150,12 @@ export default {
       }
       return this.clickCard(this.$route.path);
     },
-    // 点击事件
+    // 点击卡片事件 -- 批量删除
+    clickDelete() {
+      this.isActive = !this.isActive;
+      this.$emit('getId', this.data._id);
+    },
+    // 点击卡片事件 -- 点击卡片
     clickCard(router) {
       console.log(this.$route.path);
       if (router === '/fullTextLib') {
