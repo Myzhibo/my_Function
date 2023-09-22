@@ -20,7 +20,12 @@
         ]"
       >
           {{ data }}
-          
+
+          <!-- 为父组件放置一个插槽 -->
+          <slot name="option"></slot>    <!-- 只放置插槽、用来[接收]父组件传值 -->
+          <slot name="button_option" :text="data"></slot>     <!-- 放置插槽并[向]父组件传值 -->
+
+
           <!-- 删除文章篮图标显隐 -->
           <div
             v-if="!deleteHidden"

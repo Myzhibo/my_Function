@@ -81,13 +81,21 @@
 
 
             >
-            {{ text }}
-              <!-- 向子组件TextCard的插槽中插入 -->
-              <div slot="option"  style="margin-top:2px">
-                <!-- 为父组件放置一个插槽 -->
-                <slot name="button_option" :text="text"></slot>
-              </div>
+              {{ text }}
+
+              <!-- 向子组件CP_MyCard的插槽中插入 -->
+              <template slot="option">123123</template>     <!-- 插入 -->
+
+              <!-- 插槽: 卡片按钮 -->
+              <template #button_option="{ text }">          <!-- 接收、 插入 -->
+                <el-button size="mini" type="primary"
+                  @click.stop="$router.push({ path: `/CP_MyEditPage`, name: 'CP_MyEditPage', params: text, query: { id: text._id }})"
+                >进入编辑</el-button>
+                <!-- <el-button v-if="text.inBasket" size="mini" type="danger" @click.stop="removeTextBasket(text)">移出文章篮</el-button>
+                <el-button v-else size="mini" type="success" @click.stop="joinTextBasket(text)">加入文章篮</el-button> -->
+              </template>
           </CP_MyCard>
+
       </div>
     </div>
     <div v-if="card_listData.length === 0" class="flex-center">
