@@ -19,13 +19,6 @@
           data.inBasket ? 'in-basket' : '',
         ]"
       >
-          {{ data }}
-
-          <!-- 为父组件放置一个插槽 -->
-          <slot name="option"></slot>    <!-- 只放置插槽、用来[接收]父组件传值 -->
-          <slot name="button_option" :text="data"></slot>     <!-- 放置插槽并[向]父组件传值 -->
-
-
           <!-- 删除文章篮图标显隐 -->
           <div
             v-if="!deleteHidden"
@@ -43,6 +36,16 @@
             style="position: absolute; top: 0px; right: 0px; cursor: pointer"
           >
             <i class="el-icon-error" style="font-size: 23px" />
+          </div>
+
+          <!-- 内容  -->
+          {{ data }}
+          
+          <!-- footer -->
+          <div class="footer" v-if="!footerHidden">
+            <!-- 为父组件放置一个插槽 -->
+            <slot name="option"></slot>    <!-- 只放置插槽、用来[接收]父组件传值 -->
+            <slot name="button_option" :text="data"></slot>     <!-- 放置插槽并[向]父组件传值 -->
           </div>
       </el-card>
     </div>
@@ -63,7 +66,6 @@ export default {
     // keyword,      // 高亮关键词
     // subscribe,
     // headerHidden,
-    // footerHidden,
     // source,
     // currentNode,  // readingset页当前卡片所在节点
     abstractHidden: {
@@ -73,6 +75,10 @@ export default {
     textHidden: {
       type: Boolean,
       default: false,
+    },
+    footerHidden: {
+      type: Boolean,
+      default: false,    // 是否隐藏卡片底部
     },
     deleteHidden: {
       type: Boolean,
@@ -277,5 +283,16 @@ export default {
 }
 ::v-deep .el-card__body {
   padding: 10px 20px;
+}
+
+//s 
+.footer{
+  // background-color: pink;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 10px;
 }
 </style>

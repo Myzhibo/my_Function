@@ -72,6 +72,8 @@
           <CP_MyCard
               :data="text"
 
+              :footerHidden="false"
+
               :deleteHidden="text._id === cardId ? deleteHidden : true"
               :cancelSelected="cancelSelected"    
               :multiDelete="multiDelete"
@@ -84,7 +86,7 @@
               {{ text }}
 
               <!-- 向子组件CP_MyCard的插槽中插入 -->
-              <template slot="option">123123</template>     <!-- 插入 -->
+              <template slot="option">{{ text._id }}</template>     <!-- 插入 -->
 
               <!-- 插槽: 卡片按钮 -->
               <template #button_option="{ text }">          <!-- 接收、 插入 -->
