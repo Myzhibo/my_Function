@@ -7,10 +7,13 @@ import router from './router/index' //引入路由配置index
 import ElementUI from 'element-ui' //引入ElementUI
 import 'element-ui/lib/theme-chalk/index.css' //引入ElementUI css库
 
+import Contextmenu from 'vue-contextmenujs' //引入右键菜单库
+
 // import './styles/utils.scss'
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
+Vue.use(Contextmenu)
 
 Vue.config.productionTip = false
 

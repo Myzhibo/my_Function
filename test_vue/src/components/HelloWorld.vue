@@ -1,12 +1,14 @@
 <template>
   <div class="hello">
+    <!-- FUNCTION: 测试sass写法 -->
     <TestSass/>
     <hr>
+    <!-- FUNCTION: debug模式 -->
     <span>debug模式下才能看见后面: </span> <span v-if="isDebug" style="color: rgba(0, 217, 255, 0.664);">~~在debug模式里~~</span>
     <hr>
     <!-- FUNCTION: fixed组件 -->
     fixed组件
-    <CP_MyTextBasket style="z-index: 999"/>
+    <!-- <CP_MyTextBasket style="z-index: 999"/> -->
     <hr>
     <!-- FUNCTION: table组件 + 假分页 -->
     table组件 + 假分页  <el-button size="mini" @click="other_table=!other_table">{{other_table ? '切换为全列表格': '切换为表格2'}}</el-button>
@@ -58,16 +60,14 @@
         <!-- 卡片组件 -->
     <div v-if="card_listData.length>0">
       <div v-for="(text, index) of card_listData" :key="'lib' + index">
-
         <!-- 
-          :mode="displayMode"
+              :mode="displayMode"
               :abstractHidden="abstractHidden"
               :keyword="conditions.search"
               :changePage="changePage"
               :key="'lib' + index"
               :unfit="text.unfit"
               :serial_num="serial_num + index + 1"
-        
         -->
           <CP_MyCard
               :data="text"
@@ -108,6 +108,22 @@
     下载<br>
     <img style="width: 100px;height:100px" src="https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100" alt="">
     <el-button @click="download" size="mini" type="primary" >下载</el-button>
+    <hr>
+    <!-- FUNCTION: Tree -->
+    Tree组件
+    <CP_MyTree
+        v-if="treeData.length"
+        style="margin-top: 5px"
+        :data="treeData"
+        :currTag="currentNode"
+        :show-menu="true"
+        :expanding="true"
+        :context-menu-items="menuItems"
+        @onCurrChange="handleNode"
+        @contextMenuClick="contextMenuClick"
+    >
+    </CP_MyTree>
+    <hr>
   </div>
 </template>
 
@@ -119,6 +135,8 @@ import CP_table from './CP_table.vue';
 import CP_MyDialog from './CP_MyDialog.vue'
 import CP_MyForm from './CP_MyForm.vue'
 import CP_MyCard from './CP_MyCard.vue'
+import CP_MyTree from './CP_MyTree.vue'
+
 
 export default {
   name: 'HelloWorld',
@@ -132,11 +150,12 @@ export default {
     CP_table,
     CP_MyDialog,
     CP_MyForm,
-    CP_MyCard
+    CP_MyCard,
+    CP_MyTree
   },
   data(){
     return{
-      /************** FUNCTION: table组件假分页 - 相关 **************/
+      /********************* FUNCTION: table组件假分页 - 相关 *********************/
       ListData:[
     {
         "uid": "i-uf6escxsuu828ael9x35",
@@ -244,9 +263,9 @@ export default {
     },
       ],
       other_table: false,
-      /************** FUNCTION: 弹窗 - 相关 **************/
+      /********************* FUNCTION: 弹窗 - 相关 *********************/
       isShows: false,
-      /************** FUNCTION: 卡片 - 相关 **************/
+      /********************* FUNCTION: 卡片 - 相关 *********************/
       card_listData:[
           {
               "_id": "64e2e6df73bfa9f92410ab27",
@@ -322,6 +341,185 @@ export default {
       mutiSelected: [],
       cancelSelected: false,   // 是否取消批量删除选中的卡片
       changePage: 0,
+      /********************* FUNCTION: Tree - 相关 *********************/
+      treeData: [
+          {
+              "_id": "64e2db6b088557b377aca3dd",
+              "node_level": 1,
+              "node_type": "chapter",
+              "node_name": "zhibo",
+              "content": {
+                  "level": 1,
+                  "body": "<p>zhibo</p>",
+                  "name": "zhibo",
+                  "config": {
+                      "topic": "zhibo",
+                      "count": 1,
+                      "method": "人工选择",
+                      "sync": "否",
+                      "sync_map": "",
+                      "intro": "请填写阅读导语"
+                  }
+              },
+              "node_id": "9619ecf6fd1642e9",
+              "node_parent_id": "",
+              "expand": true,
+              "config_data": {
+                  "topic": "zhibo",
+                  "count": 1,
+                  "method": "人工选择",
+                  "sync": "否",
+                  "sync_map": "",
+                  "intro": "请填写阅读导语"
+              },
+              "isHidden": false,
+              "customer_id": 2,
+              "available": true,
+              "order": 1,
+              "create_time": "2023-08-21 11:35:07",
+              "project_id": "64e2db6b088557b377aca3dc",
+              "text_count": 5,
+              "leaf": true,
+              "rewrite_count": -3,
+              "proposition_count": 0,
+              "children": []
+          },
+          {
+              "_id": "64e415ac8aa10af998bd7dfd",
+              "node_name": "zhibo2",
+              "node_type": "chapter",
+              "content": {
+                  "name": "zhibo2",
+                  "config": {
+                      "topic": "zhibo",
+                      "count": 1,
+                      "method": "人工选择",
+                      "sync": "否",
+                      "sync_map": "",
+                      "intro": "请填写阅读导语"
+                  }
+              },
+              "node_parent_id": "",
+              "node_id": "ded304b2c0b9485b",
+              "available": true,
+              "order": 2,
+              "create_time": "2023-08-22 09:55:56",
+              "project_id": "64e2db6b088557b377aca3dc",
+              "text_count": 0,
+              "rewrite_count": 0,
+              "proposition_count": 0,
+              "leaf": false,
+              "children": [
+                  {
+                      "_id": "64e415b38aa10af998bd7dfe",
+                      "node_name": "zhibo22",
+                      "node_type": "chapter",
+                      "content": {
+                          "name": "zhibo22",
+                          "config": {
+                              "topic": "zhibo",
+                              "count": 1,
+                              "method": "人工选择",
+                              "sync": "否",
+                              "sync_map": "",
+                              "intro": "请填写阅读导语"
+                          }
+                      },
+                      "node_parent_id": "ded304b2c0b9485b",
+                      "node_id": "6542f2e57b004405",
+                      "available": true,
+                      "order": 1,
+                      "create_time": "2023-08-22 09:56:03",
+                      "project_id": "64e2db6b088557b377aca3dc",
+                      "text_count": 2,
+                      "rewrite_count": 0,
+                      "proposition_count": 0,
+                      "leaf": true,
+                      "children": [],
+                      "expand": true,
+                      "isHidden": false
+                  }
+              ],
+              "expand": true,
+              "isHidden": false
+          },
+          {
+              "_id": "64f29d193bf698bb349d31db",
+              "node_name": "test",
+              "node_type": "chapter",
+              "content": {
+                  "name": "test",
+                  "config": {
+                      "topic": "zhibo",
+                      "count": 1,
+                      "method": "人工选择",
+                      "sync": "否",
+                      "sync_map": "",
+                      "intro": "请填写阅读导语"
+                  }
+              },
+              "node_parent_id": "",
+              "node_id": "2f93282e4fd84411",
+              "available": true,
+              "order": 3,
+              "create_time": "2023-09-02 10:25:29",
+              "project_id": "64e2db6b088557b377aca3dc",
+              "text_count": 3,
+              "rewrite_count": 2,
+              "proposition_count": 0,
+              "leaf": true,
+              "children": [],
+              "expand": true,
+              "isHidden": false
+          }
+      ],
+      currentNode: null,
+      // 菜单内容
+      menuItems: (...item) => [
+        {
+          label: '导出章节内容',
+          onClick: () => {
+            this.contextMenuClick('export', ...item);
+          },
+        },
+        {
+          label: '编辑',
+          onClick: () => {
+            this.contextMenuClick('edit', ...item);
+          },
+        },
+        {
+          label: '添加同级目录',
+          onClick: () => {
+            this.contextMenuClick('addbrother', ...item);
+          },
+        },
+        {
+          label: '添加子目录',
+          onClick: () => {
+            this.contextMenuClick('addchildren', ...item);
+          },
+        },
+        {
+          label: '上移',
+          onClick: () => {
+            this.contextMenuClick('moveup', ...item);
+          },
+        },
+        {
+          label: '下移',
+          onClick: () => {
+            this.contextMenuClick('movedown', ...item);
+          },
+        },
+        {
+          label: '删除',
+          onClick: () => {
+            this.contextMenuClick('delete', ...item);
+          },
+        }
+      ],
+      
     }
   },
   mounted(){
@@ -449,12 +647,7 @@ export default {
         this.mutiSelected.splice(this.mutiSelected.indexOf(id), 1);
       }
       // console.log(this.mutiSelected);
-    },
-
-
-
-
-    
+    },  
     /************** FUNCTION: 下载 - 相关 **************/
     // 下载
     async realDownload(path,name){
@@ -484,6 +677,56 @@ export default {
     // 下载图片
     download(){
         this.realDownload('https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100', '我的图片' +'.jpg')
+    },
+    /************** FUNCTION: Tree - 相关 **************/
+    // 点击目录节点  获取子组件tree传递的值
+    async handleNode(data) {
+      console.log('点击目录节点', data.node_name);
+      if (data.children.length) return; // 目前只有叶子结点可以上传文件
+      this.currentNode = data;
+      // await this.getList();
+    },
+    // 点击菜单选项
+    async contextMenuClick(action, ...item) {
+      // console.log(this.currentNode);
+      console.log('选择menu:', action, item[0].node_name);
+      if (action === 'export') {
+        // return await this.downloadBook(item);
+      }
+      if (action === 'moveup') {
+        // return this.handleMoveNode('up', item[0]._id);
+      }
+      if (action === 'movedown') {
+        // return this.handleMoveNode('down', item[0]._id);
+      }
+      if (action === 'edit') {
+        // return this.onNodeEdit(item);
+      }
+      if (action === 'addbrother') {
+        return this.onNodeAdd('brother', item);
+      }
+      if (action === 'addchildren') {
+        return this.onNodeAdd('children', item);
+      }
+      if (action === 'delete') {
+        // return this.handleDeleteNode(item[0]._id);
+      }
+    },
+    
+    // 添加节点
+    async onNodeAdd(act, item) {
+      this.beSelected = item[0];
+      if (act === 'brother') {
+        this.beAct = 'brother';
+        console.log(item[0]);
+        this.addNodeInfo = cloneDeep(item[0]);
+        this.displayAddDialog = true;
+      }
+      if (act === 'children') {
+        this.beAct = 'children';
+        this.addNodeInfo = cloneDeep(item[0]);
+        this.displayAddDialog = true;
+      }
     }
   }
 }

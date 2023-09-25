@@ -14,6 +14,26 @@
 
 - npm i element-ui -S
 
+## Tree 组件安装插件
+
+- yarn add vue-contextmenujs
+
+### 在 main.js 文件中使用
+
+```js
+import Contextmenu from 'vue-contextmenujs'
+Vue.use(Contextmenu)
+```
+
+```js
+// 在组件中调用显示菜单
+// this.$contextmenu(options:MenuOptions);
+// 鼠标点击或滚轮自动销毁, 也可手动销毁
+// this.$contextmenu.destroy();
+
+// 去除浏览器默认菜单
+```
+
 # 笔记
 
 1. 关于 App.vue 、'router-view'、router 之间的关系
