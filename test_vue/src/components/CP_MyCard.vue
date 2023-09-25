@@ -39,8 +39,24 @@
           </div>
 
           <!-- 内容  -->
-          {{ data }}
-          
+          <!-- <div style="display: flex; align-items: center; justify-content: space-between;"> -->
+              <div>
+                  {{ data }}
+              </div>
+              <div class="c-readingset-item-inner-ops">
+                <el-dropdown @click.native.stop @command="handleCommand($event, data)">
+                  <span class="el-dropdown-link">
+                    <el-link :underline="false"> <i class="el-icon-more" style="font-size: 20px" /> </el-link>
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item command="edit">编辑</el-dropdown-item>
+                    <el-dropdown-item command="delete">删除</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </div>
+          <!-- </div> -->
+
+
           <!-- footer -->
           <div class="footer" v-if="!footerHidden">
             <!-- 为父组件放置一个插槽 -->
@@ -178,7 +194,21 @@ export default {
         });
       }
       console.log(this.data);
+    },
+
+    // 操作
+
+  handleCommand(e, item) {
+    this.book = item;
+    if (e === 'delete') {
+      console.log(item);
     }
+    if (e === 'edit') {
+      console.log(item);
+      this.bookName = item.name;
+      this.displayEditDialog = true;
+    }
+  }
     
   },
 
@@ -285,7 +315,6 @@ export default {
   padding: 10px 20px;
 }
 
-//s 
 .footer{
   // background-color: pink;
   display: flex;
@@ -294,5 +323,60 @@ export default {
   
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding-top: 10px;
+}
+
+.c-readingset-item {
+  cursor: pointer;
+  margin-bottom: 10px;
+  margin-right: 5px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.13);
+  &-inner {
+    display: flex;
+    &-icon {
+      position: relative;
+      top: 20px;
+      left: -5px;
+      flex: none;
+    }
+    &-content {
+      flex: auto;
+      width: calc(100% - 90px);
+      &-title {
+        font-size: 20px;
+        font-weight: 20px;
+        margin-bottom: 3px;
+        // background-color: red;
+      }
+      &-guide {
+        font-size: 14px;
+        font-weight: 14px;
+        width: 95%;
+        margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // background-color: green;
+      }
+      &-info {
+        display: flex;
+        font-size: 12px;
+        // background-color: yellow;
+        > span {
+          padding: 3px 0px;
+          color: #666;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+    &-ops {
+      flex: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+  }
 }
 </style>
