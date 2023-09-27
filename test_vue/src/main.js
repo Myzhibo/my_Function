@@ -17,6 +17,13 @@ Vue.use(Contextmenu)
 
 Vue.config.productionTip = false
 
+// prod环境清除所有console.log
+if (process.env.NODE_ENV === 'production') {
+  if (window) {
+    window.console.log = function () {}
+  }
+}
+
 new Vue({
   render: (h) => h(App),
   router, //挂载路由
