@@ -20,7 +20,7 @@
                 :class="item.expand ? 'el-icon-caret-bottom' : 'el-icon-caret-right'"
                -->
               <i
-                v-if="item.children && item.children.length"
+                v-if="item.children && item.children.length  && item.children.some(i=>{ return i.node_type === 'chapter'})"
                 class="node-item-icon"
                 @click.stop="$set(item, 'expand', !item.expand)"
                 :class="item.expand ? 'el-icon-caret-bottom' : 'el-icon-caret-right'"
@@ -125,9 +125,6 @@ export default {
   },
   mounted() {
     // console.log(this.treeData);
-    for(let item of this.treeData){
-      this.$set(item, 'expand', this.expanding)
-    }
   },
   computed: {
     treeData() {
@@ -135,6 +132,9 @@ export default {
         // for (const item of this.data) {
         //   item.isHidden = false;
         // }
+        for(let item of this.data){
+          this.$set(item, 'expand', this.expanding)
+        }
         return this.data;
       }
     },
