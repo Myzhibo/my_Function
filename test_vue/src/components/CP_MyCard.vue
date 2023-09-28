@@ -39,7 +39,8 @@
           </div>
 
           <!-- 内容  -->
-          <!-- <div style="display: flex; align-items: center; justify-content: space-between;"> -->
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+              <el-link :underline="false"> <i class="el-icon-more" style="font-size: 20px" /> </el-link>
               <div>
                   {{ data }}
               </div>
@@ -54,7 +55,7 @@
                   </el-dropdown-menu>
                 </el-dropdown>
               </div>
-          <!-- </div> -->
+          </div>
 
 
           <!-- footer -->
