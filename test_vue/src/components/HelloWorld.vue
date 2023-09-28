@@ -8,7 +8,7 @@
     <hr>
     <!-- FUNCTION: fixed组件 -->
     fixed组件
-    <!-- <CP_MyTextBasket style="z-index: 999"/> -->
+    <CP_MyTextBasket style="z-index: 999"/>
     <hr>
     <!-- FUNCTION: table组件 + 假分页 -->
     table组件 + 假分页  <el-button size="mini" @click="other_table=!other_table">{{other_table ? '切换为全列表格': '切换为表格2'}}</el-button>
@@ -124,6 +124,18 @@
     >
     </CP_MyTree>
     <hr>
+    <!-- FUNCTION: 筛选 -->
+    筛选组件
+    <CP_MyFilter
+        :data="filterData"
+        :total="total"
+        cate="文章"
+        :largeTitle="false"
+        :noLanguage="false"
+        :language="language"
+        @handleClick="handleFilterClick"
+      >
+      </CP_MyFilter>
   </div>
 </template>
 
@@ -136,6 +148,7 @@ import CP_MyDialog from './CP_MyDialog.vue'
 import CP_MyForm from './CP_MyForm.vue'
 import CP_MyCard from './CP_MyCard.vue'
 import CP_MyTree from './CP_MyTree.vue'
+import CP_MyFilter from './CP_MyFilter.vue';
 
 
 export default {
@@ -151,7 +164,8 @@ export default {
     CP_MyDialog,
     CP_MyForm,
     CP_MyCard,
-    CP_MyTree
+    CP_MyTree,
+    CP_MyFilter
   },
   data(){
     return{
@@ -519,7 +533,80 @@ export default {
           },
         }
       ],
-      
+      /********************* FUNCTION: 筛选 - 相关 *********************/
+      filterData: [
+        {
+          key: 'year',
+          keyName: '年份',
+          dataList: this.getYears(),
+          value: '全部',
+        },
+        {
+          key: 'article_type',
+          keyName: '文体',
+          dataList: [
+            { id: '全部', label: '全部' },
+            { id: '说明文', label: '说明文' },
+            { id: '记叙文', label: '记叙文' },
+            { id: '议论文', label: '议论文' }
+          ],
+          value: '全部',
+        },
+        {
+          key: 'word_count',
+          keyName: '词数',
+          dataList: [
+            { id: '全部', label: '全部' },
+            { id: '200', label: '200' },
+            { id: '250', label: '250' },
+            { id: '300', label: '300' },
+            { id: '350', label: '350' },
+            { id: '400', label: '400' },
+            { id: '500+', label: '500+' }
+          ],
+          value: '全部',
+        },
+        {
+          key: 'lexile',
+          keyName: '难度',
+          dataList: [
+            { id: '全部', label: '全部' },
+            { id: '300L', label: '300L' },
+            { id: '400L', label: '400L' },
+            { id: '500L', label: '500L' },
+            { id: '800L', label: '800L' },
+            { id: '1000L+', label: '1000L+' }
+          ],
+          value: '全部',
+        },
+        {
+          key: 'item_status',
+          keyName: '操作',
+          dataList: [
+            { id: '全部', label: '全部' },
+            { id: '已用于过改写', label: '已用于过改写' },
+            { id: '未用于过改写', label: '未用于过改写' }
+            // { id: '最近感兴趣文章', label: '最近感兴趣文章' }
+          ],
+          value: '全部',
+        }
+      ],
+      total: 0,
+      language: '1', // 切换语言  1英文 2中文
+      // 分页、筛选相关
+      conditions: {
+        page: 1,
+        limit: 15,
+        search: '',
+        node_id: undefined,
+        source: undefined,
+        article_type: undefined,
+        rewrite_status: undefined,
+        proposition_status: undefined,
+        time: undefined,
+        words_num: undefined,
+        lexile_score: undefined,
+      }  
     }
   },
   mounted(){
@@ -712,7 +799,6 @@ export default {
         // return this.handleDeleteNode(item[0]._id);
       }
     },
-    
     // 添加节点
     async onNodeAdd(act, item) {
       this.beSelected = item[0];
@@ -726,6 +812,32 @@ export default {
         this.beAct = 'children';
         this.addNodeInfo = cloneDeep(item[0]);
         this.displayAddDialog = true;
+      }
+    },
+    /************** FUNCTION: 筛选 - 相关 **************/
+    // 年份
+    getYears() {
+      const curYear = new Date().getFullYear();
+      const years = ['全部', `${curYear}`, `${curYear - 1}`, `${curYear - 2}`, `${curYear - 3}`].map((item) => ({
+        label: item,
+        id: item,
+      }));
+      years.push({ label: '最近1个月', id: 'latest_month' });
+      years.push({ label: '最近3个月', id: 'latest_three_month' });
+      years.push({ label: '最近6个月', id: 'latest_half_year' });
+      return years;
+    },
+    // 点击按钮筛选
+    handleFilterClick(data) {
+      console.log(data);
+      const value = data[0];
+
+      if (data[1].keyName === 'article_type') {
+        this.conditions.article_type = data[0];
+        if (value === '全部') this.conditions.article_type = undefined;
+        this.conditions.currentPage = 1;
+        this.conditions.pageSize = 15;
+        return;
       }
     }
   }
