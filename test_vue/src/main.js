@@ -9,6 +9,8 @@ import 'element-ui/lib/theme-chalk/index.css' //引入ElementUI css库
 
 import Contextmenu from 'vue-contextmenujs' //引入右键菜单库
 
+import localforage from 'localforage'
+
 // import './styles/utils.scss'
 
 Vue.use(ElementUI)
@@ -16,6 +18,9 @@ Vue.use(VueRouter)
 Vue.use(Contextmenu)
 
 Vue.config.productionTip = false
+
+localforage.config({ name: 'myDB' })
+Vue.prototype.$localForage = localforage
 
 // prod环境清除所有console.log
 if (process.env.NODE_ENV === 'production') {

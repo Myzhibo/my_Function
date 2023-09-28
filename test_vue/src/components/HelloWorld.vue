@@ -8,7 +8,7 @@
     <hr>
     <!-- FUNCTION: fixed组件 -->
     fixed组件
-    <CP_MyTextBasket style="z-index: 999"/>
+    <!-- <CP_MyTextBasket style="z-index: 999"/> -->
     <hr>
     <!-- FUNCTION: table组件 + 假分页 -->
     table组件 + 假分页  <el-button size="mini" @click="other_table=!other_table">{{other_table ? '切换为全列表格': '切换为表格2'}}</el-button>
@@ -135,7 +135,14 @@
         :language="language"
         @handleClick="handleFilterClick"
       >
-      </CP_MyFilter>
+    </CP_MyFilter>
+    <hr>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <!-- FUNCTION: localForage -->
+    <el-input v-model="testLocalForage" type="text" style="width:250px;"></el-input>
+    <el-button @click="setLocal" size="small" type="primary" >存入localForage</el-button>
+    <el-button @click="getLocal" size="small" type="primary" >获取localForage(console)</el-button> 
   </div>
 </template>
 
@@ -606,7 +613,9 @@ export default {
         time: undefined,
         words_num: undefined,
         lexile_score: undefined,
-      }  
+      },
+      /********************* FUNCTION: 筛选 - 相关 *********************/
+      testLocalForage: '',
     }
   },
   mounted(){
@@ -839,6 +848,18 @@ export default {
         this.conditions.pageSize = 15;
         return;
       }
+    },
+    /************** FUNCTION: localForage - 相关 **************/
+    setLocal(){
+      this.$localForage.setItem(('myData'), this.testLocalForage);
+      console.log('存入成功');
+    },
+    async getLocal(){
+      const data = await this.$localForage.getItem(('myData'));
+      console.log(data);
+      // await this.$localForage.getItem(('myData')).then((data) => {
+      //   console.log(data);
+      // });
     }
   }
 }

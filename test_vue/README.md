@@ -1,20 +1,20 @@
-# 包
+# -包
 
-## node
+## -node
 
 - nvm use 14
 
-## sass
+## -sass
 
 - 1 npm i sass -D
   2 npm i -D sass-loader@8.x
   3 npm i node-sass@4.14.1
 
-## elementUI
+## -elementUI
 
 - npm i element-ui -S
 
-## Tree 组件安装插件
+## -Tree 组件安装插件
 
 - yarn add vue-contextmenujs
 
@@ -33,6 +33,14 @@ Vue.use(Contextmenu)
 
 // 去除浏览器默认菜单
 ```
+
+## -localforage
+
+- npm install localforage
+- main.js 中注册
+  - import localforage from 'localforage';
+  - localforage.config({ name: 'myDB' });
+  - Vue.prototype.$localForage = localforage;
 
 # 笔记
 
