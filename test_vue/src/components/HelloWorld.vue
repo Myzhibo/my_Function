@@ -6,6 +6,23 @@
     <!-- FUNCTION: debug模式 -->
     <span>debug模式下才能看见后面: </span> <span v-if="isDebug" style="color: rgba(0, 217, 255, 0.664);">~~在debug模式里~~</span>
     <hr>
+    <!-- FUNCTION: loading -->
+    <div v-loading="loading" element-loading-text="识别中,hhhhhh">
+        <br>
+        v-loading
+        <br><br><br><br><br>
+    </div>
+    <hr>
+    <!-- FUNCTION: css filter 蒙层 -->
+    <div v-if="loading" style="background-color: rgba(255, 155, 255, 0.2);
+                  position: absolute;backdrop-filter: blur(6px);z-index: 999;
+                  width: 100%;height: 50px;" >
+        <span style="color:#3192f3;">使用css filter蒙层 .... </span>
+    </div>
+    和css filter蒙层的div同级的内容会被覆盖...和css filter蒙层的div同级的内容会被覆盖...和css filter蒙层的div同级的内容会被覆盖...和css filter蒙层的div同级的内容会被覆盖
+        <br><br>
+    <hr>
+    <hr>
     <!-- FUNCTION: fixed组件 -->
     fixed组件
     <!-- <CP_MyTextBasket style="z-index: 999"/> -->
@@ -137,9 +154,13 @@
       >
     </CP_MyFilter>
     <hr>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <!-- FUNCTION: 点击icon 复制内容 -->
+    点击icon 复制内容<br><br>
+    <i class="el-icon-copy-document" @click="copy('要复制的内容')" style="cursor: pointer;"></i>
+    <br><br>
+    <hr>
     <!-- FUNCTION: localForage -->
+    localForage<br><br>
     <el-input v-model="testLocalForage" type="text" style="width:250px;"></el-input>
     <el-button @click="setLocal" size="small" type="primary" >存入localForage</el-button>
     <el-button @click="getLocal" size="small" type="primary" >获取localForage(console)</el-button> 
@@ -283,6 +304,9 @@ export default {
         "id": 11
     },
       ],
+      /********************* FUNCTION: loading - 相关 *********************/
+      loading: true,
+      /********************* FUNCTION: table组件 - 相关 *********************/
       other_table: false,
       /********************* FUNCTION: 弹窗 - 相关 *********************/
       isShows: false,
@@ -848,6 +872,21 @@ export default {
         this.conditions.pageSize = 15;
         return;
       }
+    },
+    /************** FUNCTION: 点击icon 复制内容 - 相关 **************/
+    copy(data){
+        let url = data;
+        let oInput = document.createElement('input');
+        oInput.value = url;
+        document.body.appendChild(oInput);
+        oInput.select(); // 选择对象;
+        console.log(oInput.value)
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        this.$message({
+          message: '复制成功',
+          type: 'success'
+        });
+        oInput.remove()
     },
     /************** FUNCTION: localForage - 相关 **************/
     setLocal(){
