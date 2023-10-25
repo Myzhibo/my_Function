@@ -16,7 +16,8 @@
     "node-sass": "^4.14.1",
     "vue": "^2.6.11",
     "vue-contextmenujs": "^1.4.11",
-    "vue-router": "^3.6.5"
+    "vue-router": "^3.6.5",
+    "vue-virtual-scroller": "^1.1.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.1",

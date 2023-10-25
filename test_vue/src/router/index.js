@@ -30,6 +30,11 @@ export default new VueRouter({
           name: 'form',
           component: () => import('../views/MyElementUI/MyForm.vue'),
         },
+        {
+          path: '/vir',
+          name: 'vir',
+          component: () => import('../components/CP_Virtual.vue'),
+        },
         ...edits,
       ],
     },

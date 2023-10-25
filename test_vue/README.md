@@ -42,6 +42,9 @@ Vue.use(Contextmenu)
   - localforage.config({ name: 'myDB' });
   - Vue.prototype.$localForage = localforage;
 
+## 虚拟滚动
+- npm i vue-virtual-scroller
+
 # 笔记
 
 1. 关于 App.vue 、'router-view'、router 之间的关系
