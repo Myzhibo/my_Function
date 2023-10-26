@@ -164,6 +164,28 @@
     <el-input v-model="testLocalForage" type="text" style="width:250px;"></el-input>
     <el-button @click="setLocal" size="small" type="primary" >存入localForage</el-button>
     <el-button @click="getLocal" size="small" type="primary" >获取localForage(console)</el-button> 
+    <br><br>
+    <hr>
+    <!-- FUNCTION: el-tag的更多颜色 -->
+    el-tag的更多颜色<br><br>
+    <div>
+      <el-tag class=""> primary </el-tag>
+      <el-tag class="" type="success"> success </el-tag>
+      <el-tag class="" type="danger"> danger </el-tag>
+      <el-tag class="" type="info"> info </el-tag>
+      <el-tag class="" type="warning"> warning </el-tag>
+      <br>
+      <el-tag class="bg1"> 自定义1 </el-tag>
+      <el-tag class="bg2"> 自定义2 </el-tag>
+      <el-tag class="bg3"> 自定义3 </el-tag>
+      <el-tag class="bg4"> 自定义4 </el-tag>
+      <el-tag class="bg5"> 自定义5 </el-tag>
+      <el-tag class="bg6"> 自定义6 </el-tag>
+      <el-tag class="bg7"> 自定义7 </el-tag>
+    </div>
+    <br><br>
+    <hr>
+
   </div>
 </template>
 
@@ -919,5 +941,113 @@ li {
 }
 a {
   color: #42b983;
+}
+
+// <!-- FUNCTION: el-tag的更多颜色  相关 -->
+.bg1{
+    background: #ffffff;
+    color: #b38091;
+    border-color: #dbb9c4;
+
+    height: 32px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+.bg2{
+    background: #ffffd7;
+    color: #6b6b52;
+    border-color: #d1d1bb;
+
+    height: 32px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+.bg3{
+    background: #E6E6FA;
+    color: #9393f5;
+    border-color: #aaaaff;
+
+    height: 32px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+.bg4{
+    background: #f3e9ff;
+    color: #8564ab;
+    border-color: #c0b1d1;
+
+    height: 32px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+.bg5{
+    background: #ffeca1;
+    color: #b59d3e;
+    border-color: #b9a03f;
+
+    height: 32px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+.bg6{
+    background: #ccefce;
+    color: #026106;
+    border-color: #77c17a;
+
+    height: 32px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+.bg7{
+    // background-color: #dbf3f0;
+    background-color: #e5f5f3;
+    border-color: #a6e9e1;
+    color: #378f84;
+
+    height: 32px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+    white-space: nowrap;
 }
 </style>
