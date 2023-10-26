@@ -182,6 +182,8 @@
       <el-tag class="bg5"> 自定义5 </el-tag>
       <el-tag class="bg6"> 自定义6 </el-tag>
       <el-tag class="bg7"> 自定义7 </el-tag>
+      <el-tag class="bg8"> 自定义8 </el-tag>
+      <el-tag class="bg9"> 自定义9  </el-tag>
     </div>
     <br><br>
     <hr>
@@ -975,9 +977,9 @@ a {
     white-space: nowrap;
 }
 .bg3{
-    background: #E6E6FA;
-    color: #9393f5;
-    border-color: #aaaaff;
+    background: #0000ff1c;
+    color: #0000ff75;
+    border-color: #0000ff38;
 
     height: 32px;
     padding: 0 10px;
@@ -990,9 +992,9 @@ a {
     white-space: nowrap;
 }
 .bg4{
-    background: #f3e9ff;
-    color: #8564ab;
-    border-color: #c0b1d1;
+    background: #ddffe852;
+    color: #6eaf83;
+    border-color: #9fd1af;
 
     height: 32px;
     padding: 0 10px;
@@ -1039,6 +1041,36 @@ a {
     background-color: #e5f5f3;
     border-color: #a6e9e1;
     color: #378f84;
+
+    height: 32px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+.bg8{
+    background-color: #fef5ff;
+    border-color: #fbd1fd;
+    color: #ad7caf;
+
+    height: 32px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+.bg9{
+    background: #f3e9ff;
+    color: #8564ab;
+    border-color: #c0b1d1;
 
     height: 32px;
     padding: 0 10px;
