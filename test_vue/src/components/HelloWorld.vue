@@ -184,8 +184,11 @@
       <el-tag class="bg7"> 自定义7 </el-tag>
       <el-tag class="bg8"> 自定义8 </el-tag>
       <el-tag class="bg9"> 自定义9  </el-tag>
+      <br><br>
+      <br>
+      <span style="text-decoration:underline; cursor: pointer;" @click="handleAdd">新增</span>&nbsp;&nbsp;
+      <el-tag v-for="item in hobbies" closable @close="handleDelete(item)">{{item}}</el-tag>
     </div>
-    <br><br>
     <hr>
 
   </div>
@@ -664,6 +667,8 @@ export default {
       },
       /********************* FUNCTION: 筛选 - 相关 *********************/
       testLocalForage: '',
+      /************** FUNCTION: el-tag - 相关 **************/
+      hobbies: ['篮球', '足球', '排球'],
     }
   },
   mounted(){
@@ -923,6 +928,25 @@ export default {
       // await this.$localForage.getItem(('myData')).then((data) => {
       //   console.log(data);
       // });
+    },
+    /************** FUNCTION: el-tag - 相关 **************/
+    handleDelete(item) {
+      let _this = this;
+      for (let i = 0; i < _this.hobbies.length; i++) {
+        if (_this.hobbies[i] == item) {
+          _this.hobbies.splice(i, 1);
+          break;
+        }
+      }
+    },
+    handleAdd() {
+      let _this = this;
+      _this.$prompt('请输入您的爱好', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+      }).then(({ value }) => {
+        _this.hobbies.push(value);
+      })
     }
   }
 }
