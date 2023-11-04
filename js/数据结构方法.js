@@ -57,4 +57,4 @@ var arr = [23, 44, 3]
 res = arr.some((item) => {
   return item < 10
 })
-console.log(res)
+console.log("'some'---", res)

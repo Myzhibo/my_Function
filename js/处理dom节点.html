@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /***【插入1】***/
+      console.log('------向div中插入span------')
+      //创建一个div节点, 一个span节点
+      const div1 = document.createElement('div')
+      const span1 = document.createElement('span')
+      //将span节点【插入】到div节点中
+      div1.appendChild(span1)
+      console.log(div1)
+
+      /***【移除】***/
+      console.log('-------将div中的span移出------')
+      //创建一个div节点, 一个span节点
+      const div2 = document.createElement('div')
+      const span2 = document.createElement('span')
+      //将span节点插入到div节点中
+      div2.appendChild(span2)
+      //将span节点【移除】
+      div2.removeChild(span2)
+      console.log(div2)
+
+      /***【插入2】***/
+      console.log('-------向frag中插入span，再将frag插入到div------')
+      const div11 = document.createElement('div')
+      // 创建一个frag， 往frag里面插入节点，再将frag插入到div中
+      let frag = document.createDocumentFragment()
+      const span11 = document.createElement('span')
+      const span22 = document.createElement('span')
+      const span33 = document.createElement('span')
+      frag.appendChild(span11)
+      frag.appendChild(span22)
+      frag.appendChild(span33)
+
+      div11.appendChild(frag)
+      console.log(div11)
+
+      /***【子节点的替换】返回值是被替换对象节点***/
+      console.log('-------将div中的子节点span替换成p------')
+      //创建一个div节点, 一个span节点
+      const div3 = document.createElement('div')
+      let frag2 = document.createDocumentFragment()
+      const span111 = document.createElement('span')
+      const span222 = document.createElement('span')
+      const span333 = document.createElement('span')
+      frag2.appendChild(span111)
+      frag2.appendChild(span222)
+      frag2.appendChild(span333)
+      div3.appendChild(frag2)
+      console.log(div3)
+
+      const p = document.createElement('p')
+      p.textContent = '被替换进来的p节点'
+      div3.replaceChild(p, span333)
+
+      /***【子节点的插入】返回值是插入的节点***/
+      console.log('-------向div中插入新节点p------')
+      //创建一个div节点, 一个span节点
+      const div4 = document.createElement('div')
+      let frag3 = document.createDocumentFragment()
+      const span1111 = document.createElement('span')
+      span1111.id = 'sp1'
+      const span2222 = document.createElement('span')
+      span2222.id = 'sp2'
+      const span3333 = document.createElement('span')
+      span3333.id = 'sp3'
+      frag3.appendChild(span1111)
+      frag3.appendChild(span2222)
+      frag3.appendChild(span3333)
+      div4.appendChild(frag3)
+      div4.id = 'div4————id'
+      console.log(div4)
+
+      const p2 = document.createElement('p')
+      p2.textContent = '插入的节点'
+      div4.insertBefore(p2, div4.firstChild) // div4的第一个节点
+
+      console.log('--p2的父节点--')
+      console.log(p2.parentNode) // 查找节点的父节点
+      console.log('--p2的父节点的id属性的值--')
+      console.log(p2.parentNode.attributes['id'].textContent)
+      console.log(p2.parentNode.getAttribute('id'))
+      console.log('--p2的上一个兄弟点--')
+      console.log(p2.previousSibling) // 查找节点的父节点
+      console.log('--p2的下一个兄弟点--')
+      console.log(p2.nextSibling) // 查找节点的父节点
+      console.log('--div4的子节点--')
+      console.log(div4.childNodes) // 查找节点的子节点
+    </script>
+  </body>
+</html>
