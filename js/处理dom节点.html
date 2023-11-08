@@ -94,6 +94,22 @@
       console.log(p2.nextSibling) // 查找节点的父节点
       console.log('--div4的子节点--')
       console.log(div4.childNodes) // 查找节点的子节点
+
+      /***创建节点，编辑样式***/
+      console.log('-------创建节点，编辑样式------')
+      const imgBox = document.createElement('div')
+      const spanQ = document.createElement('span')
+      imgBox.appendChild(spanQ)
+      imgBox.style.backgroundColor = 'red'
+      imgBox.style.padding = '20px'
+      console.log(imgBox)
+
+      /***节点的深浅 克隆***/
+      console.log('-------节点的深浅 克隆------')
+      const Deep_clone_div4 = div4.cloneNode(true)
+      console.log(Deep_clone_div4)
+      const clone_div4 = div4.cloneNode(false)
+      console.log(clone_div4)
     </script>
   </body>
 </html>
