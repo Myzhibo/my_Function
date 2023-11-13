@@ -10,7 +10,16 @@ let MyObj = [
           {
             id: 3,
             content: '1级第三层',
-            children: [],
+            children: [
+              {
+                tag: {
+                  '2b86adaad': {
+                    node_name: '通电导线在磁场中的作用力方向',
+                    prob: 0.783,
+                  },
+                },
+              },
+            ],
           },
         ],
       },
@@ -42,7 +51,7 @@ const flatData = (obj, parentId = undefined) => {
       })
     }
     prev.push(curr)
-    if (curr.children.length > 0) {
+    if (curr.children?.length > 0) {
       prev.push(...flatData(curr.children, curr.id))
     }
     return prev

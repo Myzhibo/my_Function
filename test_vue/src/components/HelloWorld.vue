@@ -669,6 +669,28 @@ export default {
       testLocalForage: '',
       /************** FUNCTION: el-tag - 相关 **************/
       hobbies: ['篮球', '足球', '排球'],
+      /************** FUNCTION: 监控页面宽高 - 相关 **************/
+      clientWidth : 0,
+      clientHeight : 0
+    }
+  },
+  created(){
+    // 监控页面 + 防抖
+    let timeID = null
+    window.onresize = () => {
+      clearTimeout(timeID)
+      timeID = setTimeout(() => {
+        return (() => {
+          this.$nextTick(() => {
+            this.clientWidth = document.body.clientWidth 
+            this.clientHeight = document.body.clientHeight 
+            console.log('clientWidth', this.clientWidth);
+            console.log('clientHeight', this.clientHeight);
+            // //真实DOM元素的宽度
+            // console.log(this.$refs.test.$el.offsetWidth);
+          })
+        })()
+      }, 500)
     }
   },
   mounted(){
