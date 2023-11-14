@@ -89,7 +89,11 @@
                                 label="ip"
                                 width="170">
                               </el-table-column>
-                              <!-- 自适应列宽加一个min-width, 当该列无任何值时, 也能撑起单元格 -->
+                              <!-- 
+                                  1. 自适应列宽加一个min-width, 当该列无任何值时, 也能撑起单元格
+                                  2. template内容套一个class未optionDiv的div
+                                  3. table的ref要和renderHeader里面的一致
+                                -->
                               <el-table-column
                                 prop="test_renderHeader"
                                 label="测试列宽自适应"
@@ -191,7 +195,8 @@ export default {
             });
             return h('span', column.label);
           } else {
-            column.width = 0;
+            // column.width = 0;
+            column.width = 200;         // 如果表格没有数据 这列给200px的宽度，以免被挤没了 (暂且和上面使用这个函数的列设置的min-width一样)
             return h('span', column.label);
           }
       })
