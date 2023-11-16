@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*****
+       * 思路:
+       *  1. 把数组打平(flatData)，循环遍历打平后的数组
+       *  2. 对比两组遍历条件相同(本例子中: i.content === j.content)，且不是同一个元素(本例子中: i.id !== j.id)
+       *  3. 满足第二点条件的，删除其中一个元素node(removeNodeInArr)
+       *
+       * *******/
+
+      function removeDuplicateFile(json) {
+        let beremovedNode = null
+
+        // 打平obj
+        const flatData = (obj, parentId = undefined) => {
+          return obj.reduce((prev, curr) => {
+            if (parentId !== undefined) {
+              Object.assign(curr, {
+                parentId: parentId,
+              })
+            }
+            prev.push(curr)
+            if (curr.children?.length > 0) {
+              prev.push(...flatData(curr.children, curr.id))
+            }
+            return prev
+          }, [])
+        }
+
+        // 遍历数组，按条件查找，删除找到的对象元素
+        const removeNodeInArr = (arr, attr, value) => {
+          for (let i in arr) {
+            if (arr[i].children) {
+              removeNodeInArr(arr[i].children, attr, value)
+              if (arr[i][attr] === value) {
+                beremovedNode = arr.splice(arr.indexOf(arr[i]), 1)
+              }
+            }
+          }
+          return beremovedNode
+        }
+
+        // 主流程
+        for (let i of flatData(json)) {
+          for (let j of flatData(json)) {
+            // 条件: 如果两个对象的content相同 ， 删掉其一
+            if (i.content === j.content && i.id !== j.id) {
+              console.log(i.content)
+              const beremovedNode = removeNodeInArr(json, 'content', i.content)
+              console.log('被删掉的重复对象', beremovedNode)
+            }
+          }
+        }
+      }
+
+      let MyObj = [
+        {
+          id: 1,
+          content: '1第一层',
+          children: [
+            {
+              id: 2,
+              content: '1第二层',
+              children: [
+                {
+                  id: 3,
+                  content: '假如这是一个重复对象元素',
+                  children: [
+                    {
+                      tag: {
+                        '2b86adaad': {
+                          node_name: '通电导线在磁场中的作用力方向',
+                          prob: 0.783,
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: 4,
+          content: '假如这是一个重复对象元素',
+          children: [
+            {
+              id: 5,
+              content: '2第二层',
+              children: [],
+            },
+          ],
+        },
+        {
+          id: 6,
+          content: '3第一层',
+          children: [],
+        },
+      ]
+
+      // 深度遍历obj 删掉一个重复的children项
+      removeDuplicateFile(MyObj)
+      console.log(MyObj)
+    </script>
+  </body>
+</html>
