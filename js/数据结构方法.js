@@ -15,6 +15,14 @@ i = arr.indexOf(2)
 arr.splice(i, 1)
 console.log("'splice'---", arr)
 
+// shift(删掉第一个元素), unshift(在第一个位置添加元素)
+arr = [1, 2, 3, 4, 5]
+arr.shift()
+console.log("'shift'---", arr)
+arr = [1, 2, 3, 4, 5]
+arr.unshift('A')
+console.log("'unshift'---", arr)
+
 // filter
 arr = [1, 2, 3, 4, 5]
 newArr = arr.filter((item) => {
