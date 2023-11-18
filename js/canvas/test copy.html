@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body style="background-color: gray; margin: 0">
+    <img />
+    <!-- <canvas id="myCanvas"></canvas> -->
+
+    <script>
+      // 将base64 转换为 canvas对象
+      function imgToCanvas(dataURL) {
+        var canvas = document.createElement('canvas')
+        var image = new Image()
+        image.src = dataURL
+        canvas.width = image.width
+        canvas.height = image.height
+        canvas.getContext('2d').drawImage(image, 0, 0)
+        return canvas
+      }
+
+      //canvas转换为image
+      function canvasToImg(canvas, mimetype) {
+        var src = canvas.toDataURL(mimetype)
+        return src
+      }
+
+      const a = imgToCanvas('./test3.png')
+      console.log(a)
+      const s = canvasToImg(a, './test300.png')
+      console.log(s)
+
+      const i = document.querySelectorAll('img')
+      console.log(i[0])
+      i[0].src = s
+    </script>
+  </body>
+</html>
