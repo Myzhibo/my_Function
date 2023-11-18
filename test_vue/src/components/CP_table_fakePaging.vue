@@ -270,6 +270,14 @@ export default {
       this.$nextTick(() => {
         this.$refs.myTable.doLayout();
       });
+    },
+    // 保存当前el-table滚动条位置, 在不想要因为表格刷新导致的滚动条回到顶端时, 调用该函数
+    saveScrollTop(){
+      // (this.$refs.dataTable as any)
+      const beforeScrollTop = this.$refs.myTable.$el.querySelector('div.el-table__body-wrapper').scrollTop;
+      setTimeout(() => {
+        this.$refs.myTable.$el.querySelector('div.el-table__body-wrapper').scrollTop = beforeScrollTop;
+      }, 0);
     }
   }
 }
