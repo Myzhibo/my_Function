@@ -134,6 +134,37 @@
                                     <el-button size="mini" @click="deleteRow(row)" element-loading-spinner="el-icon-loading">删除</el-button>
                                   </template>
                               </el-table-column>
+
+                              <!-- 内表 -->
+                              <el-table-column
+                                type="expand"
+                                fixed="right"
+                                >
+                                <template slot-scope="{row}">
+                                  <div v-loading="row.expandNoData">
+                                    <el-table
+                                      :data="row.expandNodeData"
+                                      ref="nodeTable"
+                                      style="width: 100%">
+                                      <el-table-column
+                                        prop="business_project_id"
+                                        label="项目ID"
+                                        min-width="250"
+                                        fixed="false"
+                                        >
+                                        <template slot-scope="{row}">
+                                          <el-link @click.stop="entryBusiness(row.business_project_id)">{{row.business_project_id}}</el-link>
+                                        </template>
+                                      </el-table-column>
+                                      <el-table-column
+                                        prop="name"
+                                        label="项目名称"
+                                        min-width="200">
+                                      </el-table-column>
+                                    </el-table>
+                                  </div>
+                                </template>
+                              </el-table-column>
                         </el-table>
                     </div>
                     <br>
