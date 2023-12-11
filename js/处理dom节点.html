@@ -110,6 +110,34 @@
       console.log(Deep_clone_div4)
       const clone_div4 = div4.cloneNode(false)
       console.log(clone_div4)
+
+      /***dom节点如何变成range类型***/
+      // /// 获取DOM节点
+      // const node = document.getElementById('myNode');
+      // // 创建Range对象
+      // const range = document.createRange();
+      // // 设置Range的起始和结束位置
+      // range.setStart(node, 0);
+      // range.setEnd(node, node.childNodes.length);
+      // // 现在可以使用这个Range对象来操作DOM节点了
+
+      /***获取img元素的兄弟节点***/
+      // const brothers = [...$div.children].filter(item => !(item as HTMLElement).innerHTML.includes('img'))
+      /***获取全部的文本节点(nodeType === 3)***/
+      // const getTextNodes = (node)=>{
+      //   let textNodes = [];
+      //   for (let i = 0; i < node.childNodes.length; i++) {
+      //       let childNode = node.childNodes[i];
+      //       if (childNode.nodeType === 3) { // Node.TEXT_NODE === 3
+      //           textNodes.push(childNode);
+      //       } else if (childNode.childNodes) { // 如果子节点存在，递归处理
+      //           textNodes = textNodes.concat(getTextNodes(childNode));
+      //       }
+      //   }
+      //   return textNodes;
+      // }
+      // let textNodes = getTextNodes(brothers[0]);
+      // console.log(textNodes);
     </script>
   </body>
 </html>
