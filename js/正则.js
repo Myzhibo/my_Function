@@ -44,3 +44,12 @@ console.log('5-> ', str.match(reg))
 
 // 符号i：     忽略大小写
 console.log('6-> ', /[a-z]/i.test('qweQWE')) // true
+
+/***************************************************************replace***********************************************************/
+let str1 = '<p class="indent-2 style"><span style="font-family:KaiTi;">③今天，<p class="some-class">';  
+
+// 找到第一个p标签将class为indent-\d的属性拿掉
+let res = str1.replace(/^<p[^<>]+class="([^"])+/g, el => {
+  return el.replace(/indent-\d+/g, '')
+});  
+console.log(res);
