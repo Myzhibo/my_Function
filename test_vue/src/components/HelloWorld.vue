@@ -860,7 +860,7 @@ export default {
     // 点击菜单选项
     async contextMenuClick(action, ...item) {
       // console.log(this.currentNode);
-      console.log('选择menu:', action, item[0].node_name);
+      console.log('选择menu:', action, item, item[0].node_name);
       if (action === 'export') {
         // return await this.downloadBook(item);
       }

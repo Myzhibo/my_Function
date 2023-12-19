@@ -171,7 +171,7 @@ export default {
           items: this.contextMenuItems(item),
           event, // 鼠标事件信息
           customClass: 'custom-class', // 自定义菜单 class
-          zIndex: 3, // 菜单样式 z-index
+          zIndex: 99999, // 菜单样式 z-index
           minWidth: 230, // 主菜单最小宽度
         });
       }

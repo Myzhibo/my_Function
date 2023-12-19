@@ -14,7 +14,7 @@
 
 - npm i element-ui -S
 
-## -Tree 组件安装插件
+## -Tree 组件安装 右键菜单 插件
 
 - yarn add vue-contextmenujs
 
