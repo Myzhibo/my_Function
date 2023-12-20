@@ -190,7 +190,25 @@
       <el-tag v-for="item in hobbies" closable @close="handleDelete(item)">{{item}}</el-tag>
     </div>
     <hr>
-
+    <!-- FUNCTION: json变成tree结构 -->
+    json变成tree结构<br><br>
+    <el-button type="primary" size="mini" @click="packageToolVisible=true">json变成tree结构</el-button>
+    <el-dialog
+        title="json变成tree结构"
+        :visible.sync="packageToolVisible"
+        class="package-tool"
+        width="600px"
+        append-to-body
+        :close-on-click-modal="false"
+        :destroy-on-close="true"
+      >
+        <PackagingTool
+          type="pptx"
+          title="json大文件的名字。。。。。"
+          :project-json="projectJson"
+          :zip_file_info="{'chapter': 1, 'hidden_spilt_title': true, 'add_prefix_number': true}"
+          @cancle="packageToolVisible = false"/>
+    </el-dialog>
   </div>
 </template>
 
@@ -204,6 +222,9 @@ import CP_MyForm from './CP_MyForm.vue'
 import CP_MyCard from './CP_MyCard.vue'
 import CP_MyTree from './CP_MyTree.vue'
 import CP_MyFilter from './CP_MyFilter.vue';
+
+import PackagingTool from './packTool/PackagingTool.vue';
+import packData from './packTool/data.json';
 
 
 export default {
@@ -220,7 +241,9 @@ export default {
     CP_MyForm,
     CP_MyCard,
     CP_MyTree,
-    CP_MyFilter
+    CP_MyFilter,
+    PackagingTool,
+    PackagingToolDrag
   },
   data(){
     return{
@@ -671,7 +694,12 @@ export default {
       hobbies: ['篮球', '足球', '排球'],
       /************** FUNCTION: 监控页面宽高 - 相关 **************/
       clientWidth : 0,
-      clientHeight : 0
+      clientHeight : 0,
+
+    /************** FUNCTION: json变成tree结构 **************/
+      packageToolVisible: false,
+      projectJson: [],
+
     }
   },
   created(){
@@ -692,6 +720,10 @@ export default {
         })()
       }, 500)
     }
+
+    /************** FUNCTION: json变成tree结构 **************/
+    // 获取打包工具要用的projectJson， 在packTool包下面的json数据
+    this.projectJson = packData
   },
   mounted(){
     this.initCardId()
