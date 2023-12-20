@@ -8,9 +8,24 @@ str = `<p>济南高新区2021-2022学年第二学期七年级学业质量抽测<
 newStr = str.replace('<p>', "<p id='a'>")
 console.log("'replace2'---", newStr)
 
+// substring
 str = "002_第5节 表示元素的符号";  
 newStr = str.substring(4);  	// 从原始字符串的第五个字符开始提取，直到字符串的末尾，形成一个新的字符串。
 console.log(newStr);  // 输出: "第5节 表示元素的符号"
+
+// string <==> arr
+arr = ['a', 'b', 'c'];  
+str = arr.join(' ');
+console.log("'join'---", str) // "a b c"
+
+arr = ['a', 'b', 'c'];  
+str = arr.toString(); 
+console.log("'toString'---", str) // "a,b,c"
+
+str = "a,b,c";  
+arr = str.split(','); 
+console.log("'split'---", arr) // [ 'a', 'b', 'c' ]
+
 
 console.log('**************  数组  **************')
 // splice
