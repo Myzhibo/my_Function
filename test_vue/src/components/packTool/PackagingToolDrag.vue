@@ -27,7 +27,13 @@
       <div class="left">
         <div class="title">文件夹打包预览</div>
         <div class="tree">
-          <div v-for="item of list" class="scroller">
+          <draggable
+            class="scroller"
+            v-model="list"
+            @start="moveNodeStart"
+            @end="moveNodeEnd"
+          >
+          <div v-for="item of list" :key="item.id">
             <!-- 根节点是否可以操作 -->
             <div
               class="item-style"
@@ -66,6 +72,7 @@
               </div>
             </div>
           </div>
+        </draggable>
         </div>
       </div>
     </div>
@@ -141,9 +148,11 @@
 import { iterateNode } from './scripts/treeHelper';
 import _cloneDeep from 'lodash/cloneDeep';
 import uuid from './scripts/uuid';
+import draggable from 'vuedraggable';
 
 export default {
   name: 'PackagingTool',
+  components: { draggable },
   data() {
     return {
       activeNodeId: '',
@@ -216,6 +225,8 @@ export default {
         }
         return list;
       },
+      // 计算属性加了set, 后续修改this.json2的时候，就可以自动修改list
+      set(){}
     },
   },
   watch: {},
@@ -468,6 +479,7 @@ export default {
             const _dir = {
               level: c.level,
               name: c.name.split('.')[0],
+              _name: c._name || '',
               type: 'dir',
               node_id: uuid(9),
               children: [c],
@@ -495,6 +507,10 @@ export default {
     },
     // 添加序号
     formatJsonWithNumber(json, chapterLevel, partial = null) {
+      // 保留没加序号前的name
+      for (const { node } of iterateNode(json)) {
+        node._name = node.name;
+      }
       for (const { node, parent } of iterateNode(json)) {
         if (node.type === 'file') {
           let Over100 = false;
@@ -558,6 +574,97 @@ export default {
     },
     closePartialDialog() {
       this.activeRightClickNode = {};
+    },
+
+    // 拖拽: 起始事件
+    moveNodeStart(event) {
+      // 移动的节点
+      const movedNode = this.list[event.oldIndex];
+      // 移动时关闭文件夹
+      if (movedNode.type === 'dir') this.$set(movedNode, '_closed', true);
+    },
+    // 拖拽: 结束事件
+    moveNodeEnd(event) {
+      // 移动的节点
+      const movedNode = this.list[event.oldIndex];
+      // 新位置之前是谁
+      const movedNodeNext = this.list[event.newIndex];
+      const step = (event.newIndex - event.oldIndex) > 1
+        ? 1
+        : (event.newIndex - event.oldIndex) < 0
+          ? 0
+          : event.newIndex - event.oldIndex;
+      if ((event.newIndex - event.oldIndex) !== 0) {
+        // 移除拖拽节点
+        for (const { node, parent } of iterateNode(this.json2)) {
+          if (node.name === movedNode.name) {
+            if (parent.children) {
+              parent?.children?.splice(parent.children.findIndex(item => item.name === node.name), 1);
+            } else {
+              this.json2.splice(this.json2.findIndex(item => item.name === node.name), 1);
+            }
+            break;
+          }
+        }
+        // 重新添加到拖拽目的地
+        for (const { node, parent } of iterateNode(this.json2)) {
+          if (node.name === movedNodeNext.name) {
+            if (parent.children) {
+              parent?.children?.splice(parent.children.findIndex(item => item.name === node.name) + step, 0, movedNode);
+            } else {
+              this.json2.splice(this.json2.findIndex(item => item.name === node.name) + step, 0, movedNode);
+            }
+            break;
+          }
+        }
+        // 刷一下level
+        this.json2 = this.refreshLevel(this.json2);
+        // 删除空文件夹
+        this.json2 = this.deleteEmptyFolder(this.json2);
+
+        // 文件夹下既有文件夹又有文件, 拆出文件 / 合进文件夹
+        if (this.unPackFlag) {
+          this.json2 = this.UnpackFolder(this.json2);
+        } else {
+          this.json2 = this.packFolder(this.json2);
+        }
+
+        // 添加序号
+        if (this.isAddPrefixNumber) {
+          // 使用节点没加序号前的name
+          for (const { node } of iterateNode(this.json2)) {
+            node.name = node._name;
+          }
+          
+          // 再重新加
+          this.json2 = this.formatJsonWithNumber(this.json2, this.targetPackageLevel);
+        }
+
+        // 检测文件数量是否正确
+        this.zipFileCount = [...iterateNode(this.json2)].filter(item => item.node.type === 'file').length;
+      }
+    },
+    // 拖拽完毕后，刷新level
+    refreshLevel(json) {
+      for (const { node } of iterateNode(json)) {
+        if (!node.children.every(item => item.level === node.level + 1)) {
+          node.children.forEach(item => item.level = node.level + 1);
+        }
+      }
+      return json;
+    },
+    // 删除空文件夹
+    deleteEmptyFolder(json) {
+      for (const { node, parent } of iterateNode(json)) {
+        if (node.type === 'dir' && node.children.length === 0) {
+          if (parent.children) {
+            parent?.children?.splice(parent.children.findIndex(item => item.name === node.name), 1);
+          } else {
+            this.json2.splice(this.json2.findIndex(item => item.name === node.name), 1);
+          }
+        }
+      }
+      return json;
     },
   },
 };
