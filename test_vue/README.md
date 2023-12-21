@@ -45,6 +45,9 @@ Vue.use(Contextmenu)
 ## 虚拟滚动
 - npm i vue-virtual-scroller
 
+## 拖拽组件
+- yarn add vuedraggable
+
 # 笔记
 
 1. 关于 App.vue 、'router-view'、router 之间的关系

@@ -209,6 +209,25 @@
           :zip_file_info="{'chapter': 1, 'hidden_spilt_title': true, 'add_prefix_number': true}"
           @cancle="packageToolVisible = false"/>
     </el-dialog>
+    <el-button type="primary" size="mini" @click="packageToolDragVisible=true">json变成tree结构 + 可拖拽</el-button>
+    <el-dialog
+        title="json变成tree结构 + 可拖拽"
+        :visible.sync="packageToolDragVisible"
+        class="package-tool"
+        width="600px"
+        append-to-body
+        :close-on-click-modal="false"
+        :destroy-on-close="true"
+      >
+        <PackagingToolDrag
+          type="pptx"
+          title="json大文件的名字。。。。。"
+          :project-json="projectJson"
+          :zip_file_info="{'chapter': 1, 'hidden_spilt_title': true, 'add_prefix_number': true}"
+          @cancle="packageToolDragVisible = false"/>
+    </el-dialog>
+
+      <br><br><br><br><br><br><br><br><br><br><br>
   </div>
 </template>
 
@@ -224,6 +243,7 @@ import CP_MyTree from './CP_MyTree.vue'
 import CP_MyFilter from './CP_MyFilter.vue';
 
 import PackagingTool from './packTool/PackagingTool.vue';
+import PackagingToolDrag from './packTool/PackagingToolDrag.vue';
 import packData from './packTool/data.json';
 
 
@@ -698,6 +718,7 @@ export default {
 
     /************** FUNCTION: json变成tree结构 **************/
       packageToolVisible: false,
+      packageToolDragVisible: false,
       projectJson: [],
 
     }
