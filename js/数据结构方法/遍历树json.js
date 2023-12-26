@@ -92,6 +92,8 @@ json = [
     children: [],
   },
 ]
+
+// 遍历json
 for (const {  node, index, parent, siblings: nodes, level } of iterateNode(json)){
   console.log(node);
   console.log(index);
@@ -101,6 +103,14 @@ for (const {  node, index, parent, siblings: nodes, level } of iterateNode(json)
   console.log('---------------');
 }
 
-// 打平
+// 打平json
 const Anodes = [...iterateNode(json)]
 console.log(Anodes);
+
+//////// 也可以用在dom节点(dom树)
+const html = document.getElementById('html');
+for (const item of iterateNode(html?.children || [])) {
+  console.log(item);
+  const node = item.node;  // item.node as HTMLElement;
+  console.log(node);
+}
