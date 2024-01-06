@@ -6,6 +6,8 @@
       <div><el-link type="primary" :underline="false" @click="handleArrangeClick('noDir')">无文件夹</el-link></div>
       <div style="margin-left:5px; margin-right:5px">|</div>
       <div><el-link type="primary" @click="levelDialogVisible = true" :underline="false">按章节层级  [{{targetPackageLevel}}]</el-link></div>
+      <div class="m-l-5 m-r-5">|</div>
+      <div> <el-link type="primary" :underline="false" @click="handleExpendAll()">全部{{ expendAll ? '展开' : '闭合' }}</el-link></div>
       <div style="margin-left:30px; margin-top:2px">
         <el-radio-group v-model="unPackFlag" @change="changeFlag">
           <el-tooltip effect="light" placement="top">
@@ -155,6 +157,7 @@ export default {
   components: { draggable },
   data() {
     return {
+      expendAll: true,
       activeNodeId: '',
       treeLoading: false,
       levelDialogVisible: false,
@@ -238,6 +241,8 @@ export default {
   },
   methods: {
     init() {
+      // 处理重复文件名的文件，并依次为文件名添加后缀
+      this.projectJson = this.handleDuplicateFiles(this.projectJson);
       // 格式化原始数据, 获得 json1
       this.json1 = this.projectJson
 
@@ -300,7 +305,21 @@ export default {
       }
       return json;
     },
-
+      // 处理重复文件名的文件，并依次为文件名添加后缀 (遍历json 同一个level的所有节点，name一样的话就加序号后缀)
+      handleDuplicateFiles(json) {
+      const map = {};
+      for (const { node } of iterateNode(json)) {
+        node.originNodeName = node.node_name;
+        const name = node.node_name;
+        const level = node.content?.level ?? node.node_level;
+        if (!map[`${level}#${name}`]) {
+          map[`${level}#${name}`] = 1;
+          continue;
+        }
+        node.node_name = `${name}${++map[`${level}#${name}`]}`;
+      }
+      return json;
+    },
     // 获取当前 json 能够按层级划分的最深层的文件夹的 level 值
     getFolderMaxLevel(json) {
       const maxLevel = Math.max(...[...iterateNode(json)].map(node => node.node.level));
@@ -419,6 +438,8 @@ export default {
     // 切换radio
     changeFlag() {
       this.handleArrangeClick();
+      // 切换显示[全部闭合]样式
+      this.expendAll = false;
     },
     // 判断被划分层级里如果既有 dir 又有 file
     findLevelWhichDirAndFile(json) {
@@ -634,6 +655,10 @@ export default {
           // 使用节点没加序号前的name
           for (const { node } of iterateNode(this.json2)) {
             node.name = node._name;
+            // 防止用户直接拖动文件时导致自动补出的文件夹的名子带有后缀
+            if (node.type === 'dir' && node.name.split('.')[1] === this.type) {
+              node.name = node._name.split('.')[0];
+            }
           }
           
           // 再重新加
@@ -646,6 +671,7 @@ export default {
     },
     // 拖拽完毕后，刷新level
     refreshLevel(json) {
+      json.forEach(node => node.level = 1);
       for (const { node } of iterateNode(json)) {
         if (!node.children.every(item => item.level === node.level + 1)) {
           node.children.forEach(item => item.level = node.level + 1);
@@ -666,6 +692,21 @@ export default {
       }
       return json;
     },
+    // 全部展开、闭合
+    handleExpendAll() {
+      this.expendAll = !this.expendAll;
+      if (!this.expendAll) {
+        // 全部展开
+        for (const { node } of iterateNode(this.json2)) {
+          if (node.type === 'dir') this.$set(node, '_closed', false);
+        }
+      } else {
+        // 全部闭合
+        for (const { node } of iterateNode(this.json2)) {
+          if (node.type === 'dir') this.$set(node, '_closed', true);
+        }
+      }
+    }
   },
 };
 </script>
