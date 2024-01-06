@@ -26,6 +26,12 @@ str = "a,b,c";
 arr = str.split(','); 
 console.log("'split'---", arr) // [ 'a', 'b', 'c' ]
 
+// string ==> num
+// 字符串数字去掉单位变数字？？？？？？！！！！！！！！！！！
+str = '16px'
+console.log("'parseFloat' ---", parseFloat(str))  // 16
+console.log("'parseFloat' ---", parseInt(str))    // 16
+
 
 console.log('**************  数组  **************')
 // splice
