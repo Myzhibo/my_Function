@@ -141,9 +141,22 @@
       // let textNodes = getTextNodes(brothers[0]);
       // console.log(textNodes);
 
-      /***一个DOM节点到顶点的距离可以通过使用DOM元素的offsetTop属性来获取。
+      /***
+       * 一个DOM节点到顶点的距离可以通过使用DOM元素的offsetTop属性来获取。
        * offsetTop表示该元素到其父元素顶部的距离。
-       * 如果没有父元素具有定位属性，那么offsetTop属性将进行迭代计算，直到找到body元素。***
+       * 如果没有父元素具有定位属性，那么offsetTop属性将进行迭代计算，直到找到body元素。
+       * ***/
+
+       /**
+        * 获取node元素的行高
+        * window.getComputedStyle(node).getPropertyValue('font-size')
+        * parseFloat(window.getComputedStyle(node).getPropertyValue('font-size'))
+       */
+
+       /*  选中dom
+       *    const selection = window.getSelection();
+       *    const range = selection.getRangeAt(0);
+       */
     </script>
   </body>
 </html>
