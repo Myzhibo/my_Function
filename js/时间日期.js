@@ -55,3 +55,10 @@ console.log(`相差 ${seconds} 秒`)
 console.log(`相差 ${mins} 分钟`)
 console.log(`相差 ${hours} 小时`)
 console.log(`相差 ${days} 天`)
+
+
+console.log('***********************秒数 转成 分秒格式***********************')
+mySeconds = 198
+console.log('198s 是 ： ',   Math.floor(((mySeconds) / 60).toString().padStart(2, '0')),'min', (((mySeconds) % 60).toString().padStart(2, '0')),'s');
+
+
