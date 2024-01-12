@@ -226,8 +226,22 @@
           :zip_file_info="{'chapter': 1, 'hidden_spilt_title': true, 'add_prefix_number': true}"
           @cancle="packageToolDragVisible = false"/>
     </el-dialog>
-
-      <br><br><br><br><br><br><br><br><br><br><br>
+    <hr>
+    <!-- FUNCTION: 目录编译器 -->
+    <el-button type="primary" size="mini" @click="catalogEditorVisible=true">MyInput</el-button>
+    <el-dialog
+      :visible.sync="catalogEditorVisible"
+      :append-to-body="true"
+      :show-close="false"
+      width="600px"
+      destroy-on-close
+      :close-on-click-modal="false">
+        <ul class="edit-info">
+          <li>一行表示一个条目。</li>
+          <li>使用文字前的空格代表层级：1个空格表示2级标题，以此类推。</li>
+        </ul>
+        <CompileCatalog :data="catalogEditorJson" :book-name="catalogEditorName" @data-change="styleJsonChangeHandle"/>
+    </el-dialog>
   </div>
 </template>
 
@@ -241,6 +255,7 @@ import CP_MyForm from './CP_MyForm.vue'
 import CP_MyCard from './CP_MyCard.vue'
 import CP_MyTree from './CP_MyTree.vue'
 import CP_MyFilter from './CP_MyFilter.vue';
+import CompileCatalog from './CompileCatalog.vue';
 
 import PackagingTool from './packTool/PackagingTool.vue';
 import PackagingToolDrag from './packTool/PackagingToolDrag.vue';
@@ -263,7 +278,8 @@ export default {
     CP_MyTree,
     CP_MyFilter,
     PackagingTool,
-    PackagingToolDrag
+    PackagingToolDrag,
+    CompileCatalog
   },
   data(){
     return{
@@ -720,6 +736,96 @@ export default {
       packageToolVisible: false,
       packageToolDragVisible: false,
       projectJson: [],
+    /************** FUNCTION: 目录编译器 **************/
+      catalogEditorVisible: false,
+      catalogEditorName: 'test---',
+      catalogEditorJson: 
+      [{
+        "node_level": 1,
+        "node_type": "chapter",
+        "node_name": "思维导图 构建体系",
+        "content": {
+            "level": 1,
+            "body": "<p>思维导图 构建体系</p>"
+        },
+        "children": [],
+        "node_id": "0wt9ffa9p397eclsr4rpdfdba",
+        "node_parent_id": ""
+        },
+        {
+        "node_level": 1,
+        "node_type": "chapter",
+        "node_name": "教材梳理 夯实基础",
+        "content": {
+            "level": 1,
+            "body": "<p>教材梳理 夯实基础</p>"
+        },
+        "children": [
+            {
+                "node_level": 2,
+                "node_type": "chapter",
+                "node_name": "考点一 XXXX",
+                "content": {
+                    "level": 2,
+                    "body": "<p>考点一 XXXX</p>"
+                },
+                "children": [],
+                "node_id": "liqvxotyh4v5izfkywcedfdba",
+                "node_parent_id": "x62sas45ph37zdvhto64dfdba"
+            },
+            {
+                "node_level": 2,
+                "node_type": "chapter",
+                "node_name": "考点二 XXXX",
+                "content": {
+                    "level": 2,
+                    "body": "<p>考点二 XXXX</p>"
+                },
+                "children": [],
+                "node_id": "82z1b7tnmiwu116n2vnadfdba",
+                "node_parent_id": "x62sas45ph37zdvhto64dfdba"
+            }
+        ],
+        "node_id": "x62sas45ph37zdvhto64dfdba",
+        "node_parent_id": ""
+      },
+      {
+          "node_level": 1,
+          "node_type": "chapter",
+          "node_name": "重难突破 能力提升",
+          "content": {
+              "level": 1,
+              "body": "<p>重难突破 能力提升</p>"
+          },
+          "children": [
+              {
+                  "node_level": 2,
+                  "node_type": "chapter",
+                  "node_name": "重难一 XXXX",
+                  "content": {
+                      "level": 2,
+                      "body": "<p>重难一 XXXX</p>"
+                  },
+                  "children": [],
+                  "node_id": "0jkv7dk3jzr69ecoszyudfdba",
+                  "node_parent_id": "d0fvborvfxds1euyvm55dfdba"
+              }
+          ],
+          "node_id": "d0fvborvfxds1euyvm55dfdba",
+          "node_parent_id": ""
+      },
+      {
+          "node_level": 1,
+          "node_type": "chapter",
+          "node_name": "实验突破 素养提升",
+          "content": {
+              "level": 1,
+              "body": "<p>实验突破 素养提升</p>"
+          },
+          "children": [],
+          "node_id": "gnjrh8poexzca7aaa73ndfdba",
+          "node_parent_id": ""
+      }]
 
     }
   },
@@ -1022,7 +1128,13 @@ export default {
       }).then(({ value }) => {
         _this.hobbies.push(value);
       })
-    }
+    },
+    
+    /************** FUNCTION: 目录编译器 **************/
+    styleJsonChangeHandle (data) {
+      this.catalogEditorJson = data;
+      console.log(this.catalogEditorJson);
+    },
   }
 }
 </script>
@@ -1181,4 +1293,16 @@ a {
     box-sizing: border-box;
     white-space: nowrap;
 }
+
+
+// <!-- FUNCTION: 目录编译器 -->
+.edit-info {
+    color: pink;
+    list-style: disc;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    li{
+      list-style: disc;
+    }
+  }
 </style>
