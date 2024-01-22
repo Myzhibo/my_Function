@@ -158,6 +158,8 @@
     点击icon 复制内容<br><br>
     <i class="el-icon-copy-document" @click="copy('要复制的内容')" style="cursor: pointer;"></i>
     <br><br>
+    <!-- FUNCTION: 复制内容到粘贴板 -->
+    <el-button @click="copy2()">复制内容到粘贴板 (可以复制带\n的字符串，即带换行的)</el-button>
     <hr>
     <!-- FUNCTION: localForage -->
     localForage<br><br>
@@ -227,7 +229,8 @@
           @cancle="packageToolDragVisible = false"/>
     </el-dialog>
     <hr>
-    <!-- FUNCTION: 目录编译器 -->
+    <!-- FUNCTION: 目录(json)编译器 -->
+    目录(json)编译器<br><br>
     <el-button type="primary" size="mini" @click="catalogEditorVisible=true">MyInput</el-button>
     <el-dialog
       :visible.sync="catalogEditorVisible"
@@ -242,6 +245,9 @@
         </ul>
         <CompileCatalog :data="catalogEditorJson" :book-name="catalogEditorName" @data-change="styleJsonChangeHandle"/>
     </el-dialog>
+    <hr>
+    <!-- FUNCTION: lodash防抖 -->
+    <el-input placeholder="请输入内容" prefix-icon="el-icon-search" style="width: 200px" size="mini"  v-model="lodash_search" @input="lodashSearchList" />
   </div>
 </template>
 
@@ -260,6 +266,8 @@ import CompileCatalog from './CompileCatalog.vue';
 import PackagingTool from './packTool/PackagingTool.vue';
 import PackagingToolDrag from './packTool/PackagingToolDrag.vue';
 import packData from './packTool/data.json';
+
+import _debounce from 'lodash/debounce';
 
 
 export default {
@@ -472,6 +480,7 @@ export default {
       mutiSelected: [],
       cancelSelected: false,   // 是否取消批量删除选中的卡片
       changePage: 0,
+
       /********************* FUNCTION: Tree - 相关 *********************/
       treeData: [
           {
@@ -650,6 +659,7 @@ export default {
           },
         }
       ],
+
       /********************* FUNCTION: 筛选 - 相关 *********************/
       filterData: [
         {
@@ -724,19 +734,23 @@ export default {
         words_num: undefined,
         lexile_score: undefined,
       },
+
       /********************* FUNCTION: 筛选 - 相关 *********************/
       testLocalForage: '',
+
       /************** FUNCTION: el-tag - 相关 **************/
       hobbies: ['篮球', '足球', '排球'],
+
       /************** FUNCTION: 监控页面宽高 - 相关 **************/
       clientWidth : 0,
       clientHeight : 0,
 
-    /************** FUNCTION: json变成tree结构 **************/
+      /************** FUNCTION: json变成tree结构 **************/
       packageToolVisible: false,
       packageToolDragVisible: false,
       projectJson: [],
-    /************** FUNCTION: 目录编译器 **************/
+
+      /************** FUNCTION: 目录编译器 **************/
       catalogEditorVisible: false,
       catalogEditorName: 'test---',
       catalogEditorJson: 
@@ -825,7 +839,12 @@ export default {
           "children": [],
           "node_id": "gnjrh8poexzca7aaa73ndfdba",
           "node_parent_id": ""
-      }]
+      }],
+
+      /************** FUNCTION: lodash防抖 **************/
+      lodash_search: '',
+
+
 
     }
   },
@@ -858,6 +877,17 @@ export default {
   computed:{
     isDebug(){
       return Object.hasOwnProperty.call(this.$route.query, ['debug'])
+    }
+  },
+  watch: {
+    /************** FUNCTION: lodash防抖 (watch) **************/
+    filters_test: {
+      handler: _debounce(async function (newV, oldV) {
+        console.log(123);
+        // await this.getList();
+      }, 500),
+      deep: true,
+      immediate: true
     }
   },
   methods:{
@@ -1098,6 +1128,34 @@ export default {
         });
         oInput.remove()
     },
+    
+    /************** FUNCTION: 保存内容到粘贴板 **************/
+    copy2 () {
+      if (!navigator.clipboard) {
+        // 如果不支持，则使用传统的 document.execCommand("copy") 方式
+        const textArea = document.createElement('textarea');
+        textArea.value = '这是一段需要复制到剪贴板的文本aaa';
+        textArea.style.position = 'fixed';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        return;
+      }
+      // 使用 Clipboard API 复制内容到剪切板
+      navigator.clipboard.writeText('这是一段需要复制到剪贴板的文本aaa').then(
+        function () {
+          console.log('复制成功');
+        },
+        function () {
+          console.log('复制失败');
+        }
+      );
+
+      this.$message.success(`复制成功`);
+    },
+
     /************** FUNCTION: localForage - 相关 **************/
     setLocal(){
       this.$localForage.setItem(('myData'), this.testLocalForage);
@@ -1135,6 +1193,17 @@ export default {
       this.catalogEditorJson = data;
       console.log(this.catalogEditorJson);
     },
+
+    
+    /************** FUNCTION: lodash防抖 **************/
+    lodashSearchList: _debounce(async function (val) {
+      console.log(val);
+      // await this.getList();
+    }, 500, {
+      leading: false,
+      trailing: true
+    }),
+
   }
 }
 </script>
