@@ -32,6 +32,15 @@ export default {
   },
   mounted() {
     this.dragControllerDiv();
+
+    // 监听视口变化，变了的话重新跑函数，【因为 left_screen 会变】
+    window.onresize = () => {
+      return (() => {
+        this.$nextTick(() => {
+          this.dragControllerDiv();
+        });
+      })();
+    };
     /*
      * console.log(this.box);
      * console.log(this.left);
@@ -51,6 +60,7 @@ export default {
       //
       const leftMin = this.leftMin;
       const rightMin = this.rightMin;
+      const that = this;
 
       for (let i = 0; i < resize.length; i++) {
         // 鼠标按下事件
@@ -92,6 +102,7 @@ export default {
             document.onmousemove = null;
             document.onmouseup = null;
             resize[i].releaseCapture && resize[i].releaseCapture(); // 当你不在需要继续获得鼠标消息就要应该调用ReleaseCapture()释放掉
+            that.$emit('finishMove');
           };
           resize[i].setCapture && resize[i].setCapture(); // 该函数在属于当前线程的指定窗口里设置鼠标捕获
           return false;
