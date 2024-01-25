@@ -192,7 +192,12 @@
       <draggable v-model="hobbies" @start="moveTagStart" @end="moveTagEnd">  
         <el-tag v-for="(item, index) in hobbies"
               closable @close="handleDelete(item)"
-              style="margin-left:10px" >
+              style="margin-left:10px; cursor: pointer;" 
+              @click="handleClickTag(index)"
+              :style="{
+                  'color': index == currentTagIndex ? '#fff' : '#000',
+                  'background-color': index == currentTagIndex ? 'rgba(72, 99, 143, .9)' : '#fff',
+              }">
           <span v-if="!editing[item]" @dblclick="handleEdit(item)">{{item}}</span>
           <el-input v-if="editing[item]" autofocus v-model="hobbyInput" :key="item" @blur="closeInput(item)" size='mini' style="width:60px;font-size:12px"></el-input>
         </el-tag>
@@ -750,6 +755,7 @@ export default {
 
       /************** FUNCTION: el-tag - 相关 **************/
       hobbies: ['篮球', '足球', '排球'],
+      currentTagIndex: 0,
       hobbyInput:'',
       editing: {},
 
@@ -1180,6 +1186,10 @@ export default {
       // });
     },
     /************** FUNCTION: el-tag - 相关 **************/
+    handleClickTag(index){
+      console.log(index);
+      this.currentTagIndex = Number(index);
+    },
     handleDelete(item) {
       let _this = this;
       for (let i = 0; i < _this.hobbies.length; i++) {
@@ -1215,9 +1225,11 @@ export default {
     },
     moveTagStart(){
       console.log(this.hobbies);
+      console.log(this.hobbies[this.currentTagIndex]);
     },
     moveTagEnd(){
       console.log(this.hobbies);
+      console.log(this.hobbies[this.currentTagIndex]);
     },
     
     /************** FUNCTION: 目录编译器 **************/
