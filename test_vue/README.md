@@ -44,6 +44,8 @@ Vue.use(Contextmenu)
 
 ## 虚拟滚动
 - npm i vue-virtual-scroller
+## 虚拟滚动2
+- npm i vue-infinite-scroll
 
 ## 拖拽组件
 - yarn add vuedraggable

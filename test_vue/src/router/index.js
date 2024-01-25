@@ -35,6 +35,11 @@ export default new VueRouter({
           name: 'vir',
           component: () => import('../components/CP_Virtual.vue'),
         },
+        {
+          path: '/vir2',
+          name: 'vir2',
+          component: () => import('../components/CP_Virtual2.vue'),
+        },
         ...edits,
       ],
     },

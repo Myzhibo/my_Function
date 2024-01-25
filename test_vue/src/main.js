@@ -11,11 +11,15 @@ import Contextmenu from 'vue-contextmenujs' //引入右键菜单库
 
 import localforage from 'localforage'
 
+import vInfiniteScroll from 'vue-infinite-scroll';  
+
 // import './styles/utils.scss'
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Contextmenu)
+  
+Vue.use(vInfiniteScroll);
 
 Vue.config.productionTip = false
 
