@@ -25,7 +25,7 @@
     <hr>
     <!-- FUNCTION: fixed组件 -->
     fixed组件
-    <!-- <CP_MyTextBasket style="z-index: 999"/> -->
+    <CP_MyTextBasket style="z-index: 999"/>
     <hr>
     <!-- FUNCTION: table组件 + 假分页 -->
     table组件 + 假分页  <el-button size="mini" @click="other_table=!other_table">{{other_table ? '切换为全列表格': '切换为表格2'}}</el-button>
@@ -168,7 +168,7 @@
     <el-button @click="getLocal" size="small" type="primary" >获取localForage(console)</el-button> 
     <br><br>
     <hr>
-    <!-- FUNCTION: el-tag的更多颜色 -->
+    <!-- FUNCTION: el-tag的更多颜色  el-tag - 相关 -->  
     el-tag的更多颜色<br><br>
     <div>
       <el-tag class=""> primary </el-tag>
@@ -189,10 +189,14 @@
       <br><br>
       <br>
       <span style="text-decoration:underline; cursor: pointer;" @click="handleAdd">新增</span>&nbsp;&nbsp;
-      <el-tag v-for="item in hobbies" closable @close="handleDelete(item)">
-        <span v-if="!editing[item]" @dblclick="handleEdit(item)">{{item}}</span>
-        <el-input v-if="editing[item]" autofocus v-model="hobbyInput" :key="item" @blur="closeInput(item)" size='mini' style="width:60px;font-size:12px"></el-input>  
-      </el-tag>
+      <draggable v-model="hobbies" @start="moveTagStart" @end="moveTagEnd">  
+        <el-tag v-for="(item, index) in hobbies"
+              closable @close="handleDelete(item)"
+              style="margin-left:10px" >
+          <span v-if="!editing[item]" @dblclick="handleEdit(item)">{{item}}</span>
+          <el-input v-if="editing[item]" autofocus v-model="hobbyInput" :key="item" @blur="closeInput(item)" size='mini' style="width:60px;font-size:12px"></el-input>
+        </el-tag>
+      </draggable>
     </div>
     <hr>
     <!-- FUNCTION: json变成tree结构 -->
@@ -214,6 +218,7 @@
           :zip_file_info="{'chapter': 1, 'hidden_spilt_title': true, 'add_prefix_number': true}"
           @cancle="packageToolVisible = false"/>
     </el-dialog>
+    &nbsp;
     <el-button type="primary" size="mini" @click="packageToolDragVisible=true">json变成tree结构 + 可拖拽</el-button>
     <el-dialog
         title="json变成tree结构 + 可拖拽"
@@ -265,6 +270,7 @@ import CP_MyCard from './CP_MyCard.vue'
 import CP_MyTree from './CP_MyTree.vue'
 import CP_MyFilter from './CP_MyFilter.vue';
 import CompileCatalog from './CompileCatalog.vue';
+import draggable from 'vuedraggable';
 
 import PackagingTool from './packTool/PackagingTool.vue';
 import PackagingToolDrag from './packTool/PackagingToolDrag.vue';
@@ -290,7 +296,8 @@ export default {
     CP_MyFilter,
     PackagingTool,
     PackagingToolDrag,
-    CompileCatalog
+    CompileCatalog,
+    draggable
   },
   data(){
     return{
@@ -1036,7 +1043,7 @@ export default {
         a.dispatchEvent(event)
     }
     image.src = path;
-    this.$Message.success('下载成功');
+    this.$message.success('下载成功');
     },
     // 下载图片
     download(){
@@ -1205,6 +1212,12 @@ export default {
         }
       });
       this.hobbies.splice(getIndex, 1,this.hobbyInput);
+    },
+    moveTagStart(){
+      console.log(this.hobbies);
+    },
+    moveTagEnd(){
+      console.log(this.hobbies);
     },
     
     /************** FUNCTION: 目录编译器 **************/
