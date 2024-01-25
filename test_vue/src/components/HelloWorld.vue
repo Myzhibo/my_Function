@@ -189,7 +189,10 @@
       <br><br>
       <br>
       <span style="text-decoration:underline; cursor: pointer;" @click="handleAdd">新增</span>&nbsp;&nbsp;
-      <el-tag v-for="item in hobbies" closable @close="handleDelete(item)">{{item}}</el-tag>
+      <el-tag v-for="item in hobbies" closable @close="handleDelete(item)">
+        <span v-if="!editing[item]" @dblclick="handleEdit(item)">{{item}}</span>
+        <el-input v-if="editing[item]" autofocus v-model="hobbyInput" :key="item" @blur="closeInput(item)" size='mini' style="width:60px;font-size:12px"></el-input>  
+      </el-tag>
     </div>
     <hr>
     <!-- FUNCTION: json变成tree结构 -->
@@ -740,6 +743,8 @@ export default {
 
       /************** FUNCTION: el-tag - 相关 **************/
       hobbies: ['篮球', '足球', '排球'],
+      hobbyInput:'',
+      editing: {},
 
       /************** FUNCTION: 监控页面宽高 - 相关 **************/
       clientWidth : 0,
@@ -1187,6 +1192,21 @@ export default {
         _this.hobbies.push(value);
       })
     },
+    handleEdit(item){
+      this.editing = {}
+      this.editing[item] = true
+      this.hobbyInput = item
+    },
+    closeInput(item){
+      this.editing = {}
+      //修改数据
+      const getIndex = this.hobbies.findIndex((h, index) => {
+        if (h === item) {
+          return index;
+        }
+      });
+      this.hobbies.splice(getIndex, 1,this.hobbyInput);
+    },
     
     /************** FUNCTION: 目录编译器 **************/
     styleJsonChangeHandle (data) {
@@ -1200,8 +1220,8 @@ export default {
       console.log(val);
       // await this.getList();
     }, 500, {
-      leading: false,
-      trailing: true
+      leading: false, // 第一次触发时 是否立即执行函数
+      trailing: true  // 最后一次触发后 是否立即执行函数
     }),
 
   }
