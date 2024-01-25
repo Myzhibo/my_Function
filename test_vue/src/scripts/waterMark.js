@@ -7,7 +7,7 @@ export function __canvasWM ({
   textAlign = 'center',
   textBaseline = 'middle',
   font = '14px Microsoft Yahei',
-  fillStyle = 'rgba(160, 160, 160, 0.1)',
+  fillStyle = 'rgba(160, 160, 160, 0.3)',
   content = '请勿外传',
   rotate = '20',
   zIndex = 1000

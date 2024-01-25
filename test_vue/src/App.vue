@@ -5,10 +5,18 @@
 </template>
 
 <script>
+import { __canvasWM } from './scripts/waterMark';
 
 export default {
   name: 'App',
   components: {
+  },
+  created () {
+    console.log('初始');
+    // 添加水印
+    __canvasWM({
+      content: '我是水印'
+    });
   }
 }
 </script>
