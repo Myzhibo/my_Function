@@ -1,7 +1,7 @@
 <template>
   <div class="error-page">
     <div class="pic-404">
-      <img class="pic-404__parent" src="src/assets/logo.png" alt="404 img" />
+      <img class="pic-404__parent" src="src/assets/404_images/404.png" alt="404 img" />
     </div>
     <div class="notFound">
       <span>啊哦~~~你访问的页面不存在哦</span>

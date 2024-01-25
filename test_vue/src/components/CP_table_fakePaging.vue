@@ -50,6 +50,14 @@
                                     {{ row.uid }}
                                   </template> -->
                               </el-table-column>
+                              <el-table-column prop="name" label="双行数据列" width="280">  
+                                <template slot-scope="scope">  
+                                  <router-link @click.native.stop :to="`/fbd/detail?_id=${scope.row._id}`">
+                                    <div>{{ scope.row.name }}</div>  
+                                  </router-link>
+                                  <div style="margin-top: 0px;">其他内容</div>  
+                                </template>  
+                              </el-table-column>
                               <el-table-column
                                 prop="name"
                                 label="机器名"
