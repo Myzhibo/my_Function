@@ -891,6 +891,14 @@ export default {
   },
   mounted(){
     this.initCardId()
+
+    // 监听键盘事件
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        // 在这里执行你需要的操作
+        console.log('Esc key pressed!');
+      }
+    });
   },
   computed:{
     isDebug(){
