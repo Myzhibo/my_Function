@@ -189,11 +189,16 @@
       <br><br>
       <br>
       <span style="text-decoration:underline; cursor: pointer;" @click="handleAdd">新增</span>&nbsp;&nbsp;
-      <draggable v-model="hobbies" @start="moveTagStart" @end="moveTagEnd">  
+      <button @click="openDrag = !openDrag">切换是否可以拖拽</button>{{openDrag}}
+      <draggable v-model="hobbies" @start="moveTagStart" @end="moveTagEnd" filter=".unDrag">
+        <!--filter设置class为unDrag是不可以拖拽的项, 
+            当openDrag为true时, 动态为item是篮球的标签加上unDrag为true,此时只有篮球不能拖拽,
+            当openDrag为false时, 所有标签都加上unDrag为true,此时就关闭了拖拽功能-->
         <el-tag v-for="(item, index) in hobbies"
               closable @close="handleDelete(item)"
               style="margin-left:10px; cursor: pointer;" 
               @click="handleClickTag(index)"
+              :class="{ unDrag:  openDrag ? item === '篮球' : true}"
               :style="{
                   'color': index == currentTagIndex ? '#fff' : '#000',
                   'background-color': index == currentTagIndex ? 'rgba(72, 99, 143, .9)' : '#fff',
@@ -758,6 +763,7 @@ export default {
       currentTagIndex: 0,
       hobbyInput:'',
       editing: {},
+      openDrag: false,
 
       /************** FUNCTION: 监控页面宽高 - 相关 **************/
       clientWidth : 0,
@@ -891,14 +897,6 @@ export default {
   },
   mounted(){
     this.initCardId()
-
-    // 监听键盘事件
-    document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape') {
-        // 在这里执行你需要的操作
-        console.log('Esc key pressed!');
-      }
-    });
   },
   computed:{
     isDebug(){
