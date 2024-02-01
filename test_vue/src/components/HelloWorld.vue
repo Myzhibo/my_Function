@@ -264,8 +264,11 @@
         <CompileCatalog :data="catalogEditorJson" :book-name="catalogEditorName" @data-change="styleJsonChangeHandle"/>
     </el-dialog>
     <hr>
-    <!-- FUNCTION: lodash防抖 -->
+    <!-- FUNCTION: lodash防抖 -->lodash防抖<br><br>
     <el-input placeholder="请输入内容" prefix-icon="el-icon-search" style="width: 200px" size="mini"  v-model="lodash_search" @input="lodashSearchList" />
+    <hr>
+    <!-- FUNCTION: 返回上一个路由 -->返回上一个路由<br><br>
+    <el-button size="small" @click="$router.back()">返回</el-button>
   </div>
 </template>
 
