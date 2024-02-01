@@ -80,10 +80,19 @@ newArr = arr.map((item) => {
   return item
 })
 console.log("'map3'---(1) 改变原数组后再返回", newArr)
+
+arr = [{ body: '<p>123</p>', id: 1 }]
 newArr = arr.map((item) => {
   return item.body.replace('<p', "<p id='a'")
 })
 console.log("'map3'---(2) 直接返回了改变后的数组", newArr)
+
+arr = ['65b9f0c1ef7f17ca235c675f', '65b9f0c1ef7f17ca235c675e', '65b9f0c5ef7f17ca235c6760']; 
+const result = arr.map((text_type_id, index) => ({
+  text_type_id: text_type_id,
+  order: index + 1
+}));
+console.log("'map3'---(3)", result);
 
 // some
 arr = [23, 44, 3]
@@ -92,6 +101,10 @@ res = arr.some((item) => {
 })
 console.log("'some'---", res)
 
+// sort
+arr = [{one:1,two:'q'},{one:3,two:'qqq'},{one:2,two:'qq'}]
+arr.sort((a, b) => a.one - b.one);  
+console.log(arr);
 
 
 
