@@ -2,7 +2,7 @@
   <div>
     <div v-if="!list || !list.length" class="text-light">暂无上传文件</div>
     <template v-else>
-      <UploadFileListItem v-for="item in list" :key="item.index" :data="item" @click="deleteFile($event)"/>
+      <UploadFileListItem v-for="item in list" :key="item.index" :data="item" @click="deleteFile($event)" @getFileName="getFileName"/>
     </template>
   </div>
 </template>
@@ -24,6 +24,9 @@ export default {
   methods: {
     deleteFile (data) {
       this.$emit('delete', data)
+    },
+    getFileName(val){
+      this.$emit('getFileName', val)
     }
   }
 }

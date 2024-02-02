@@ -1,11 +1,11 @@
 <template>
-  <div class="ppt-upload bg-white" v-loading="loading">
-    <div class="m-b-15">
+  <div class="ppt-upload" style="background-color:white" v-loading="loading">
+    <div style="margin-bottom: 15px">
       <slot name="title"></slot>
       <el-button @click="chooseFile()">选择文件</el-button>
-      <el-button type="primary" @click="fileUploadOss()">上传</el-button>
+      <el-button type="primary" @click="fileUploadOss()" :disabled="!allowToUpload">上传</el-button>
     </div>
-    <UploadFileList :list="files" @delete="deleteFile($event)"/>
+    <UploadFileList :list="files" @delete="deleteFile($event)" @getFileName="getFileName" v-show="allowToUpload"/>
     <input v-if="multiple" ref="file" type="file" multiple="multiple" :value="fileVal" class="file-input" @change="fileChange">
     <input v-else ref="file" type="file" :value="fileVal" class="file-input" @change="fileChange">
   </div>
@@ -30,6 +30,10 @@
       cancel_load: {
         type: Number,
         default: 0
+      },
+      allowToUpload: {
+        type: Boolean,
+        default: true,
       }
     },
     data () {
@@ -78,34 +82,31 @@
         }
       },
       async fileUploadOss () {
-        this.$guard('uploading', async () => {
-          const { files } = this
-          if (!files || !files.length) {
-            this.$message('请先选择文件')
-            return
-          }
-          const needUploadFile = files.filter(item => item.process === 0)
-          console.log(needUploadFile, 11)
-          let fileStatus = await Promise.all(
-            needUploadFile.map(item => {
-              return this.uploadImg(item)
-            })
-          )
-          let isSuccess = true
-          fileStatus.forEach(item => {
-            if (item.status !== 200) {
-              isSuccess = false
-            }
-          })
-          if (!isSuccess) {
-            this.$message.error('上传失败~')
-            return
-          }
-          // await this.fileUpload(files)
-          this.$emit('upload', needUploadFile)
-        })
+        const { files } = this
+        if (!files || !files.length) {
+          this.$message('请先选择文件')
+          return
+        }
+        const needUploadFile = files.filter(item => item.process === 0)
+        /**  正常这里要向OSS上传，调用上传接口 */
+        // let fileStatus = await Promise.all(
+        //   needUploadFile.map(item => {
+        //     return this.uploadFile(item)
+        //   })
+        // )
+        // let isSuccess = true
+        // fileStatus.forEach(item => {
+        //   if (item.status !== 200) {
+        //     isSuccess = false
+        //   }
+        // })
+        // if (!isSuccess) {
+        //   this.$message.error('上传失败~')
+        //   return
+        // }
+        this.$emit('upload', needUploadFile)
       },
-      async uploadImg (item) {
+      async uploadFile (item) {
         const { file } = item
         let { ossConfig } = this
         if (!ossConfig)  {
@@ -118,7 +119,7 @@
         const { policy, accessid, signature, dir, host } = ossConfig
         const name = file.name
         const url = `${dir}${name}`
-        this.$emit('ImgURL', (host+'/'+url));
+        this.$emit('fileURL', (host+'/'+url));
         return this.$api.postFile(host, {
           key: url,
           policy,
@@ -141,6 +142,9 @@
         this.$emit('process', 'delete_item')
         this.files.splice(index, 1)
       },
+      getFileName(val){
+        this.$emit('getFileName', val)
+      }
     },
     watch: {
       cancel_load(){

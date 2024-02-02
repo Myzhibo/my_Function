@@ -1,10 +1,10 @@
 <template>
-  <div class="file-item flex j-between a-center">
+  <div class="file-item" style="display: flex;align-items: center;justify-content: space-between;">
     <span>{{ data.file.name }}</span>
-    <i class="el-icon-delete fs-18 c-p" @click="clickHandler(data)"></i>
+    <i class="el-icon-delete" style="font-size:18px; cursor: pointer;" @click="clickHandler(data)"></i>
     <div v-if="data.process"
       :style="{width: data.process}"
-      class="file-process bg-success"></div>
+      class="file-process" style="background-color: #28a745 !important"></div>
   </div>
 </template>
 
@@ -17,6 +17,15 @@ export default {
     }
   },
   name: 'UploadFileItem',
+  watch:{
+    data:{
+      handler(val){
+        this.$emit('getFileName', val.file.name)
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   methods: {
     clickHandler (data) {
       this.$emit('click', data)

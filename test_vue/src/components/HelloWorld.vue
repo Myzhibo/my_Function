@@ -269,6 +269,25 @@
     <hr>
     <!-- FUNCTION: 返回上一个路由 -->返回上一个路由<br><br>
     <el-button size="small" @click="$router.back()">返回</el-button>
+    <hr>
+    <!-- FUNCTION: 上传 -->上传<br><br>
+      <!-- 
+        uploading: 是否正在上传
+        cancel_load: 是否中途取消上传
+        multiple: 是否允许多文件上传
+
+        @upload 上传按钮的回调
+        @fileURL 上传到oss后返回url的回调
+        @process 上传进度的回调
+
+        @getFileName 选择文件时，获取文件name
+        allowToUpload 是否允许上传(上传按钮是否允许点击)
+      -->
+    <Upload v-model="uploading" class="min-400"
+      :cancel_load="cancel_load" :multiple="false"
+      @upload="uploadHandler" @fileURL="getURL" @process="getProcess"
+      @getFileName="getFileName" :allowToUpload="allowToUpload"
+      />
   </div>
 </template>
 
@@ -284,6 +303,7 @@ import CP_MyTree from './CP_MyTree.vue'
 import CP_MyFilter from './CP_MyFilter.vue';
 import CompileCatalog from './CompileCatalog.vue';
 import draggable from 'vuedraggable';
+import Upload from '/src/components/Upload/Upload';
 
 import PackagingTool from './packTool/PackagingTool.vue';
 import PackagingToolDrag from './packTool/PackagingToolDrag.vue';
@@ -310,7 +330,8 @@ export default {
     PackagingTool,
     PackagingToolDrag,
     CompileCatalog,
-    draggable
+    draggable,
+    Upload,
   },
   data(){
     return{
@@ -871,8 +892,13 @@ export default {
       /************** FUNCTION: lodash防抖 **************/
       lodash_search: '',
 
-
-
+      /************** FUNCTION: 上传相关 **************/
+      uploading: false,
+      fileName: '',
+      ossUrl: '',
+      process: '',
+      cancel_load: 0,  // 取消上传时 this.cancel_load += 1;
+      allowToUpload: true,
     }
   },
   created(){
@@ -1257,6 +1283,36 @@ export default {
       trailing: true  // 最后一次触发后 是否立即执行函数
     }),
 
+    
+    /************** FUNCTION: 上传相关 **************/
+    // 选择文件时，获取file名称
+    getFileName(val){
+      console.log(val);
+      if(!val.includes('zip')){
+        this.allowToUpload = false;
+        this.$message.error('请上传zip文件')
+      }else{
+        this.allowToUpload = true;
+      }
+    },
+    uploadHandler(files) {
+      console.log('上传文件');
+      console.log(files);
+      this.fileName = files[0].file.name;
+      console.log(this.fileName);
+    },
+    // 获取上传的文件的url
+    getURL(url) {
+      console.log('获取上传的文件的url');
+      this.ossUrl = url;
+      console.log(this.ossUrl);
+    },
+    // 获取上传进度
+    getProcess(val) {
+      console.log('获取上传的进度');
+      this.process = val;
+      console.log('----', this.process);
+    },
   }
 }
 </script>
