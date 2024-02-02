@@ -33,3 +33,8 @@ const transformedJson = json.reduce((acc, item) => {
 }, []);  
   
 console.log(transformedJson);
+// [
+//   { id: 1, result: [ 'a', 'b' ] },
+//   { id: 2, result: [ 'c' ] },
+//   { id: 3, result: [ 'd', 'e' ] }
+// ]

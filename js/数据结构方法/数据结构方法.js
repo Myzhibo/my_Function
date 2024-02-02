@@ -157,6 +157,9 @@ objectArray = [
 objectArray.splice(objectArray.findIndex(item => item.id === 5) + 1, 0, { a: 1 });  
 console.log(objectArray);
 
+
+
+
 console.log('******  ****')
 function findMaxLevel(array) {  
   let maxLevel = 0;  

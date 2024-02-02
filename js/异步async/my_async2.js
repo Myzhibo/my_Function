@@ -4,7 +4,7 @@ const _image = (item) =>
   new Promise(async (resolve) => {
     console.log(1)
     // item.onload = async () => {
-    await resolve()
+    await resolve('ok')
     // }
     console.log(2)
     // item.onerror = () => resolve()
@@ -17,7 +17,8 @@ const test = async () => {
   await Promise.all(
     ARR.map(async (item) => {
       console.log('前')
-      await _image(item)
+      const res = await _image(item)
+      console.log(res);
       console.log('后')
     })
   )
