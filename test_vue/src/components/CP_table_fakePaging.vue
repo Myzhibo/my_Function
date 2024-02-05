@@ -142,6 +142,49 @@
                                     <el-button size="mini" @click="deleteRow(row)" element-loading-spinner="el-icon-loading">删除</el-button>
                                   </template>
                               </el-table-column>
+                              <el-table-column
+                                align="center"
+                                min-width="100px"
+                                >
+                                <div slot="header">
+                                  <span>列名内加icon 第二种方法</span>
+                                  <el-popover
+                                    ref="popover1"
+                                    placement="bottom"
+                                    width="width"
+                                    trigger="hover">
+                                    <section class="status-info">
+                                      <div class="header">关联数据状态说明</div>
+                                      <div class="body">
+                                        <div class="item">
+                                          <span style="color:#F56C6C">未关联</span>
+                                          <span>该项目没有关联工单数据或图书项目。</span>
+                                        </div>
+                                        <div class="item">
+                                          <span style="color:#909399">图书项目</span>
+                                          <span>该项目关联了图书项目数据，可直接使用。</span>
+                                        </div>
+                                        <div class="item">
+                                          <span style="color:#409EFF">进行中</span>
+                                          <span>该项目关联了工单数据，该数据正在生产中尚未完成。</span>
+                                        </div>
+                                        <div class="item">
+                                          <span style="color:#67C23A">已完成</span>
+                                          <span>该项目关联了工单数据，该数据已生产完成。</span>
+                                        </div>
+                                      </div>
+                                    </section>
+                                    <i slot="reference" class="el-icon-info"></i>
+                                  </el-popover>
+                                </div>
+                                <template slot-scope="{row}">
+                                  <span v-if="!row.relate_type" style="color:#F56C6C">未关联</span>
+                                  <span v-else-if="row.relate_type === 2" style="color:#909399">图书项目</span>
+                                  <span v-else-if="row.relate_type === 1 && xdocStatusObject && xdocStatusObject[row._id] && xdocStatusObject[row._id].status === 1" style="color:#409EFF">进行中</span>
+                                  <span v-else-if="row.relate_type === 1 && xdocStatusObject && xdocStatusObject[row._id] && xdocStatusObject[row._id].status === 2" style="color:#67C23A">已完成</span>
+                                  <span v-else style="color:#F56C6C">未关联</span>
+                                </template>
+                              </el-table-column>
 
                               <!-- 内表 -->
                               <el-table-column
