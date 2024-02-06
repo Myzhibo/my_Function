@@ -130,7 +130,7 @@
                                         <span>{{ row.test_renderHeader }}</span>
                                       </el-tooltip>
                                   </div>
-                                </template> 
+                                </template>
                               </el-table-column>
                               <el-table-column
                                 prop="operate"
