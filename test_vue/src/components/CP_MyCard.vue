@@ -17,6 +17,8 @@
         @click.native="handleCardClick"
         :class="[
           data.inBasket ? 'in-basket' : '',
+          unfit ? 'unfit' : '',
+          subscribe ? 'subscribe' : '',
         ]"
       >
           <!-- 删除文章篮图标显隐 -->
@@ -81,7 +83,14 @@ export default {
     data: Object,
     // serial_num,   // 卡片序号
     // keyword,      // 高亮关键词
-    // subscribe,
+    unfit: {        // 不合适
+      type: Boolean,
+      default: false,
+    },
+    subscribe: {    // 订阅
+      type: Boolean,
+      default: false,
+    },
     // headerHidden,
     // source,
     // currentNode,  // readingset页当前卡片所在节点

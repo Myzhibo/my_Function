@@ -98,6 +98,8 @@
               @deleteSingleData="deleteSingleData(text._id)"
               @getId="getId"
 
+              :subscribe = "text.subscribe"
+              :unfit = "text.unfit"
 
             >
               {{ text }}
@@ -107,6 +109,8 @@
 
               <!-- 插槽: 卡片按钮 -->
               <template #button_option="{ text }">          <!-- 接收、 插入 -->
+                <el-button size="mini" type="primary" @click.stop="changeCardColor('subscribe', text)">订阅</el-button>
+                <el-button size="mini" type="primary" @click.stop="changeCardColor('unfit', text)">不合适</el-button>
                 <el-button size="mini" type="primary"
                   @click.stop="$router.push({ path: `/cp_myeditpage`, name: 'cp_myeditpage', params: text, query: { id: text._id }})"
                 >进入编辑</el-button>
@@ -1059,7 +1063,19 @@ export default {
         this.mutiSelected.splice(this.mutiSelected.indexOf(id), 1);
       }
       // console.log(this.mutiSelected);
-    },  
+    },
+    changeCardColor(type, text){
+      if(type==='subscribe'){
+        this.$set(text, 'subscribe', true)
+        this.$set(text, 'unfit', false)
+        
+        console.log(1);
+        console.log(this.$store);
+      }else {
+        this.$set(text, 'subscribe', false)
+        this.$set(text, 'unfit', true)
+      }
+    },
     /************** FUNCTION: 下载 - 相关 **************/
     // 下载
     async realDownload(path,name){
