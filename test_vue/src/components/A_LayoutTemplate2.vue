@@ -24,7 +24,7 @@
     <!-- 下方功能栏 -->
     <div class="content">
       <div style="width: 85%; height: 700px; border: 1px solid rgb(224, 224, 224); background-color: rgb(239, 240, 246);">
-          <div class="m-r-20" style="width: 100%; height: 40%; background-color:red">1
+          <div class="m-r-20" style="width: 100%; height: 45%; background-color:red">1
           </div>
           <div class="m-r-20" style="width: 100%; height: 10%;  background-color:yellow;display: flex;-webkit-box-pack: center;justify-content: center;">
             {{topicSearch.includes('\n')}}
@@ -34,13 +34,13 @@
             />
             <div class="textInput" style="width: 80%;position: relative;" v-if="topicSearch.includes('\n')">
               <el-input v-model="topicSearch" type="textarea" :rows="4" autofocus ref="textArea"
-                size="mini" style="width: 100%;height:60px;"
+                size="mini" style="width: 100%;"
                 @keydown.native="handleKeyDown"
               ></el-input>
               <i class="el-icon-s-promotion" style="font-size:20px;position: absolute;z-index: 999999;color:rgb(196,192,204);right: 26px; top:18px" />
             </div>
           </div>
-          <div class="m-r-20" style="width: 100%; height: 50%; position: relative">
+          <div class="m-r-20" style="width: 100%; height: 45%; position: relative">
             <div style="width: 80%; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%)">
               <div><span>试试这些主题扩展例子</span></div>
               <el-card shadow="hover" style=" margin-bottom: 10px; border-radius: 10px;"> <div style="height: 20px;line-height: 20px;">鼠标悬浮时显示</div> </el-card>
@@ -92,8 +92,18 @@ export default {
         this.topicSearch += '\n';
         // 删除多余的\n
         if (this.topicSearch.trimRight().length < this.topicSearch.length  && (this.topicSearch.match(/\n/g) || []).length >1) {
-          this.topicSearch = this.topicSearch.trimRight();
+          this.topicSearch = this.topicSearch.replace(/\n$/, '');
         }
+        // ※※  动态修改elementUI的样式 this.$refs.textArea.$el获取然后修改其style ※※
+        setTimeout(() => {
+          if (this.$refs.textArea) {
+            const textarea = this.$refs.textArea.$el.querySelector('textarea');
+            if (textarea && (this.topicSearch.match(/\n/g) || []).length > 2) {
+              textarea.style.height = 'auto';
+              textarea.style.height = `${(this.topicSearch.match(/\n/g) || []).length * 25}px`;
+            }
+          }
+        }, 10);
         console.log(this.topicSearch);
       }
       if (event.key === 'Enter') {
@@ -180,6 +190,8 @@ export default {
   border-radius: 10px;
 }
 .textInput ::v-deep .el-textarea__inner{
+  height: 70px;
+  max-height: 90px;
   font-size: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
   border-radius: 10px;
