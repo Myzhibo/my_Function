@@ -13,13 +13,15 @@ import localforage from 'localforage'
 
 import vInfiniteScroll from 'vue-infinite-scroll';  
 
+// import store from './store'                     //main.js 引入vuex配置index
+
 // import './styles/utils.scss'
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Contextmenu)
-  
 Vue.use(vInfiniteScroll);
+// Vue.use(store);
 
 Vue.config.productionTip = false
 
@@ -35,5 +37,6 @@ if (process.env.NODE_ENV === 'production') {
 
 new Vue({
   render: (h) => h(App),
+  // store,                                         //挂载vuex
   router, //挂载路由
 }).$mount('#app')

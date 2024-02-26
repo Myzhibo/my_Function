@@ -14,6 +14,12 @@
 
 - npm i element-ui -S
 
+## -vuex
+
+-  npm i vuex@3
+-  import store from './store'                     //main.js 引入vuex配置index
+-  main.js 挂载vuex store
+
 ## -Tree 组件安装 右键菜单 插件
 
 - yarn add vue-contextmenujs
