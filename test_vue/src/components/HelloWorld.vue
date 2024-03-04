@@ -129,6 +129,7 @@
     下载<br>
     <img style="width: 100px;height:100px" src="https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100" alt="">
     <el-button @click="download" size="mini" type="primary" >下载</el-button>
+    <el-button @click="download2" size="mini" type="primary" >下载2</el-button>
     <hr>
     <!-- FUNCTION: Tree -->
     Tree组件
@@ -292,6 +293,12 @@
       @upload="uploadHandler" @fileURL="getURL" @process="getProcess"
       @getFileName="getFileName" :allowToUpload="allowToUpload"
       />
+    <hr>
+    <!-- FUNCTION: this.$notify -->this.$notify<br><br>
+    <el-button size="small" @click="openNotify">this.$notify</el-button>
+    <hr>
+
+    <br><br>
   </div>
 </template>
 
@@ -1106,6 +1113,24 @@ export default {
     download(){
         this.realDownload('https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100', '我的图片' +'.jpg')
     },
+    async download2(){
+      try {  
+          const fileUrl = 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100';  
+          const response = await fetch(fileUrl);  
+          const blob = await response.blob();  
+          const url = window.URL.createObjectURL(blob);  
+          const link = document.createElement('a');  
+          link.href = url;  
+          link.download = '我的图片' +'.jpg';  
+          link.style.display = 'none';  
+          document.body.appendChild(link);  
+          link.click();  
+          window.URL.revokeObjectURL(url);  
+          document.body.removeChild(link);  
+        } catch (error) {  
+          console.error('Error downloading file:', error);  
+        }  
+    },
     /************** FUNCTION: Tree - 相关 **************/
     // 点击目录节点  获取子组件tree传递的值
     async handleNode(data) {
@@ -1329,6 +1354,27 @@ export default {
       this.process = val;
       console.log('----', this.process);
     },
+
+    
+    /************** FUNCTION: this.$notify **************/
+    openNotify () {
+      let notifyObj = this.$notify({
+        title: '选材进行中...',
+        dangerouslyUseHTMLString: true,
+        message: `<strong>
+              可以在任务列表中查看选材进度，点击
+              <router-link to="/taskList" target="_self" style="color:blue">查看本任务</router-link>
+            </strong>`,
+        duration: 10000,
+        // 使用箭头函数可以拿到this。箭头函数会捕获其所在上下文的 this 值，作为自己的 this 值，自己本身并没有this值。
+        onClick: ()=> {
+          //跳转到任务列表
+          this.$router.push({ path: '/selection', name: 'selection', params: { fromAITopic: true } });
+          notifyObj.close();
+        }
+      });
+    }
+      
   }
 }
 </script>

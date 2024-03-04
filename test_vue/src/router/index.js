@@ -32,6 +32,16 @@ export default new VueRouter({
           component: () => import('../components/A_LayoutTemplate2.vue'),
         },
         {
+          path: '/lay3',
+          name: 'lay3',
+          component: () => import('../components/A_LayoutTemplate3.vue'),
+        },
+        {
+          path: '/lay4',
+          name: 'lay4',
+          component: () => import('../components/A_LayoutTemplate4.vue'),
+        },
+        {
           path: '/form',
           name: 'form',
           component: () => import('../views/MyElementUI/MyForm.vue'),

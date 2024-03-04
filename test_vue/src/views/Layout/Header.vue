@@ -5,6 +5,8 @@
             <template slot="title">css布局模版</template>
             <el-menu-item index="lay1">选项1</el-menu-item>
             <el-menu-item index="lay2">选项2</el-menu-item>
+            <el-menu-item index="lay3">选项3</el-menu-item>
+            <el-menu-item index="lay4">选项4</el-menu-item>
           </el-submenu>
 
           <el-menu-item index="home">HelloWorld</el-menu-item>
