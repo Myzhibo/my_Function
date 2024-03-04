@@ -9,6 +9,11 @@
 
           <el-menu-item index="home">HelloWorld</el-menu-item>
 
+          <el-submenu index="11">
+            <template slot="title">功能</template>
+            <el-menu-item index="selection">选择文本</el-menu-item>
+          </el-submenu>
+
           <el-menu-item index="vir">虚拟滚动</el-menu-item>
           
           <el-menu-item index="vir2">虚拟滚动2</el-menu-item>
