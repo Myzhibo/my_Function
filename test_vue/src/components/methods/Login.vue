@@ -1,7 +1,7 @@
 <template>
   <div class="background-image-container">
     <div class="logo" style="margin-top:100px">
-      <img src="/backHXN_logo2.png" alt="" style="width: 462px; height: 130px;">
+      <img src="/backHXN_logo2.png" alt="" style="width: 100%;height: auto; display: block;">
     </div>
     <div class="search-container">
       <h1>数字资源服务平台</h1>
@@ -117,14 +117,16 @@ body {
   height: 100vh;
   width: 100%;
 
-  position: relative
+  position: relative;
 }
 .logo {
   position: absolute;
   top: 0;
   left: 0;
-  max-width: 100px;
-  height: 100px;
+  // max-width: 100px;
+  // height: 100px;
+  width: 20vw;
+  height: auto;
 }
 .search-container {
   width: 600px;

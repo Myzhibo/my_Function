@@ -56,6 +56,30 @@ Vue.use(Contextmenu)
 ## 拖拽组件
 - yarn add vuedraggable
 
+# webpack
+## chunk:  npm install --save-dev webpack-bundle-analyzer
+在vue.config.js文件中配置。 analyzerMode 可以设置为 'server' 或 'static'。设置为 'server' 将在构建完成后启动一个 HTTP 服务器，并在默认浏览器中打开可视化的树状图。
+```js
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;  
+module.exports = {  
+  configureWebpack: {  
+    plugins: [  
+      new BundleAnalyzerPlugin({  
+        // 可以设置为 `server` 或 `static`  
+        analyzerMode: 'server',  
+        // 其他的配置选项...  
+      })  
+    ]  
+  }  
+};
+```
+配置好插件后，运行构建命令 , 最后会弹出一个网页可视化所有的chunk
+```js
+npm run build
+```
+
+※※ 最后，当你不再需要 webpack-bundle-analyzer 时，记得从 vue.config.js 中移除相关的配置，以避免不必要的构建时间开销。
+
 # 笔记
 
 1. 关于 App.vue 、'router-view'、router 之间的关系

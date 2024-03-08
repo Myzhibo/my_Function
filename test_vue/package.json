@@ -35,7 +35,8 @@
     "sass": "^1.68.0",
     "sass-loader": "^8.0.2",
     "sass-resources-loader": "^2.2.5",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack-bundle-analyzer": "^4.10.1"
   },
   "eslintConfig": {
     "root": true,
