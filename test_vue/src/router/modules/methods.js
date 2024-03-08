@@ -14,6 +14,11 @@ const methodsRouter = [
     name: 'clickText',
     component: () => import('../../components/methods/ClickText.vue'),
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../../components/methods/Login.vue'),
+  },
 ]
 
 export default methodsRouter

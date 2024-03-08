@@ -97,8 +97,9 @@ const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme
 console.log(isDarkMode) 
 // Result: True or False
 
-// 21. 防止浏览器缓存加hash
+// 21. 防止浏览器缓存加hash （&t=${new Date().getTime()}&h=${Math.random().toString(36).substring(7)}）
 Math.random().toString(36).substring(7) 
+`URL-URL-URL&t=${new Date().getTime()}&h=${Math.random().toString(36).substring(7)}`;
 
 // 22. if\else 简写
 a = true

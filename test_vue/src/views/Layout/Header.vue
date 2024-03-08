@@ -16,6 +16,7 @@
             <el-menu-item index="selection">选择文本</el-menu-item>
             <el-menu-item index="clickText">点击文本</el-menu-item>
             <el-menu-item index="hoverText">悬停文本</el-menu-item>
+            <el-menu-item index="login">登录页面</el-menu-item>
           </el-submenu>
 
           <el-menu-item index="vir">虚拟滚动</el-menu-item>
