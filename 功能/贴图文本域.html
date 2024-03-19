@@ -1,0 +1,66 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>图片文本域示例</title>  
+<style>  
+  .text-area {  
+    border: 1px solid #ccc;  
+    padding: 10px;  
+    min-height: 100px;  
+    width: 300px;  
+    position: relative;  
+    overflow: auto;  
+  }  
+  .text-area img {  
+    max-width: 100%;  
+    height: auto;  
+  }  
+</style>  
+</head>  
+<body>  
+  
+<div class="text-area" contenteditable="true">  
+  这里可以输入文本，也可以粘贴图片。
+</div>  
+<button id="btn">按钮</button>
+  
+<script>  
+  // 监听粘贴事件，以便在粘贴图片时进行处理  
+  const textArea = document.querySelector('.text-area');  
+  textArea.addEventListener('paste', function(event) {  
+    // 阻止默认的粘贴行为  
+    event.preventDefault();  
+      
+    // 获取剪贴板中的数据  
+    const items = (event.clipboardData || window.clipboardData).items;  
+      
+    for (let index in items) {  
+      const item = items[index];  
+      if (item.kind === 'file') {  
+        const blob = item.getAsFile();  
+        const reader = new FileReader();  
+          
+        reader.onload = function(event) {  
+          const img = document.createElement('img');  
+          img.src = event.target.result;
+          img.style.width = "100px";
+          textArea.appendChild(img);  
+        }; // 数据加载完，执行回调函数  
+          
+        reader.readAsDataURL(blob); // 以DataURL字符串的形式读取文件内容  
+      }  
+    }  
+  });  
+
+  const btn = document.getElementById('btn');
+  btn.onclick = () => {
+    console.log(1);
+    console.log(textArea.innerHTML);
+    console.log(textArea.innerText);
+  }
+</script>  
+  
+</body>  
+</html>

@@ -14,6 +14,7 @@ export default {
   mounted(){
     ///////////// 没有下面这段代码的话，css hover 不会生效      ///////////////////////////////////////////////////////////////
     ///////////// 因为使用了【v-html】指令，那么Vue 不会处理该 HTML 中的任何 Vue 特定功能，包括样式绑定和事件监听。     ///////////
+    ///////////// 如果没有使用【v-html】指令，css hover应该就可以了(没测试)     ///////////////////////////////////////////////
     const spans = this.$el.querySelectorAll('span[data-sn]');  
     spans.forEach(span => {  
       span.addEventListener('mouseenter', () => {  

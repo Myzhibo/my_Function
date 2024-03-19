@@ -297,7 +297,50 @@
     <!-- FUNCTION: this.$notify -->this.$notify<br><br>
     <el-button size="small" @click="openNotify">this.$notify</el-button>
     <hr>
-
+    <br><br>
+    <!-- FUNCTION: 标准el-dialog -->
+    <el-button size="small" @click="dialog_visible = true">标准el-dialog</el-button>
+    <el-dialog
+      title="添加文章标签"
+      :visible.sync="dialog_visible"
+      width="30%"
+      append-to-body
+      :close-on-click-modal="false"
+      >
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialog_visible = false">取 消</el-button>
+        <el-button type="primary" @click="dialog_visible = false">确 定</el-button>
+      </span>
+    </el-dialog>
+    <hr>
+    <br><br>
+    <!-- FUNCTION: 跳动的icon -->
+    <span style="cursor: pointer;position: relative;">
+      跳动的icon
+      <el-tooltip class="item" effect="light" content="点击添加文章类型" placement="right-start">
+        <i class="el-icon-info blinking-text"></i>
+      </el-tooltip>
+    </span>
+    <hr>
+    <br><br>
+    <!-- FUNCTION: v-for -->
+    <div
+        v-for="(item, index) in inputContent"
+        v-bind:key="index"
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: relative;
+          margin-top: 5px;
+        "
+      >
+      <el-input style="width:95%" v-model="item.content" placeholder="文章标签"></el-input>
+      <i class="el-icon-circle-plus" @click="addContent"
+          style="font-size: 18px; cursor: pointer;"></i>
+    </div>
+    <hr>
     <br><br>
   </div>
 </template>
@@ -910,6 +953,12 @@ export default {
       process: '',
       cancel_load: 0,  // 取消上传时 this.cancel_load += 1;
       allowToUpload: true,
+
+      /************** FUNCTION: 标准el-dialog **************/
+      dialog_visible: false,
+
+      /************** FUNCTION: v-for **************/
+      inputContent: [{ content:'' }],
     }
   },
   created(){
@@ -1355,7 +1404,6 @@ export default {
       console.log('----', this.process);
     },
 
-    
     /************** FUNCTION: this.$notify **************/
     openNotify () {
       let notifyObj = this.$notify({
@@ -1373,8 +1421,12 @@ export default {
           notifyObj.close();
         }
       });
-    }
-      
+    },
+    
+    /************** FUNCTION: v-for **************/
+    addContent () {
+      this.inputContent.push({content:''});
+    },
   }
 }
 </script>
@@ -1545,4 +1597,29 @@ a {
       list-style: disc;
     }
   }
+
+
+// <!-- FUNCTION: 跳动的icon -->
+@keyframes blink {
+  0%, 100% {
+    color: #999; /* 原色 */
+    font-size: inherit; /* 原大小 */
+  }
+  50% {
+    color: orange; /* 红色 */
+    font-size: 1.1em; /* 变大 */
+  }
+}
+
+.blinking-text {
+  animation: blink 1.5s infinite; /* 应用动画，持续时间为2秒，无限次循环 */
+  position: absolute;
+  // margin-left: -2px;
+}
+
+// <!-- FUNCTION: v-for -->
+.el-icon-circle-plus:hover {
+  // color: #7a7e9a;
+  color: pink;
+}
 </style>

@@ -68,8 +68,8 @@ export default {
       this.textBefore = range.startContainer.textContent.slice(0, range.startOffset);
       this.textAfter = range.endContainer.textContent.slice(range.endOffset);
       this.isTextSelected = this.selectedText.trim().length > 0;
-      // console.log(this.selectedText, selection);
-      // console.log(this.textBefore);
+      console.log(this.selectedText, selection);
+      console.log(this.textBefore);
       const regex = /\_\_(\d+)\_\_/g;
       const matches = this.textAfter.match(regex);
       if(matches){

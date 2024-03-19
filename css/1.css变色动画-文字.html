@@ -1,0 +1,29 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>闪烁动画文本</title>  
+<style>  
+@keyframes blink {  
+  0%, 100% {  
+    color: inherit; /* 原色 */  
+    font-size: inherit; /* 原大小 */  
+  }  
+  50% {  
+    color: red; /* 红色 */  
+    font-size: 1.5em; /* 变大 */  
+  }  
+}  
+  
+.blinking-text {  
+  animation: blink 2s infinite; /* 应用动画，持续时间为2秒，无限次循环 */  
+}  
+</style>  
+</head>  
+<body>  
+  
+<p class="blinking-text">这是一段闪烁的文字。</p>  
+  
+</body>  
+</html>

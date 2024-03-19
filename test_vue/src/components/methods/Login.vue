@@ -40,6 +40,7 @@
         <el-button type="primary" @click="loginHandler">登 录</el-button>
       </div>
     </div>
+    <div class="my-font"> &copy;111111111111111</div>
   </div>
 </template>
 
@@ -112,7 +113,8 @@ body {
 .background-image-container {
   /* 设置背景图片 */
   background-image: url('/backHXN.jpg');
-  background-size: cover;
+  // background-size: cover;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   height: 100vh;
   width: 100%;
@@ -123,9 +125,8 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  // max-width: 100px;
-  // height: 100px;
-  width: 20vw;
+  width: 20%;
+  min-width: 150px;
   height: auto;
 }
 .search-container {
@@ -140,7 +141,20 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  z-index: 9999;
+  }
+
+  .my-font {
+  text-align: center;
+  font-size: 14px;
+  color: #999;
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
+
 h1 {
   margin-bottom: 20px;
   letter-spacing: 2px;

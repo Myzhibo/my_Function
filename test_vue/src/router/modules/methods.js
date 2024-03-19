@@ -19,6 +19,11 @@ const methodsRouter = [
     name: 'login',
     component: () => import('../../components/methods/Login.vue'),
   },
+  {
+    path: '/leave_route',
+    name: 'leave_route',
+    component: () => import('../../components/methods/LeaveRoute.vue'),
+  },
 ]
 
 export default methodsRouter
