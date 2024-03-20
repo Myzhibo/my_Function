@@ -24,6 +24,11 @@ const methodsRouter = [
     name: 'leave_route',
     component: () => import('../../components/methods/LeaveRoute.vue'),
   },
+  {
+    path: '/skeleton',
+    name: 'skeleton',
+    component: () => import('../../components/methods/Skeleton.vue'),
+  },
 ]
 
 export default methodsRouter

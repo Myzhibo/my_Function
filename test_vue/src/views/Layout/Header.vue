@@ -18,6 +18,7 @@
             <el-menu-item index="hoverText">悬停文本</el-menu-item>
             <el-menu-item index="login">登录页面</el-menu-item>
             <el-menu-item index="leave_route">退出提示</el-menu-item>
+            <el-menu-item index="skeleton">骨架屏</el-menu-item>
           </el-submenu>
 
           <el-menu-item index="vir">虚拟滚动</el-menu-item>
