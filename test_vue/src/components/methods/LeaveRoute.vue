@@ -1,5 +1,5 @@
 <template>
-  <div class="background-image-container">
+  <div>
       <h1>数字资源服务平台</h1>
       <button @click="isSaved = !isSaved">是否保存了: {{isSaved}}</button>
   </div>

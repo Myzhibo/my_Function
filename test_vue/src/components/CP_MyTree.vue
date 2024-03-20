@@ -292,6 +292,9 @@ export default {
       }
 
       .sp-title {
+        line-height: 20px;
+        margin-bottom: 4px;
+
         // overflow: hidden;
         // text-overflow: ellipsis;
         white-space: nowrap;

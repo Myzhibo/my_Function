@@ -79,13 +79,13 @@ newArr = arr.map((item) => {
   item.body = item.body.replace('<p', "<p id='forTrack'") // replace返回新字符串
   return item
 })
-console.log("'map3'---(1) 改变原数组后再返回", newArr)
+console.log("'map3'---(1) 改变原数组后再返回", newArr) // 返回的仍然是item
 
 arr = [{ body: '<p>123</p>', id: 1 }]
 newArr = arr.map((item) => {
   return item.body.replace('<p', "<p id='a'")
 })
-console.log("'map3'---(2) 直接返回了改变后的数组", newArr)
+console.log("'map3'---(2) 直接返回了改变后的数组", newArr)  // 返回的仍然是item.body
 
 arr = ['65b9f0c1ef7f17ca235c675f', '65b9f0c1ef7f17ca235c675e', '65b9f0c5ef7f17ca235c6760']; 
 const result = arr.map((text_type_id, index) => ({

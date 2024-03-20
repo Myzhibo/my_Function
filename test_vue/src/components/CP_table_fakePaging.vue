@@ -116,10 +116,10 @@
                                           </el-tooltip>
                                           --------
                                           <el-tooltip effect="light" placement="bottom">
-                                            <div slot="content" style="width:100px">
+                                            <div slot="content" style="max-width:100px">
                                                 {{ row.test_renderHeader }}
                                             </div>
-                                            <i class="el-icon-info"></i>
+                                            <i class="el-icon-info" style="cursor: pointer;"></i>
                                           </el-tooltip>
                                       </el-button>
                                       --------
