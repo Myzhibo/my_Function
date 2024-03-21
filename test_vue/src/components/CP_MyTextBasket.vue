@@ -16,6 +16,9 @@
       </el-badge>
       <!-- 抽屉 -->
       <el-drawer @open="handleOpened" @close="handleClose" size="30%" :visible.sync="drawerVisible" :modal="false">
+        <div v-for="data of dataList">
+          {{data.title_ch}}
+        </div>
         <!-- <div class="text-basket-drawer m-l-20 m-r-20">
           <div class="text-basket-drawer-content" style="position: relative">
             <slot name="title"></slot>
@@ -54,11 +57,12 @@
 export default {
   data(){
     return {
-      dataList:['1','2'],
+      // dataList:[],
       drawerVisible: false,
       draging: false    // 是否正在拖拽
     }
   },
+  props: ['dataList'],
   methods:{
     // 拖拽
     dragMe(event) {

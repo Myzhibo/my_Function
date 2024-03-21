@@ -25,7 +25,7 @@
     <hr>
     <!-- FUNCTION: fixed组件 -->
     fixed组件
-    <CP_MyTextBasket style="z-index: 999"/>
+    <CP_MyTextBasket style="z-index: 999" :dataList="$store.getters['common/get_Basket']"/>
     <hr>
     <!-- FUNCTION: table组件 + 假分页 -->
     table组件 + 假分页  <el-button size="mini" @click="other_table=!other_table">{{other_table ? '切换为全列表格': '切换为表格2'}}</el-button>
@@ -109,8 +109,8 @@
 
               <!-- 插槽: 卡片按钮 -->
               <template #button_option="{ text }">          <!-- 接收、 插入 -->
-                <el-button size="mini" type="primary" @click.stop="changeCardColor('subscribe', text)">订阅</el-button>
-                <el-button size="mini" type="primary" @click.stop="changeCardColor('unfit', text)">不合适</el-button>
+                <el-button size="mini" type="primary" @click.stop="changeBasket('subscribe', text)">订阅</el-button>
+                <el-button size="mini" type="primary" @click.stop="changeBasket('unfit', text)">不合适</el-button>
                 <el-button size="mini" type="primary"
                   @click.stop="$router.push({ path: `/cp_myeditpage`, name: 'cp_myeditpage', params: text, query: { id: text._id }})"
                 >进入编辑</el-button>
@@ -1120,16 +1120,19 @@ export default {
       }
       // console.log(this.mutiSelected);
     },
-    changeCardColor(type, text){
+    changeBasket(type, text){
       if(type==='subscribe'){
         this.$set(text, 'subscribe', true)
         this.$set(text, 'unfit', false)
         
-        console.log(1);
-        console.log(this.$store);
+        // 存入vuex
+        this.$store.commit('common/setBasket_status', text);
       }else {
         this.$set(text, 'subscribe', false)
         this.$set(text, 'unfit', true)
+
+        // 存入vuex
+        this.$store.commit('common/removerBasket_status', text);
       }
     },
     /************** FUNCTION: 下载 - 相关 **************/
