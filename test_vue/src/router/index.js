@@ -7,6 +7,7 @@ import Layout from '../views/Layout/index.vue'
 //4. 模块化引入外部路由
 import edits from './modules/edits'
 import methodsRouter from './modules/methods'
+import myNPM from './modules/mynpm'
 
 //3. 创建并暴露一个路由器
 export default new VueRouter({
@@ -58,6 +59,7 @@ export default new VueRouter({
         },
         ...edits,
         ...methodsRouter,
+        ...myNPM,
       ],
     },
     //配置404

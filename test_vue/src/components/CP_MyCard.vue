@@ -205,20 +205,18 @@ export default {
       }
       console.log(this.data);
     },
-
     // 操作
-
-  handleCommand(e, item) {
-    this.book = item;
-    if (e === 'delete') {
-      console.log(item);
+    handleCommand(e, item) {
+      this.book = item;
+      if (e === 'delete') {
+        console.log(item);
+      }
+      if (e === 'edit') {
+        console.log(item);
+        this.bookName = item.name;
+        this.displayEditDialog = true;
+      }
     }
-    if (e === 'edit') {
-      console.log(item);
-      this.bookName = item.name;
-      this.displayEditDialog = true;
-    }
-  }
     
   },
 
