@@ -13,6 +13,7 @@
     "element-ui": "^2.15.14",
     "js-cookie": "^3.0.5",
     "localforage": "^1.10.0",
+    "multifunc-card": "^0.3.3",
     "node-sass": "^4.14.1",
     "vue": "^2.6.11",
     "vue-contextmenujs": "^1.4.11",
