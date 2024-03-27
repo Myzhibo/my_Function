@@ -372,6 +372,8 @@
       </el-dropdown-menu>
     </el-dropdown>
     <hr>
+    <!-- FUNCTION: confirm 多行提示 -->
+    <el-button @click="handleConfirm"> confirm </el-button>
     <br><br>
     <br><br>
     <br><br>
@@ -1465,6 +1467,31 @@ export default {
     addContent () {
       this.inputContent.push({content:''});
     },
+
+    /************** FUNCTION: confirm 多行提示 **************/
+    handleConfirm () {
+      const aaa = 'lalala'
+      // 把写的提示信心需要换行的地方分成数组 confirmText
+      const confirmText = [`是否${aaa}？`,  'hahahh?'] 
+      const newDatas = []
+      const h = this.$createElement
+      for (const i in confirmText) {
+        newDatas.push(h('p', null, confirmText[i]))
+      }
+      this.$confirm(
+        '提示',
+        {
+          title: '提示',
+          message: h('div', null, newDatas),
+          showCancelButton: true,
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }
+      ).then(() => {
+          console.log('OK');
+      })
+    }, 
   }
 }
 </script>
