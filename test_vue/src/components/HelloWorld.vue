@@ -342,6 +342,41 @@
     </div>
     <hr>
     <br><br>
+    <!-- FUNCTION: 下拉框多选 -->
+    <el-dropdown trigger="click">
+      <span class="el-dropdown-link">
+        下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+      </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item @mouseleave.native="() => {$refs.subDropdown.hide()}">鞋子</el-dropdown-item>
+        <el-dropdown-item>
+          <!-- 二级菜单 -->
+          <el-dropdown trigger="click" placement="right-start" :show-timeout="0" ref="subDropdown">
+            <!-- 手动控制hover显示，解决鼠标移入三级菜单时二级菜单消失问题 -->
+            <span @mouseenter="() => {$refs.subDropdown.show()}">包包</span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>古驰</el-dropdown-item>
+              <el-dropdown-item>
+                <!-- 三级菜单 -->
+                <el-dropdown trigger="hover" :show-timeout="0" placement="right-start">
+                <span>香奈儿</span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item>Boy系列</el-dropdown-item>
+                  <el-dropdown-item>Chanel 19系列</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+    <hr>
+    <br><br>
+    <br><br>
+    <br><br>
+    <br><br>
+    <br><br>
   </div>
 </template>
 

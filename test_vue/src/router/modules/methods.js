@@ -29,6 +29,11 @@ const methodsRouter = [
     name: 'skeleton',
     component: () => import('../../components/methods/Skeleton.vue'),
   },
+  {
+    path: '/multi_select',
+    name: 'multi_select',
+    component: () => import('../../components/methods/MultiSelect.vue'),
+  },
 ]
 
 export default methodsRouter
