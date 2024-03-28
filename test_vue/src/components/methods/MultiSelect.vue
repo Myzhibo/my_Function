@@ -1,12 +1,13 @@
 <template>  
   <div>
+    多层级单选
     <el-dropdown trigger="click" style="width:30%">
       <el-button style="width:100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-          {{editTag2}}<i class="el-icon-arrow-down el-icon--right"></i>
+          {{Tag1}}<i class="el-icon-arrow-down el-icon--right"></i>
       </el-button>
       <!-- 1级菜单 -->
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item v-for="(t0,i) in MYArr">
+        <el-dropdown-item v-for="(t0,i) in MYArr1">
           <el-dropdown trigger="hover" placement="right-start" :show-timeout="0">
             <span>{{t0[0]}}</span>
             <!-- 2级菜单 -->
@@ -17,7 +18,7 @@
                   <!-- 3级菜单 -->
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item v-for="(t2,i) in t1[1]">
-                      <span @click="handleClickSyncTag(t2, 'edit')">{{t2}}</span>
+                      <span @click="handleClickTag1(t2, 'edit')">{{t2}}</span>
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
@@ -27,6 +28,40 @@
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    多层级多选
+    <el-dropdown trigger="click" style="width:30%">
+      <el-button style="width:80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+          {{Tag2.join(', ')}}<i class="el-icon-arrow-down el-icon--right"></i>
+      </el-button>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item v-for="(t,i) in MYArr2">
+          <el-dropdown trigger="hover" placement="right-start" :show-timeout="100" ref="subDropdown" >
+            <!-- 1级菜单 -->
+            <span>{{t[0]}}</span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item v-for="(t1,i) in MYArr2.filter(item => item[0] === t[0])[0][1]">
+              <el-dropdown trigger="hover" :show-timeout="0" placement="right-start">
+                <!-- 2级菜单 -->
+                <span @click="handleClickTag2(t1, 'edit')"
+                    :disabled="!Tag2.includes(t1) && (Tag2 ? [...new Set(Tag2.map(tag => MYArr2.find(group => group[1].includes(tag)) ? MYArr2.find(group => group[1].includes(tag))[0] : null).filter(tagName => tagName !== null))].includes(MYArr2.find(group => group[1].includes(t1)) ? MYArr2.find(group => group[1].includes(t1))[0] : null) : '')"
+                >
+                  {{t1}}  <i v-if="Tag2.includes(t1)" class="el-icon-check" style="margin-left:10px; margin-right:-10px;color:green" />
+                </span>
+              </el-dropdown>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+    
   </div>
 </template>  
   
@@ -34,9 +69,9 @@
 export default {  
   data() {  
     return {
-      editTag2: '',
-      MYArr: 
-            [
+      // 多层级【单】选data ↓↓↓↓↓↓↓↓↓↓↓
+      Tag1: '',
+      MYArr1:[
           [
               "七年级上册",
               [
@@ -659,16 +694,114 @@ export default {
                   ]
               ]
           ]
+        ],
+
+
+        
+      // 多层级【单】选data ↓↓↓↓↓↓↓↓↓↓↓
+      Tag2: [],
+      MYArr2: [
+          [
+              "生活与学习",
+              [
+                  "校园生活",
+                  "身心健康",
+                  "励志故事",
+                  "乐学善学",
+                  "教育育人"
+              ]
+          ],
+          [
+              "做人与做事",
+              [
+                  "职业启蒙",
+                  "劳动教育",
+                  "金融理财",
+                  "实践创新"
+              ]
+          ],
+          [
+              "社会与服务",
+              [
+                  "志愿服务",
+                  "家乡变化"
+              ]
+          ],
+          [
+              "人际交往与沟通",
+              [
+                  "友谊故事",
+                  "亲情故事",
+                  "团队协作",
+                  "文化交际"
+              ]
+          ],
+          [
+              "文学体育与艺术",
+              [
+                  "艺术作品",
+                  "艺术人物",
+                  "体育活动"
+              ]
+          ],
+          [
+              "历史文化与社会",
+              [
+                  "文化习俗",
+                  "杰出人物",
+                  "公共秩序",
+                  "中国实力与美",
+                  "社会热点"
+              ]
+          ],
+          [
+              "科学与技术",
+              [
+                  "科技工程",
+                  "发明创新"
+              ]
+          ],
+          [
+              "人与自然",
+              [
+                  "自然生态",
+                  "环境保护",
+                  "灾害防范",
+                  "宇宙探索",
+                  "旅游风光"
+              ]
+            ],
         ]
+          
+      
       
     };  
   },
   mounted() {
-    console.log(this.MYArr);
+    console.log('多层级【单】选data ↓↓↓↓↓↓↓↓↓↓↓');
+    console.log(this.MYArr1);
+
+    
+    console.log('多层级【多】选data ↓↓↓↓↓↓↓↓↓↓↓');
+    console.log(this.MYArr2);
   },
   methods: {
-    handleClickSyncTag(t2) {
-      this.editTag2 = t2
+    // 多层级单选data ↓↓↓↓↓↓↓↓↓↓↓
+    handleClickTag1(t) {
+      this.Tag1 = t
+    },
+
+    // 多层级多选data ↓↓↓↓↓↓↓↓↓↓↓
+    handleClickTag2(t){
+      // 当前已经选中第二层级某一个之后就不能再选了
+      const isDisabled = !this.Tag2.includes(t) && 
+                         (this.Tag2 ? [...new Set(this.Tag2.map(tag => this.MYArr2.find(group => group[1].includes(tag)) ? this.MYArr2.find(group => group[1].includes(tag))[0] : null).filter(tagName => tagName !== null))].includes(this.MYArr2.find(group => group[1].includes(t)) ? this.MYArr2.find(group => group[1].includes(t))[0] : null) : '')
+
+      if(isDisabled){
+        return false;
+      }
+      if(!this.Tag2.includes(t)) this.Tag2.push(t);
+      else this.Tag2.splice(this.Tag2.indexOf(t), 1);
     }
   },  
 };  
