@@ -5,24 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
 <title>图片文本域示例</title>  
 <style>  
-  .text-area {  
-    border: 1px solid #ccc;  
-    padding: 10px;  
-    min-height: 100px;  
-    width: 300px;  
-    position: relative;  
-    overflow: auto;  
-  }  
-  .text-area img {  
-    max-width: 100%;  
-    height: auto;  
-  }  
+  .text-area {
+    border: 1px solid #ccc;
+    padding: 10px;
+    min-height: 200px;
+    width: 300px;
+    position: relative;
+    overflow: auto;
+  }
+  .text-area img {
+    max-width: 100%;
+    height: auto;
+  }
+  .placeholder-div {
+    position: relative;
+    min-height: 20px; /* 设置你需要的最小高度 */
+    padding: 5px;
+    border: 1px solid #ccc; /* 设置边框样式 */
+  }
+  .placeholder-div[data-placeholder]:empty::before {
+    content: attr(data-placeholder);
+    color: #999; /* 设置占位符文本的颜色 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; /* 防止点击占位符文本时触发内容编辑 */
+  }
 </style>  
 </head>  
 <body>  
   
-<div class="text-area" contenteditable="true">  
-  这里可以输入文本，也可以粘贴图片。
+<div class="text-area placeholder-div"  data-placeholder="请输入内容..." contenteditable="true">  
 </div>  
 <button id="btn">按钮</button>
   
@@ -56,9 +70,17 @@
 
   const btn = document.getElementById('btn');
   btn.onclick = () => {
-    console.log(1);
-    console.log(textArea.innerHTML);
     console.log(textArea.innerText);
+    const imgElements = textArea.querySelectorAll('img');
+    console.log(imgElements);
+    for (let imgElement of imgElements) {
+      if (imgElement && imgElement.src.startsWith('data:')) {
+          const base64Image = imgElement.src;
+          console.log('base64编码的图片数据: ', base64Image);
+      } else {
+          console.log('图片的src属性不是base64编码的数据');
+      }
+    }
   }
 </script>  
   

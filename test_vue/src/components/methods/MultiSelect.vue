@@ -36,13 +36,14 @@
     <br>
 
     多层级多选
-    <el-dropdown trigger="click" style="width:30%">
+    <el-dropdown trigger="click" style="width:30%" :hide-on-click="false">
       <el-button style="width:80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
           {{Tag2.join(', ')}}<i class="el-icon-arrow-down el-icon--right"></i>
       </el-button>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item v-for="(t,i) in MYArr2">
-          <el-dropdown trigger="hover" placement="right-start" :show-timeout="100" ref="subDropdown" >
+        <el-dropdown-item v-for="(t,i) in MYArr2" style="position: relative;">
+                <span style="position: absolute; right:5px; color:#999; font-size:10px ; ">></span>
+          <el-dropdown trigger="hover" placement="right-start" :show-timeout="100" :hide-on-click="false" ref="subDropdown" >
             <!-- 1级菜单 -->
             <span>{{t[0]}}</span>
             <el-dropdown-menu slot="dropdown">
