@@ -1,3 +1,6 @@
+# 运行
+
+- npm run serve
 # -包
 
 ## -node
