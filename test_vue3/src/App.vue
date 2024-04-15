@@ -9,7 +9,8 @@
       mode="horizontal"
       @select="handleSelect"
     >
-      <el-menu-item index="/">HOME</el-menu-item>
+      <el-menu-item index="">HOME</el-menu-item>
+      <el-menu-item index="Vue3API">API</el-menu-item>
       <el-sub-menu>
         <template #title>工具1</template>
         <el-menu-item index="helloworld">hello world</el-menu-item>

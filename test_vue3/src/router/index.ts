@@ -3,6 +3,7 @@ import Home from '../views/Home.vue';
 import HelloWorld from '../views/HelloWorld.vue';
 import UploadBook from '../views/UploadBook.vue';
 import ImageDetail from '../views/ImageDetail.vue';
+import Vue3API from '../views/Vue3API.vue';
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/ImageDetail',
     name: 'ImageDetail',
     component: ImageDetail,
+  },
+  {
+    path: '/Vue3API',
+    name: 'Vue3API',
+    component: Vue3API,
   },
   // 其他路由...
 ];

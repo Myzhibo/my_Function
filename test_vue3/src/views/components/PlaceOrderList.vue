@@ -681,6 +681,14 @@ function handleWarningInfo() {
 function handleCloseWarningTable() {
   visible_warningTable.value = false;
 }
+function delImage(row) {
+  if (row.available) {
+    return (row.available = false);
+  } else {
+    const index = props.fileList.findIndex(item => item === row);
+    emit('deleteImage', index, row.name);
+  }
+}
 </script>
 
 <style lang="scss" scoped>
