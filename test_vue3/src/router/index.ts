@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HelloWorld from '../views/HelloWorld.vue';
 import Home from '../views/Home.vue';
+import HelloWorld from '../views/HelloWorld.vue';
+import UploadBook from '../views/UploadBook.vue';
+import ImageDetail from '../views/ImageDetail.vue';
 
 const routes = [
   {
@@ -12,6 +14,16 @@ const routes = [
     path: '/helloworld',
     name: 'HelloWorld',
     component: HelloWorld,
+  },
+  {
+    path: '/UploadBook',
+    name: 'UploadBook',
+    component: UploadBook,
+  },
+  {
+    path: '/ImageDetail',
+    name: 'ImageDetail',
+    component: ImageDetail,
   },
   // 其他路由...
 ];

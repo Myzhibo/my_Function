@@ -1,17 +1,14 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-
-defineProps<{ msg: string }>()
-
-const count = ref(0)
-</script>
-
 <template>
-HelloWorld
+  <div>
+    HelloWorld123  
+    <el-button type="primary">主要按钮</el-button>  
+    <el-button>次要按钮</el-button>
+    <el-icon name="minus"></el-icon>  
+  </div>
 </template>
 
+<script setup lang="ts">
+</script>
+
 <style scoped>
-.read-the-docs {
-  color: #888;
-}
 </style>
