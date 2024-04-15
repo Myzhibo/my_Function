@@ -1,6 +1,6 @@
 # 运行
 
-- npm run serve
+- yarn run serve
 # -包
 
 ## -node
