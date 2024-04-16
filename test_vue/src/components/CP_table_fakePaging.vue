@@ -24,6 +24,7 @@
                           :data="showData"
                           style="width: 100%; z-index: 99"
                           @selection-change="handleSelectionChange"
+                          @cell-click="clickCell"
                         >
                         <!-- :reserve-selection="true" -->
 
@@ -313,6 +314,14 @@ export default {
       },
       [h('span')]
       )
+    },
+    // 点击表格
+    clickCell (row, column, cell, event) {
+      console.log(row);
+      console.log(column);
+      console.log(column.property);
+      console.log(cell);
+      console.log(event);
     },
     getRowKeys(row){
       return row.uid;
