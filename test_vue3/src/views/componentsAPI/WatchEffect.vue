@@ -8,17 +8,17 @@
       <tr>
         <td>第一个参数： 副作用 effect</td>
         <td>{{sum2}} <el-button @click="handleClick2">sum2 + 1</el-button></td>
-        <td><span style="border-radius: 4px;background-color: pink;">副作用函数 下一次执行前被调用</span></td>
+        <td><span style="border-radius: 4px;background-color: #ffdde3;">副作用函数 下一次执行<b style="color:green">前</b>被调用</span></td>
       </tr>
       <tr>
         <td>返回值</td>
         <td>{{sum3}} <el-button @click="handleClick3">sum3 + 1</el-button>&nbsp;<el-button @click="stopWatch">停止</el-button></td>
-        <td><span style="border-radius: 4px;background-color: pink;">停止时, 不影响最后一次 onCleanup 的执行， 仍会执行一次副作用</span></td>
+        <td><span style="border-radius: 4px;background-color: #ffdde3;">停止时, 不影响最后一次 onCleanup 的执行， <b style="color:green">仍会执行</b>一次副作用</span></td>
       </tr>
       <tr>
         <td>第二个参数： 配置项</td>
         <td><input id="ipt" v-model="inputVal" /></td>
-        <td><span style="border-radius: 4px;background-color: pink;">一般需要在 dom 更新之后再获取的情况，可以设置为 post</span>
+        <td><span style="border-radius: 4px;background-color: #ffdde3;">一般需要在 dom 更新之后再获取的情况，可以设置为 post</span>
           
           <el-tooltip placement="right-end" effect="dark">
             <template #content>
@@ -34,7 +34,7 @@
                 watchSyncEffect()：watchEffect() 使用 flush: 'sync' 选项时的别名 <br>
               </div>
             </template>
-            配置项
+            <el-icon :size="16" style="color:skyblue; cursor: pointer;"><Management /></el-icon>
           </el-tooltip>
         </td>
       </tr>
@@ -43,6 +43,7 @@
 </template>
 
 <script setup lang="ts">
+import {Management} from '@element-plus/icons-vue'
 import {reactive, ref, watch, watchEffect} from 'vue'        //引入watchEffect
 
   // ========================= watchEffect =========================
