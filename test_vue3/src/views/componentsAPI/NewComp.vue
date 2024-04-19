@@ -9,7 +9,7 @@
     <br>
 
   2<div style="border: 1px solid black">
-    <p> <b style="color:green">teleport</b>: 是一中能够将组件html结构移动到指定位置的技术 </p>
+    <p> <b style="color:green">teleport</b>: 是一种能够将组件html结构移动到指定位置的技术 </p>
           把一段代码套上teleport to到body上面，这段代码就被转移到body上面了 ， 无论他被嵌套到哪个组件中  【to="标签名/class类名/id名"】
           <pre>
             &lt;teleport to="body"&gt;
@@ -21,6 +21,10 @@
               &lt;/div&gt;
             &lt;/teleport&gt;
           </pre>
+
+          传递组件 <br>
+          首先，在父组件的模板中添加一个目标元素： &lt;div id="dialog-teleport-target"&gt;&lt;/div&gt;    <br>
+          然后，在子组件中 &lt;teleport to="#dialog-teleport-target"&gt; ... &lt;/teleport&gt;
   </div>
 
   <br>
