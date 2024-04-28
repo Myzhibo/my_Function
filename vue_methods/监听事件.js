@@ -9,8 +9,14 @@ mounted(){
 
   // keydown 监听键盘事件
   document.addEventListener('keydown', function (event) {
+    console.log(event.key);
     if (event.key === 'Escape') {
       console.log('Esc key pressed!');
+    }
+  });
+  document.addEventListener('keyup', function (event) {
+    if (event.key === 'Shift') {
+      console.log('shift键被抬起');
     }
   });
 

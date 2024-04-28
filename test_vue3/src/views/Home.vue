@@ -10,11 +10,18 @@
     <br>
     <hr>
     <LongPress/>
+    <br>
+    <hr>
+    <Choice/>
+    <hr>
+    <CreateWatcher/>
   </div>
 </template>
 
 <script setup lang="ts">
 import LongPress from './components/LongPress.vue';
+import Choice from './components/Choice.vue';
+import CreateWatcher from './components/CreateWatcher.vue';
 </script>
 
 <style scoped>
