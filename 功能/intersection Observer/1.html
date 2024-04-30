@@ -1,0 +1,77 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>实践： 懒加载图片，图片出现在视口之后再加载</title>  
+    <!-- https://picsum.photos/100/100?r=1    这是一个可以随机生成一张照片的接口 -->
+    <!-- https://source.unsplash.com/random/100x100    这是一个可以随机生成一张照片的接口 -->
+</head>  
+<body>  
+  <div id="imageContainer"></div>
+
+  <script>
+      /********************   准备工作    循环创建1000个img元素用于测试  ********************/
+      var container = document.getElementById('imageContainer');
+      for (var i = 0; i < 1000; i++) {
+          var img = document.createElement('img');
+          // img.src = 'https://source.unsplash.com/random/100x100';
+          img.src = './static/default.jpg';
+          img.id = 'image-' + i;
+          img.className = 'imageClass';
+          img.style.weight = '100px';
+          img.style.height = '100px';
+          img.style.marginRight = '10px';
+          img.style.marginBottom = '10px';
+          container.appendChild(img);
+      } 
+
+      
+      /********************   实践： 懒加载图片，图片出现在视口之后再加载   ********************/
+      /*  【IntersectionObserver】接收两个参数
+      *       1. callback：可见性发现变化时的回调函数.
+                  回调参数： entries 是一个数组，给全部被观察的元素一个entry对象。
+                                字段 isIntersecting 表示当前元素是否被观察， 即 是否在视口中
+      *       2. option：配置对象
+      *           {
+      *             threshold: 决定了什么时候触发观察回调函数。
+      *                         它是一个数组，每个成员都是一个门槛值，默认为[0]，即交叉比例（intersectionRatio）达到0时触发回调函数。
+      *                         可以自定义这个数组。比如，[0, 0.25, 0.5, 0.75, 1]就表示当目标元素 0%、25%、50%、75%、100% 可见时，会触发回调函数。
+      *             root: 观察的目标跟什么东西进行交叉，默认null是浏览器的视口，也可以指定具体元素，指定元素的时候用于观察的元素必须是指定元素的子元素    
+      *             rootMargin： 可以使root向外扩散多少像素，比如扩散10px，那么在图片距离视口10px就要交叉的时候，就会触发观察回调
+      *           }
+      */
+
+      // 创建一个观察器
+      const io = new IntersectionObserver(
+      (entries) => {
+        // console.log('交叉情况变化了', entries);
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            console.log('交叉了', entry);
+            // 把所有在视口中的img元素，替换为真实图片
+            const img = entry.target;
+            setTimeout(() => {
+              img.src = "https://picsum.photos/100/100?r=1";
+            }, 1000);
+            // 取消对这个图片的监听
+            io.unobserve(img);
+          }
+        }
+      }, 
+      {
+        threshold: 0,
+        // root: null,
+        // rootMargin: 0,
+      });
+      // 获取到全部图片
+      const imgs = document.querySelectorAll('img');
+      console.log(imgs);
+      imgs.forEach(img => {
+        // 调用观测器 observe 方法 观察
+        io.observe(img);
+      });
+  </script>
+
+</body>  
+</html>
