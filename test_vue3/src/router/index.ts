@@ -4,6 +4,7 @@ import HelloWorld from '../views/HelloWorld.vue';
 import UploadBook from '../views/UploadBook.vue';
 import ImageDetail from '../views/ImageDetail.vue';
 import Vue3API from '../views/Vue3API.vue';
+import Authority from '../views/Authority.vue';
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: '/ImageDetail',
     name: 'ImageDetail',
     component: ImageDetail,
+  },
+  {
+    path: '/Authority',
+    name: 'Authority',
+    component: Authority,
   },
   {
     path: '/Vue3API',

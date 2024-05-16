@@ -1,0 +1,25 @@
+{
+  "code": 0,
+  "message": "38ms",
+  "data": {
+    "_id": "662b45c1f0e0af623e8d64ed",
+    "customer_id": 2,
+    "config": {
+      "adminAccess": [
+        "/workbench",
+        "/project_manage"
+      ],
+      "makerAccess": [
+        "/workbench",
+        "/project_manage"
+      ],
+      "projectAdminAccess": [
+        "/workbench"
+      ],
+      "editorAccess": []
+    },
+    "available": true,
+    "create_time": "2024-04-26 14:12:17",
+    "update_time": "2024-04-26 14:12:17"
+  }
+}

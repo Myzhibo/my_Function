@@ -16,6 +16,7 @@
         <el-menu-item index="helloworld">hello world</el-menu-item>
         <el-menu-item index="UploadBook">上传</el-menu-item>
         <el-menu-item index="ImageDetail">图片详情</el-menu-item>
+        <el-menu-item index="Authority">权限管理</el-menu-item>
         <el-sub-menu index="2-4">
           <template #title>item four</template>
           <el-menu-item index="2-4-1">item one</el-menu-item>
