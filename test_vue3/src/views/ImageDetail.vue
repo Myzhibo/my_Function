@@ -161,7 +161,7 @@ const projectInfo = reactive({});
 
 const theHeight = ref(0); // 初始高度设置为 0
 const theGap = ref(0);
-const bigDiv = ref(null); // 使用 ref 来引用 bigDiv 元素
+const bigDiv = ref(null); // 使用 ref 来引用 bigDiv 元素    // 和vue2的 this.refs.bigDiv 一样    // #获取ref #获取refs 
 
 // 更新 div 高度的方法
 function updateDivHeight() {

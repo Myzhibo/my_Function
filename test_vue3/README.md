@@ -1,6 +1,7 @@
 # 运行
 
 - npm run dev
+- yarn run vite
 
 # -包
 
