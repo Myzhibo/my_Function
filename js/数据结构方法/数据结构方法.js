@@ -37,8 +37,15 @@ console.log('**************  数组  **************')
 // splice
 arr = [1, 2, 3, 4, 5]
 i = arr.indexOf(2)
-arr.splice(i, 1)
-console.log("'splice'---", arr)
+res = arr.splice(i, 1)  // i位置往后截取一个
+console.log("'splice'---", arr, '改变原数组')
+console.log("'splice 返回值'---", res)
+// slice
+arr = [1, 2, 3, 4, 5]
+i = arr.indexOf(2)
+res = arr.slice(i,2) // 截取i位置到index为2的位置
+console.log("'slice'---", arr, '不会改变原数组')
+console.log("'slice 返回值'---", res)
 
 // shift(删掉第一个元素), unshift(在第一个位置添加元素)
 arr = [1, 2, 3, 4, 5]
