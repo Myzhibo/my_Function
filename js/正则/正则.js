@@ -45,11 +45,25 @@ console.log('5-> ', str.match(reg))
 // 符号i：     忽略大小写
 console.log('6-> ', /[a-z]/i.test('qweQWE')) // true
 
-/***************************************************************replace***********************************************************/
-let str1 = '<p class="indent-2 style"><span style="font-family:KaiTi;">③今天，<p class="some-class">';  
+/***************************************************************replace*****（+ 回调函数,  参数是匹配到的str)******************************************************/
+let str1 = '<p class="indent-2" style><span style="font-family:KaiTi;">③今天，<p class="some-class">';  
 
 // 找到第一个p标签将class为indent-\d的属性拿掉
 let res = str1.replace(/^<p[^<>]+class="([^"])+/g, el => {
+  console.log('? el: ', el);
   return el.replace(/indent-\d+/g, '')
 });  
-console.log(res);
+console.log('7-> ', res);
+
+/***************************************************************replace******（+ 回调函数,  参数是匹配到的str)*****************************************************/
+let str2 = 'At the beginning, it was not <span data-sn="4">__4__</span>for her to swim.';
+
+const regex = /\_\_(\d+)\_\_/g;
+let res2 = str2.replace(regex, function(match, capture) {   // *** 回调函数的第一个参数是match到的字符串， 第二三四..个参数是捕获组, 例如本例中(\d+)就是一个捕获组
+  console.log(match, capture);
+  const number = parseInt(capture, 10);
+  if (isNaN(number)) {
+    return match;
+  }
+  return `__${number - 1}__`;
+});
