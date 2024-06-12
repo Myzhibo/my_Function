@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+
+  <style>
+    .container{
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+    }
+    .left{
+      width: 55vw;
+      height: 100vh;
+      background-color: green;
+    }
+    .top{
+      width: 55vw;
+      height: 10vh;
+      background-color: red;
+    }
+    .middle{
+      width: 55vw;
+      height: 80vh;
+      background-color: yellow;
+    }
+    .bottom{
+      width: 55vw;
+      height: 10vh;
+      background-color: pink;
+    }
+    .right{
+      width: 45vw;
+      height: 100vh;
+      background-color: #999;
+    }
+  </style>
+
+</head>
+<body>
+  <div class="container">
+    <div class=left>
+      <div class="top">1</div>
+      <div class="middle">
+        <!-- style="object-fit: contain;"  保持纵横比 -->
+        <img class="middle" style="object-fit: contain;" src="Tlogo.png" alt="">
+      </div>
+      <div class="bottom">3</div>
+
+    </div>
+    <div class=right>2</div>
+  </div>
+</body>
+</html>

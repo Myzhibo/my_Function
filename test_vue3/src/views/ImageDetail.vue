@@ -34,7 +34,7 @@
           @mouseover="hoverImage(image._id, index)"
           @mouseleave="leaveImage"
         >
-          <!-- 对于某些布局，你可能希望图片填充整个 <div> 的尺寸，同时仍然保持其纵横比。在这种情况下，可以使用 object-fit 属性。(貌似没有用。。) -->
+          <!-- 对于某些布局，你可能希望图片填充整个 <div> 的尺寸，同时仍然保持其纵横比。在这种情况下，可以使用 object-fit 属性。-->
           <img
             :src="
               image.tif_image?.image_url

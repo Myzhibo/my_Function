@@ -21,6 +21,37 @@
             <div>{{ scope.row.name }}</div>
         </template>
       </el-table-column>
+      <el-table-column width="120" align="center" prop="status">
+          <template v-slot:header="scope1">
+            <div class="filter-creator" style="display: flex;">
+              <el-select v-model="statusValue" placeholder="项目状态" size="small" @change="handleSearch"
+                style="width:100px">
+              <el-option
+                v-for="item in [
+                  {label: '全部', value: -1},
+                  {label: '初始化', value: 0},
+                  {label: '进行中', value: 1},
+                  {label: '已完成', value: 2},
+                  {label: '失败', value: 3},
+                  {label: '入库失败', value: 4},
+                ]"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+            </div>
+          </template>
+          <template v-slot:default="scope">
+            <div>
+              <div v-if="scope.row.status === 0" style="color: #999">初始化</div>
+              <div v-if="scope.row.status === 1" style="color: #2727c5">进行中</div>
+              <div v-if="scope.row.status === 2" style="color: green">已完成</div>
+              <div v-if="scope.row.status === 3" style="color: #df2b2b">失败</div>
+              <div v-if="scope.row.status === 4" style="color: #df2b2b">入库失败</div>
+            </div>
+          </template>
+        </el-table-column>
       <el-table-column width="100" align="center" label="状态" prop="status">
         <template v-slot="scope">
           <div style="display: flex; justify-content: center">
