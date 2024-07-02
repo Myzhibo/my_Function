@@ -114,3 +114,29 @@ for (const item of iterateNode(html?.children || [])) {
   const node = item.node;  // item.node as HTMLElement;
   console.log(node);
 }
+
+// 遍历json树 寻找祖先节点
+export function findNames(obj, targetKey, path = [], flatPath = []) {
+  // 遍历对象或数组
+  Object.keys(obj).forEach((key, index) => {
+      // 更新当前路径
+      let currentPath = [...path, key];
+
+      // 如果当前值是对象或数组，则递归
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+          findNames(obj[key], targetKey, currentPath, flatPath);
+      }
+
+      // 检查当前路径的最后一个元素是否为目标名称
+      if (key === targetKey) {
+          let fullPath = currentPath.slice(0, -1);
+          let fullPathStr = fullPath.map(part => part.toString())
+          let fullPathIndex = fullPath.map(part => Number(part)).filter(part => !Number.isNaN(part))
+
+          // flatPath: 到达某一个子节点的路径
+          flatPath.push({ path: fullPathStr, pathIndex: fullPathIndex, value: obj[key] });
+      }
+  });
+
+  return { flatPath };
+}

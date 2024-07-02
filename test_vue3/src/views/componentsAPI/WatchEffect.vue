@@ -60,6 +60,13 @@ import {reactive, ref, watch, watchEffect} from 'vue'        //引入watchEffect
   function handleClick3 () {
     sum3.value = sum3.value + 1;
   }
+  // 0. 普通watch
+  watch(
+    () => sum1.value,
+    async (newVal, oldVal) => {
+      console.log("普通watch .", sum1);
+    }
+  ) 
   
   // 1. 用谁就监视谁, 回调里想看谁就写谁
   watchEffect(()=>{
