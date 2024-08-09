@@ -1,0 +1,67 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Storyline Table</title>  
+    <style>  
+        table {  
+            width: 100%;  
+            border-collapse: collapse;  
+        }  
+        th, td {  
+            border: 1px solid #ddd;  
+            padding: 8px;  
+            text-align: left;  
+        }  
+        th {  
+            background-color: #f2f2f2;  
+        }  
+        textarea {  
+            width: 100%;  
+            height: 50px;  
+            margin: 0;  
+            padding: 5px;  
+            box-sizing: border-box;  
+        }  
+    </style>  
+</head>  
+<body>  
+  
+<table class="storyline">  
+    <thead>  
+        <tr>  
+            <th>情节发展</th>  
+            <th colspan="3">细节</th>  
+        </tr>  
+        <tr>  
+            <th></th>  
+            <th>Time/Place</th>  
+            <th>What happened?</th>  
+            <th>How did the character respond?</th>  
+        </tr>  
+    </thead>  
+    <tbody>  
+        <!-- 假设数据 -->  
+        <tr>  
+            <td>情节1</td>  
+            <td contenteditable="true">2023-01-01, School</td>  
+            <td contenteditable="true">Eva met her new classmates.</td>  
+            <td contenteditable="true">She was nervous but excited.</td>  
+        </tr>  
+        <tr>  
+            <td>情节2</td>  
+            <td contenteditable="true">2023-01-02, Classroom</td>  
+            <td contenteditable="true">Eva gave a presentation.</td>  
+            <td contenteditable="true">She was confident and did well.</td>  
+        </tr>  
+    </tbody>  
+</table>  
+  
+<script>  
+    // 这里没有使用 Vue.js，只是纯 HTML 和 CSS  
+    // 如果要添加类似 Vue 的动态功能，你需要引入 Vue.js 并在 JavaScript 中管理数据  
+</script>  
+  
+</body>  
+</html>
