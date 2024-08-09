@@ -158,14 +158,27 @@ export default {
       }
     },
     enterEditChapterHandle (chapter) {
-      const index = this.flattenJson.findIndex(item => item === chapter);
+      // 找到按下回车键时
+      const selectionStart = this.$refs[chapter.node_id][0]?.$el?.querySelector('input')?.selectionStart;
+      console.log(selectionStart);
+      const index = this.flattenJson.findIndex((item) => item === chapter)
       if (index === this.flattenJson.length - 1) {
+        // 如果是最后一个input, 那么开启新的最下面的空input
         this.$nextTick(() => {
           this.$refs.input.focus();
         });
       } else {
+        // 如果不是， 那么插入一个input
+        let positionIndex;
+        if (selectionStart === 0) {
+          // 如果光标在最前面， 那么就在上面插入
+          positionIndex = index;
+        } else {
+          // 如果不是， 那么就在下面插入
+          positionIndex = index + 1;
+        }
         const node = this.defaultChapterNode(chapter.node_level, ' ');
-        this.flattenJson.splice(index + 1, 0, node);
+        this.flattenJson.splice(positionIndex, 0, node);
         const focusId = node.node_id;
         this.$nextTick(() => {
           this.$refs[focusId][0].focus();

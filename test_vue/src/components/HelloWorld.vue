@@ -172,6 +172,9 @@
     <el-button @click="setLocal" size="small" type="primary" >存入localForage</el-button>
     <el-button @click="getLocal" size="small" type="primary" >获取localForage(console)</el-button> 
     <br><br>
+    <el-input v-model="testLocalForage2" type="text" style="width:250px;"></el-input>
+    <el-button @click="getAndSetLocal" size="small" type="primary" >判断是否已有这个名字的local，没有创建一个</el-button> 
+    <br><br>
     <hr>
     <!-- FUNCTION: el-tag的更多颜色  el-tag - 相关 -->  
     el-tag的更多颜色<br><br>
@@ -872,6 +875,7 @@ export default {
 
       /********************* FUNCTION: 筛选 - 相关 *********************/
       testLocalForage: '',
+      testLocalForage2: '',
 
       /************** FUNCTION: el-tag - 相关 **************/
       hobbies: ['篮球', '足球', '排球'],
@@ -1220,6 +1224,37 @@ export default {
           console.error('Error downloading file:', error);  
         }  
     },
+    async download3(item) {
+      const url = window.location.protocol + item.url.replace('http:', '').replace('https:', '');
+      
+      // fetch(item.url)
+      fetch(url)
+      .then(response => {
+        if (response.status === 200) {
+          this.loading = true;
+          return response.blob()
+        } else {
+          this.$message.error('下载失败: 文件不存在');
+          return;
+        }
+      })
+      .then(blob => {  
+        const url = URL.createObjectURL(blob);  
+        const link = document.createElement('a');  
+        link.href = url;  
+        link.download = item.name;  
+        document.body.appendChild(link);  
+        link.click();  
+        document.body.removeChild(link);  
+        URL.revokeObjectURL(url); // 清理内存
+        
+        this.loading = false;
+      })
+      .catch(error => {
+        console.error('下载失败:', error)
+        this.loading = false;  
+      });
+    },
     /************** FUNCTION: Tree - 相关 **************/
     // 点击目录节点  获取子组件tree传递的值
     async handleNode(data) {
@@ -1349,6 +1384,20 @@ export default {
       // await this.$localForage.getItem(('myData')).then((data) => {
       //   console.log(data);
       // });
+    },
+    async getAndSetLocal() {
+      console.log(this.testLocalForage2);
+      await this.$localForage.keys().then(async key => {
+        if (key.filter(item => item === this.testLocalForage2).length === 0) {
+          // 没有， 创建一个
+          this.$localForage.setItem(this.testLocalForage2, this.testLocalForage2);
+        } else {
+          console.log(this.$localForage.keys());
+          // 没有， 打印出来
+          const data = await this.$localForage.getItem(this.testLocalForage2);
+          console.log(data);
+        }
+      });
     },
     /************** FUNCTION: el-tag - 相关 **************/
     handleClickTag(index){

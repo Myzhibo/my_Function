@@ -37,6 +37,7 @@ export default {
     window.onresize = () => {
       return (() => {
         this.$nextTick(() => {
+          console.log(window.innerWidth);
           this.dragControllerDiv();
         });
       })();
