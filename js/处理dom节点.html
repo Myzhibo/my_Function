@@ -96,6 +96,10 @@
       console.log(p2.nextSibling) // 查找节点的父节点
       console.log('--div4的子节点--')
       console.log(div4.childNodes) // 查找节点的子节点
+      console.log('--div4的子节点 nodeType- : 1元素节点  3文本节点-');
+      div4.childNodes.forEach(node => {
+        console.log(node, node.nodeType);  // nodeType : 1元素节点  3文本节点
+      })
 
       /***创建节点，编辑样式***/
       console.log('-------创建节点，编辑样式------')
@@ -162,7 +166,7 @@
         *  滚动条滚到底 (展示最新一条数据)
         * (this.$refs.theBody as HTMLElement).scrollTop = (this.$refs.theBody as HTMLElement).scrollHeight;
         * document.getElementById('page-container').scrollTop = document.getElementById('page-container').scrollHeight;
-        * /
+       */
     </script>
   </body>
 </html>

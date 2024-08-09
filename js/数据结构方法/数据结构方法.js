@@ -84,7 +84,7 @@ console.log("'map2'---", newArr)
 arr = [{ body: '<p>123</p>', id: 1 }]
 newArr = arr.map((item) => {
   item.body = item.body.replace('<p', "<p id='forTrack'") // replace返回新字符串
-  return item
+  return item           // 重点在这： return的是map之后的item
 })
 console.log("'map3'---(1) 改变原数组后再返回", newArr) // 返回的仍然是item
 
