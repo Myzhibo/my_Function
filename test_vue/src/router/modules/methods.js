@@ -34,6 +34,16 @@ const methodsRouter = [
     name: 'multi_select',
     component: () => import('../../components/methods/MultiSelect.vue'),
   },
+  {
+    path: '/float_tool',
+    name: 'float_tool',
+    component: () => import('../../components/methods/WithFloatTool.vue'),
+  },
+  {
+    path: '/test_html',
+    name: 'test_html',
+    component: () => import('../../components/methods/TestHtml.vue'),
+  },
 ]
 
 export default methodsRouter

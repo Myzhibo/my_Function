@@ -20,11 +20,14 @@
             <el-menu-item index="leave_route">退出提示</el-menu-item>
             <el-menu-item index="skeleton">骨架屏</el-menu-item>
             <el-menu-item index="multi_select">下拉框多选</el-menu-item>
+            <el-menu-item index="float_tool">悬浮工具栏</el-menu-item>
+            <el-menu-item index="test_html">v-html</el-menu-item>
           </el-submenu>
           <el-submenu index="22">
             <template slot="title">我的npm组件</template>
             <el-menu-item index="MyCard">多功能卡片</el-menu-item>
           </el-submenu>
+          <el-menu-item index="FatherChild">父子组件</el-menu-item>
 
           <el-menu-item index="vir">虚拟滚动</el-menu-item>
           
