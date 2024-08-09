@@ -57,6 +57,11 @@ export default new VueRouter({
           name: 'vir2',
           component: () => import('../components/CP_Virtual2.vue'),
         },
+        {
+          path: '/FatherChild',
+          name: 'FatherChild',
+          component: () => import('../components/testProp/Father.vue'),
+        },
         ...edits,
         ...methodsRouter,
         ...myNPM,
