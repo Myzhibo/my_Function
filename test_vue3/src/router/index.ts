@@ -6,6 +6,8 @@ import ImageDetail from '../views/ImageDetail.vue';
 import Vue3API from '../views/Vue3API.vue';
 import Authority from '../views/Authority.vue';
 
+import componentsRouter from './componentsRouter.ts'
+
 const routes = [
   {
     path: '/',
@@ -38,6 +40,7 @@ const routes = [
     component: Vue3API,
   },
   // 其他路由...
+  ...componentsRouter
 ];
 
 const router = createRouter({

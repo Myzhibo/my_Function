@@ -24,6 +24,11 @@
           <el-menu-item index="2-4-3">item three</el-menu-item>
         </el-sub-menu>
       </el-sub-menu>
+      <el-sub-menu>
+        <template #title>组件</template>
+        <el-menu-item index="myComPage">使用组件</el-menu-item>
+        <el-menu-item index="layoutAndMenu">布局和菜单</el-menu-item>
+      </el-sub-menu>
       <el-menu-item index="3" disabled>Info</el-menu-item>
       <el-menu-item index="4">Orders</el-menu-item>
     </el-menu>
