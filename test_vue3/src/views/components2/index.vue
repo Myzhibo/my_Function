@@ -1,4 +1,5 @@
 <template>
+  <div>
   我是主页： <br>
 
   <LayoutAndMenu 
@@ -19,7 +20,7 @@
 
   <TextCard
     :cardData="cardData"
-    :children="cardData.children"
+    :ifChild="cardData.children"
   >
     <template #prefix>
       <div>
@@ -39,10 +40,11 @@
 
   <FilterGroup
     :filterData="filterData"
-    @click="handleClick"
+    @change="handleClick"
   >
 
   </FilterGroup>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -85,10 +87,15 @@ const filterData = ref(
   [
     {label: '类型', filters: [{label: '全部', value: 'all'}], active: 'all'},
     {label: '年份', filters: [{label: '全部', value: 'all'}, {label: '2025', value: '2025'}, {label: '2024', value: '2024'}, {label: '2023', value: '2023'}, {label: '更早', value: 'early'}], active: 'all'},
+    {label: '年份2', filters: [{label: '全部', value: 'all'}, {label: '2025', value: '2025'}, {label: '2024', value: '2024'}, {label: '2023', value: '2023'}, {label: '更早', value: 'early'},{label: '全部', value: 'all'}, {label: '2025', value: '2025'}, {label: '2024', value: '2024'}, {label: '2023', value: '2023'}, {label: '更早', value: 'early'},{label: '全部', value: 'all'}, {label: '2025', value: '2025'}, {label: '2024', value: '2024'}, {label: '2023', value: '2023'}, {label: '更早', value: 'early'}], active: 'all'},
     {label: '地区', filters: [{label: '全部', value: 'all'}, {label: '北京', value: '北京'}, {label: '天津', value: '天津'}, {label: '辽宁', value: '辽宁'}, {label: '@@@1', value: '@@@1'}, {label: '@@@2', value: '@@@2'}, {label: '@@@3', value: '@@@3'}, {label: '@@@4', value: '@@@4'}, {label: '@@@5', value: '@@@5'}, {label: '@@@6', value: '@@@6'}, {label: '@@@7', value: '@@@7'}, {label: '@@@8', value: '@@@8'}, {label: '@@@9', value: '@@@9'}, {label: '@@@11', value: '@@@11'}, {label: '@@@22', value: '@@@22'}, {label: '@@@33', value: '@@@33'}], active: 'all'},
   ]
 )
-
+const handleClick = (val) => {
+  filterData.value.forEach(item => {
+    if(item.label === val.label) item.active = val.active;
+  });
+}
 </script>
 
 <style lang="scss" scoped>

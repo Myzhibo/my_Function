@@ -10,7 +10,7 @@
         </span>
       </template>
       <template v-else>
-        <el-select v-model="item.active" size="large" style="width: 240px" @change="handleChange">
+        <el-select v-model="item.active" size="large" style="width: 240px" @change="val => handleChange(val, item.label)">
           <el-option v-for="filter in item.filters" :key="filter.value" :label="filter.label" :value="filter.value" />
         </el-select>
       </template>
@@ -19,8 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, reactive, toRefs, onMounted } from 'vue';
-
 // 定义props
 const props = defineProps({
   /** [ {label: '年级', filters: [{label: '全部', value: 'all'}], active: 'all'}, ]  */
@@ -29,17 +27,15 @@ const props = defineProps({
 // 定义emit
 const emit = defineEmits(['change']);
 
-
-const handleClick = (activeLabel, activeFilter) => {
-  props.filterData.map(item => {
-    if(item.label === activeLabel) item.active = activeFilter.value;
-    return item;
-  })
-  // emit('change', props.filterData);
-}
-const handleChange = (val) => {
-  // emit('change', props.filterData);
-}
+const handleClick = (activeLabel: string, activeFilter: string) => {
+  // 构造一个对象，只包含需要更新的信息
+  const updateData = { label: activeLabel, active: activeFilter.value };
+  emit('change', updateData);
+};
+const handleChange = (val, activeLabel) => {
+  const updateData = { label: activeLabel, active: val };
+  emit('change', updateData);
+};
 
 </script>
 

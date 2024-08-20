@@ -1,19 +1,34 @@
 <template>
-  <div class="container">
+  <div class="menu-container">
     <div class="content">
       <slot name="prefix"></slot>
-      <div style="display: flex; width: 100%; min-width: 400px; overflow-x: hidden; white-space: nowrap; padding: 0px 20px;">
-        <span v-if="needPaging" :style="{color: scrollLeft === 0 ? '#ddd' : '' }"
-          class="no-select" style="margin-right: 20px; cursor: pointer;" @click="handleClick('left')"> < </span>
+      <div class="menu-content" ref="menuContainer">
+        <span v-if="showArrow" class="no-select leftArrow" :style="{ color: scrollLeft === 0 ? '#ddd' : '' }"
+          @click="handleClick('left')">
+          <el-icon class="icon">
+            <ArrowLeft />
+          </el-icon>
+        </span>
         <ul class="navbar-nav no-select" ref="scrollContainer">
-          <li v-for="item of data" :key="item.path" style="margin-right: 20px; font-weight: 500; cursor: pointer;"
-            @click="handleSelect(item.path)"
-          >
-            {{item.name}}
+          <li v-for="item of menuData.filter(item => !item.hidden)" :key="item.path" class="navbar-li"
+            @click="handleSelect(item)">
+            <div v-if="route.path.includes(item.name) || props.currentPath === item.path" class="activeLine"></div>
+            <div :style="{
+              color:
+                route.path.includes(item.name) || props.currentPath === item.path || ()
+                  ? 'var(--main1-6)'
+                  : ''
+            }" class="tab-name">
+              {{ item.tabName }}
+            </div>
           </li>
         </ul>
-        <span v-if="needPaging" :style="{color: ifMaxRight ? '#ddd' : '' }"
-          class="no-select" style="margin-left: 20px; cursor: pointer;" @click="handleClick('right')"> > </span>
+        <span v-if="showArrow" class="no-select rightArrow" :style="{ color: ifMaxRight ? '#ddd' : '' }"
+          @click="handleClick('right')">
+          <el-icon class="icon">
+            <ArrowRight />
+          </el-icon>
+        </span>
       </div>
       <slot name="suffix"></slot>
     </div>
@@ -21,130 +36,195 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted, watch, nextTick } from 'vue';
-import { message } from '@pureadmin/components';
-import { ElMessageBox } from 'element-plus';
-import { useRoute, useRouter, onBeforeRouteEnter, onBeforeRouteUpdate, onBeforeRouteLeave } from 'vue-router';
+import { computed, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue';
+
+import type { IMenuDataEmits, IMenuDataProps } from '@/components/LayoutAndMenu/types';
+
+const store = useStore();
 const route = useRoute();
 const router = useRouter();
-const routers = useRouter().options.routes;
 
-const props = defineProps({
-  /** [{ path: 'test1', name: '测试1'},{path: 'test2', name: '测试2'}] */
-  data: {
-    type: Array,
-    required: () => []
-  },
-  /** 'test1' */
-  defaultPath: {
-    type: String,
-    default: ''
-  }
+// 定义props
+const props = withDefaults(defineProps<IMenuDataProps>(), {
+  menuData: [
+    { path: '', tabName: '', name: '', currentTab: '', hidden: true }
+  ] /** [{ path: 'test1', tabName: '测试1'},{path: 'test2', tabName: '测试2'}]  */,
+  currentPath: ''
+});
+// 定义emit
+const emits = defineEmits<IMenuDataEmits>();
+
+// 当前选中的tab
+const activeIndex = computed(() => {
+  console.log(route);
+
+  return route.path;
 });
 
-// 默认选中的tab
-const activeIndex = computed(() =>{
-  return props.defaultPath;
-})
+const handleSelect = (item: any) => {
+  emits('change', item);
+};
 
-const handleSelect = (path) => {
-  route.path === ('/'+path) ? '' : router.push('/'+path);
-}
+const menuContainer = ref(null);
+const scrollContainer = ref(null);
 
 onMounted(() => {
-  // 监听视口
   getWindowWidth();
   window.onresize = () => {
     return (() => {
-      nextTick(() => {
-        getWindowWidth();
-      });
+      getWindowWidth();
     })();
   };
-})
+});
 
-const windowWidth = ref(0);
-const needPaging = ref(false);
 const getWindowWidth = () => {
-  windowWidth.value = window.innerWidth;
-  // 宽度小于1500 就让 right icon 出现
-  if (windowWidth.value && windowWidth.value < 1500) needPaging.value = true;
-  else needPaging.value = false;
-  
   ifMaxRight.value = ifScrollAtRight();
-}
+};
 
 // 判断当前滚动条是否在最右边
 const ifScrollAtRight = () => {
-  const scrollContainer = document.querySelector('.navbar-nav');
-  const { scrollWidth, scrollLeft, clientWidth } = scrollContainer;
-  if (scrollWidth - scrollLeft <= clientWidth + 5) {
-    console.log('滚动条已经到达最右边');
-    return true;
-  } else {
-    return false;
+  if (scrollContainer.value) {
+    const { scrollWidth, scrollLeft, clientWidth } = scrollContainer.value;
+    if (scrollWidth - scrollLeft <= clientWidth + 1) {
+      console.log('滚动条已经到达最右边');
+      return true;
+    } else {
+      return false;
+    }
   }
-}
+};
+
+// 判断是否可以显示 左右箭头
+const showArrow = computed(() => {
+  // 如果左右箭头都是灰色的话，说明此时不需要箭头。那么此时就需要隐藏 左右箭头
+  if (scrollLeft.value === 0 && !!ifMaxRight.value) return false;
+  else return true;
+});
 
 const ifMaxRight = ref(false);
 const scrollLeft = ref(0);
-const handleClick = (ty) => {
-  const scrollContainer = document.querySelector('.navbar-nav');
 
-  if (ty==='left') {
-    scrollContainer.scrollLeft -= 100; // 每次向左滚动100px
+const handleClick = (ty: string) => {
+  if (ty === 'left') {
+    scrollContainer.value.scrollLeft -= 100; // 每次向左滚动100px
     ifMaxRight.value = false;
-    if (scrollContainer.scrollLeft <= 0) {
-      scrollContainer.scrollLeft = 0; // 防止反向滚动超出界限
+    if (scrollContainer.value.scrollLeft <= 0) {
+      scrollContainer.value.scrollLeft = 0; // 防止反向滚动超出界限
     }
   }
-  if (ty==='right') {
-    scrollContainer.scrollLeft += 100; // 每次向右滚动100px
-
-    ifMaxRight.value = ifScrollAtRight();
+  if (ty === 'right') {
+    scrollContainer.value.scrollLeft += 100; // 每次向右滚动100px
   }
 
-  scrollLeft.value = scrollContainer.scrollLeft;
-}
+  ifMaxRight.value = ifScrollAtRight();
+  // 滚动条距离左边的长度；
+  scrollLeft.value = scrollContainer.value.scrollLeft;
+};
+
+watch(
+  () => props.menuData,
+  () => {
+    scrollLeft.value = 0;
+    ifMaxRight.value = false;
+    scrollContainer.value.scrollLeft = 0;
+    getWindowWidth();
+  }
+);
 </script>
 
 <style lang="scss" scoped>
-.container {
-  width: 100vw;
+.menu-container {
+  width: 100%;
   display: flex;
-  align-item: center;
+  align-items: center;
   justify-content: center;
-  border-bottom: 1px #dcdfe6 solid;
+  // border-bottom: 1px #dcdfe6 solid;
 }
+
 .content {
   display: flex;
-  width: 80%;
-}
-.MyMenu {
+  align-items: center;
   width: 100%;
-  min-width: 400px;
+  overflow: auto;
+  overflow-y: hidden;
+  // background-color: red;
+
+  .menu-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow-x: hidden;
+    white-space: nowrap;
+    // padding: 0px 20px;
+    // background-color: green;
+
+    .leftArrow {
+      margin-right: 8px;
+      cursor: pointer;
+    }
+
+    .rightArrow {
+      margin-left: 20px;
+      cursor: pointer;
+    }
+  }
 }
+
 ::v-deep .el-menu--horizontal.el-menu {
   border-bottom: none;
 }
 
 .navbar-nav {
+  // background-color: pink;
+  font-size: 18px;
   display: flex;
+  // align-items: center;
   list-style: none;
   padding: 0;
   margin: 0;
-  overflow-x: auto; /* 允许横向滚动 */
-  -ms-overflow-style: none; /* IE 和 Edge */
-  scrollbar-width: none; /* Firefox */
+  overflow-x: auto;
+  /* 允许横向滚动 */
+  -ms-overflow-style: none;
+  /* IE 和 Edge */
+  scrollbar-width: none;
+  /* Firefox */
+
+  .navbar-li:not(:first-child) {
+    margin-left: 32px;
+  }
+
+  .navbar-li {
+    // margin-left: 32px;
+    font-weight: 400;
+    cursor: pointer;
+    position: relative;
+
+    .activeLine {
+      width: 100%;
+      height: 3px;
+      background-color: var(--main1-6);
+      position: absolute;
+      bottom: 0px;
+      border-radius: 10px 10px 0 0;
+    }
+  }
 }
 
 .navbar-nav::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
+  /* Chrome, Safari, Opera */
 }
+
 .no-select {
-  -webkit-user-select: none; /* Chrome all / Safari all */
-  -moz-user-select: none; /* Firefox all */
-  -ms-user-select: none; /* IE 10+ */
-  user-select: none; /* Likely future */
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+  /* Likely future */
 }
 </style>
