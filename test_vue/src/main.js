@@ -28,6 +28,18 @@ Vue.config.productionTip = false
 localforage.config({ name: 'myDB' })
 Vue.prototype.$localForage = localforage
 
+// 判断是否是移动端
+const userAgent = navigator.userAgent.toLowerCase();
+if (
+  /iphone|midp|rv:1.2.3.4|ucweb|android|windows ce|windows mobile/.test(
+    userAgent
+  )
+) {
+  Vue.prototype.$isMobile = true;
+} else {
+  Vue.prototype.$isMobile = false;
+}
+
 // prod环境清除所有console.log
 if (process.env.NODE_ENV === 'production') {
   if (window) {
