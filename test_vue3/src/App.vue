@@ -8,16 +8,14 @@
       <el-menu-item index="Vue3API">API</el-menu-item>
       <el-sub-menu>
         <template #title>工具1</template>
+        <el-sub-menu index="2-4">
+          <template #title>布局</template>
+          <el-menu-item index="layout1">布局1</el-menu-item>
+        </el-sub-menu>
         <el-menu-item index="helloworld">hello world</el-menu-item>
         <el-menu-item index="UploadBook">上传</el-menu-item>
         <el-menu-item index="ImageDetail">图片详情</el-menu-item>
         <el-menu-item index="Authority">权限管理</el-menu-item>
-        <el-sub-menu index="2-4">
-          <template #title>item four</template>
-          <el-menu-item index="2-4-1">item one</el-menu-item>
-          <el-menu-item index="2-4-2">item two</el-menu-item>
-          <el-menu-item index="2-4-3">item three</el-menu-item>
-        </el-sub-menu>
       </el-sub-menu>
       <!-- <el-sub-menu>
         <template #title>组件</template>
