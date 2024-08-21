@@ -1,14 +1,9 @@
-<template>  
-  <div id="app">  
+<template>
+  <div id="app">
     <!-- <router-link to="/">Home</router-link><br>
     <router-link to="/helloworld">Hello</router-link> -->
     <!-- 导航 -->
-    <el-menu
-      :default-active="activeIndex"
-      class="el-menu-demo"
-      mode="horizontal"
-      @select="handleSelect"
-    >
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
       <el-menu-item index="">HOME</el-menu-item>
       <el-menu-item index="Vue3API">API</el-menu-item>
       <el-sub-menu>
@@ -24,17 +19,17 @@
           <el-menu-item index="2-4-3">item three</el-menu-item>
         </el-sub-menu>
       </el-sub-menu>
-      <el-sub-menu>
+      <!-- <el-sub-menu>
         <template #title>组件</template>
         <el-menu-item index="myComPage">使用组件</el-menu-item>
         <el-menu-item index="layoutAndMenu">布局和菜单</el-menu-item>
-      </el-sub-menu>
+      </el-sub-menu> -->
       <el-menu-item index="3" disabled>Info</el-menu-item>
       <el-menu-item index="4">Orders</el-menu-item>
     </el-menu>
     <!-- 内容 -->
-    <router-view style="padding: 15px;"></router-view>  
-  </div>  
+    <router-view style="padding: 15px;"></router-view>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -48,9 +43,8 @@ const routers = useRouter().options.routes;
 const activeIndex = ref('1')
 const handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
-  route.path === ('/'+key) ? '' : router.push('/'+key);
+  route.path === ('/' + key) ? '' : router.push('/' + key);
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

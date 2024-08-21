@@ -15,7 +15,7 @@
             <div v-if="route.path.includes(item.name) || props.currentPath === item.path" class="activeLine"></div>
             <div :style="{
               color:
-                route.path.includes(item.name) || props.currentPath === item.path || ()
+                route.path.includes(item.name) || props.currentPath === item.path
                   ? 'var(--main1-6)'
                   : ''
             }" class="tab-name">
@@ -40,7 +40,17 @@ import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue';
 
-import type { IMenuDataEmits, IMenuDataProps } from '@/components/LayoutAndMenu/types';
+
+export interface IMenuDataProps {
+  menuData: { path?: string; tabName: string; name?: string; hidden?: Boolean }[];
+  currentPath: string;
+}
+
+export interface IMenuDataEmits {
+  (e: 'update:modelValue', value: boolean): void;
+  (e: 'change', path: string): void;
+}
+
 
 const store = useStore();
 const route = useRoute();
