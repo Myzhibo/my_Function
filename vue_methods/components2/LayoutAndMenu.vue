@@ -227,6 +227,7 @@ watch(
   /* Chrome, Safari, Opera */
 }
 
+// 无法选中
 .no-select {
   -webkit-user-select: none;
   /* Chrome all / Safari all */
