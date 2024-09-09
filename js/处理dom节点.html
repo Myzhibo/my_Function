@@ -81,7 +81,10 @@
 
       const p2 = document.createElement('p')
       p2.textContent = '插入的节点'
-      div4.insertBefore(p2, div4.firstChild) // div4的第一个节点
+      // p2是需要插入的节点  将p2插入到div4.firstChild(div4的第一个节点)【之前】的位置
+      div4.insertBefore(p2, div4.firstChild) 
+      // p2是需要插入的节点  将p2插入到div4.firstChild.nextSibling(div4的第二个节点)【之前】的位置， 也就是 div4.firstChild(div4的第一个节点)【之后】的位置
+      div4.insertBefore(p2, div4.firstChild.nextSibling) 
 
       console.log('--p2的父节点--')
       console.log(p2.parentNode) // 查找节点的父节点
@@ -129,6 +132,10 @@
 
       /***获取img元素的兄弟节点***/
       // const brothers = [...$div.children].filter(item => !(item as HTMLElement).innerHTML.includes('img'))
+
+      // 判断是img节点
+      // node.tagName === 'IMG'
+
       /***获取全部的文本节点(nodeType === 3)***/
       // const getTextNodes = (node)=>{
       //   let textNodes = [];

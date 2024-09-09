@@ -1,0 +1,67 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Flexbox List with Three Items per Row</title>  
+<style>  
+  :root {
+    --column-count: 3;   /* 每行多少个元素 */  
+  }
+  
+  .flex-container {  
+    display: flex;  
+    flex-wrap: wrap; /* 允许子项换行 */  
+    list-style-type: none;  
+    padding: 0;  
+    margin: 0;  
+  }  
+  
+  .flex-container li {  
+    /* 每个元素占据一行的百分比  -  每行除最后一个元素外的其他元素占据的marginRight的值 */
+    flex: 0 0 calc((100%/var(--column-count)) - ((20px*(var(--column-count) - 1))/var(--column-count)));
+    /* 确保padding和border不会增加元素的总宽度 */  
+    box-sizing: border-box;
+    background-color: #f2f2f2;  
+    padding: 10px;
+     /* 垂直间隔 */
+    margin-bottom: 10px;
+  }  
+  
+  /* 除了每行最后一个, 其他元素加上右margin间隔 */  
+  .flex-container li:not(:nth-child(3n)) {            /* ******** 这里不能使用变量， 否则应该是 var(--column-count) * n 。 所以要根据column-count的不同记得修改 ******** */
+    margin-right: 20px;
+  }   
+</style>  
+</head>  
+<body>  
+<ul class="flex-container">  
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+  <li>4</li>
+  <li>5</li>
+  <li>6</li>
+  <li>7</li>
+  <li>8</li>
+  <li>9</li>
+  <li>10</li>
+  <li>11</li>
+  <li>12</li>
+  <li>13</li>
+  <li>14</li>
+  <li>15</li>
+  <li>16</li>
+  <li>17</li>
+  <li>18</li>
+  <li>19</li>
+  <li>20</li>
+  <li>21</li>
+  <li>22</li>
+  <li>23</li>
+  <li>24</li>
+  <li>25</li>
+  <li>26</li>
+</ul>
+</body>  
+</html>
