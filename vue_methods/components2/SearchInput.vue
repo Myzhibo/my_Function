@@ -1,3 +1,13 @@
+<!-- 
+            <SearchInput
+              v-model="searchName"
+              placeholder="请输入关键词进行搜索"
+              @click="getList"
+              @enter="getList"
+              @clearInput="getList"
+            />
+-->
+
 <template>
   <div>
     <el-input class="my-input" v-model="localValue" :placeholder="props.placeholder" :prefix-icon="Search"
