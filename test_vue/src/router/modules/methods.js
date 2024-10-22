@@ -44,6 +44,11 @@ const methodsRouter = [
     name: 'test_html',
     component: () => import('../../components/methods/TestHtml.vue'),
   },
+  {
+    path: '/more_lines',
+    name: 'more_lines',
+    component: () => import('../../components/methods/MoreLinesTest.vue'),
+  },
 ]
 
 export default methodsRouter
