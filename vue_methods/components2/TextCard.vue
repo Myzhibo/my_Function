@@ -1,9 +1,17 @@
 <template>
-  <div :class="[props.showChildrenCards ? 'expanding' : 'noExpanding', props.from,
-  isLastOne ? 'lastOne' : '', isFirstOne ? 'firstOne' : ''
+  <div :class="[
+    props.isFlatCard ? 'expanding' : 'noExpanding',
+    props.from,
+    isLastOne ? 'lastOne' : '',
+    isFirstOne ? 'firstOne' : ''
   ]">
     <!-- 卡片 -->
     <div class="card-container">
+      <!-- 卡片标签 -->
+      <div v-if="false">
+        <div class="flag"></div>
+        <div class="flag2"></div>
+      </div>
       <el-card style="width: 100%" shadow="never" :class="props.nodeType" @click="handleCardClick">
         <div class="card-container-content">
           <div class="card-container-content-left">
@@ -24,10 +32,10 @@
     <div v-if="props.showChildrenCards && children?.length" style="display: flex; justify-content: right">
       <div class="card-container-child" v-if="props.showChildrenCards">
         <el-card v-for="(child, index) of children" :key="index" class="card-container-child-content"
-          style="width: 100%" shadow="none" @click="handleCardClick">
+          style="width: 100%" shadow="never" @click="handleCardClick">
           <div>
             <!-- <div class="card-container-child-content-left"> -->
-            <slot name="child-content" :childItem="child"></slot>
+            <slot name="child-content" :childItem="child" :childIndex="index"></slot>
             <!-- </div> -->
           </div>
         </el-card>
@@ -60,12 +68,22 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  isFlatCard: {
+    type: Boolean,
+    default: false
+  },
   from: {
     type: String,
     default: ''
   },
-  isFirstOne: Number,
-  isLastOne: Number
+  isFirstOne: {
+    type: Boolean,
+    default: false
+  },
+  isLastOne: {
+    type: Boolean,
+    default: false
+  }
 });
 // 定义emit
 const emit = defineEmits(['click']);
@@ -89,6 +107,24 @@ const clickCard = (router) => { };
   width: 100%;
   min-width: 600px;
   cursor: pointer;
+
+  .flag {
+    width: 50px;
+    height: 50px;
+    background-color: var(--main1-6);
+    position: absolute;
+    border-radius: 4px;
+    clip-path: polygon(0% 0%, 0% 100%, 100% 0%);
+  }
+
+  .flag2 {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(240, 240, 240, 0.3);
+    position: absolute;
+    border-radius: 4px;
+    clip-path: polygon(0% 0%, 0% 100%, 100% 0%);
+  }
 
   .card-container-content {
     width: 100%;
@@ -118,8 +154,12 @@ const clickCard = (router) => { };
   border-left: 4px var(--main1-6) solid;
   padding-left: 12px;
 
-  .card-container-child-content:not(:first-child) {
-    margin-top: 8px;
+  .card-container-child-content {
+    border-color: var(--main1-6);
+
+    &:not(:first-child) {
+      margin-top: 8px;
+    }
   }
 }
 
@@ -150,6 +190,9 @@ const clickCard = (router) => { };
 
   :deep(.el-card .chapter) {
     height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   ::v-deep .el-card__body {
