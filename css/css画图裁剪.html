@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .test {
+      width: 100px;
+      height: 100px;
+      background-color: rgb(255, 192, 203, 0.5); 
+      position: absolute;
+
+      /* 解析： 在上面这个正方形的左上角作为原点画一个坐标系， 三角形就是三个点 polygon(x y , x y , x y) */
+      clip-path: polygon(0% 0%, 0% 100% , 100% 0%); 
+    }
+  </style>
+</head>
+<body>
+  <div class="test">QQQ</div>
+</body>
+</html>
