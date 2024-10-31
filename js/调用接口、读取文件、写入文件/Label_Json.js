@@ -41,7 +41,7 @@ function myGetSubjectAndStage(ticket_id) {
       data: {},
       headers: {
         cookie:
-          '__wpkreporterwid_=5590064d-ff16-4ea5-12b9-0deac887465f; Hm_lvt_99c7c33e9929a415fd774d2698b152e1=1698647865,1700276548; UBUS=eZfbFx8mBwZYI7jsH7mHdXqJtKWzQbKAToHHOAZQCjt0TpBPuP6X4vZyPx9oLkTA', // 若验证错误：Login invalid identity  ==>> 需要更新cookie
+          'UBUS=FG0Bq29YpO7bc3XBo49xt8aESY2vl9JY0-kA1UnbR56gQgUsgmZpxWWdXokcZn69', // 若验证错误：Login invalid identity  ==>> 需要更新cookie
       },
     })
       .then((response) => {
@@ -69,7 +69,7 @@ function myGetDownJSON(ticket_id, jsonId) {
       data: {},
       headers: {
         cookie:
-          '__wpkreporterwid_=5590064d-ff16-4ea5-12b9-0deac887465f; Hm_lvt_99c7c33e9929a415fd774d2698b152e1=1698647865,1700276548; UBUS=eZfbFx8mBwZYI7jsH7mHdXqJtKWzQbKAToHHOAZQCjt0TpBPuP6X4vZyPx9oLkTA',
+          'UBUS=w0cnyFhxdhHs6qTd5DvRFRK7_2pTjOkxRZWtkQHrDvQLisGvf4IroFVo-FKZh8A2',
       },
     })
       .then((response) => {
@@ -188,11 +188,11 @@ function generate(ticket_id, subject, stage, filename, timer) {
           JSON.stringify(result.data, null, 4),
           (error) => {
             if (error) {
-              console.log(`创建失败：${error}`)
+              reject(`文件创建失败：${error}`);  
             }
           },
-          resolve(`创建成功！`)
-        )
+        ) 
+        resolve('创建成功！');
       }
     }, 10000)
   })
@@ -200,26 +200,37 @@ function generate(ticket_id, subject, stage, filename, timer) {
 
 // 检查处理完的json是否存在prob字段
 async function check() {
-  fs.readdir('./result', (err, files) => {  
-    if (err) {  
-      console.error('Error reading directory:', err);  
-      return;  
+  console.log('************** 开始check');
+  
+  fs.readdir('./result', (err, files) => {
+    if (err) {
+      console.error('Error reading directory:', err);
+      return;
     }
-    files.forEach(file => {  
-      // 排除掉文件夹  
-      const fullPath = path.join('./result', file);  
-      const stats = fs.statSync(fullPath);  
-      if (stats.isFile()) {  
-        // 打印文件路径  
-        // console.log(fullPath);  
+    
+    let successCount = 0;
+    files.forEach(file => {
+      // 排除掉文件夹
+      const fullPath = path.join('./result', file);
+      const stats = fs.statSync(fullPath);
+      if (stats.isFile()) {
+        // 打印文件路径
+        // console.log(fullPath);
         // 读取文件内容
-        const content = fs.readFileSync(fullPath, 'utf8');  
+        const content = fs.readFileSync(fullPath, 'utf8');
         let flated = flatData(JSON.parse(content))
+        if(!flated.map(item => item.tag).filter(item => item).length) {
+          console.log(fullPath, '打标签失败！' , false);
+          return false
+        }
         for (let i in flated) {
           for (let j in flated[i].tag) {
-            // console.log(flated[i].tag)
-            if (Object.values(flated[i].tag).find(obj => obj.hasOwnProperty('prob'))) {
-              console.log(fullPath, ' -> 成功 <- ' );
+            if (Object.values(flated[i].tag).find(obj => obj.hasOwnProperty('prob'))&&
+                Object.keys(flated[i].tag).includes('diffc') &&
+                Object.keys(flated[i].tag).includes('qtype')
+            ) {
+              console.log(fullPath, ' -> 成功 <- ' , true);
+              successCount++;
               return true
             } else {
               console.log(fullPath, '打标签失败！' , false);
@@ -229,6 +240,9 @@ async function check() {
         }
       }  
     });  
+    if(successCount === files.length) {
+      console.log('全部成功', true);
+    }
   });
 }
 
@@ -276,39 +290,32 @@ async function main() {
     await generate(ticket_id, subject, stage, book_name, timer)
   }
   
-    // 最终check 生成物中是否有'prob'标签
-    check()
+  // 最终check 生成物中是否有'prob'标签
+  check()
 }
 
-async function main2() {
-  /** 直接对目录中的json进行打码*/
-  // 获取当前目录下除package以外全部的json文件
-  let jsonFiles = []
-  fs.readdir(__dirname, async (err, files) => {
-    if (err) {
-      console.error(err)
-      return
-    }
-    jsonFiles = files.filter((file) => {
-      return (
-        file.split('.')[file.split('.').length - 1] === 'json' &&
-        !file.split('.')[file.split('.').length - 2].includes('package')
-      )
-    })
-    let timer = {}
-    console.log(jsonFiles)
-    for (let file of jsonFiles) {
-      fileArr = file.split('.')
-      fileArr.pop()
-      filename = fileArr.join('.')
-      console.log(jsonFiles)
+async function main2() {  
+  try {  
+    // 获取当前目录下除package以外全部的json文件  
+    let files = await fs.promises.readdir(__dirname);  
+    let jsonFiles = files.filter(file => {  
+      const ext = file.split('.').pop().toLowerCase();  
+      const base = file.split('.').slice(0, -1).join('.');  
+      return ext === 'json' && !base.includes('package');  
+    });  
+  
+    let timer = {};  
+    console.log(jsonFiles);  
+  
+    const generatePromises = jsonFiles.map(async (file) => {  
+      const filename = file.split('.').slice(0, -1).join('.');  
       // 获取学科、学段英文
       let subject = ''
       let stage = filename.includes('小学')
         ? 'primary'
-        : filename.includes('初中')
+        : (filename.includes('初中') || filename.includes('中考') || filename.includes('高级中等'))
         ? 'junior'
-        : filename.includes('高中')
+        : (filename.includes('高中') || filename.includes('高考'))
         ? 'senior'
         : ''
       const subInfo = await GetSubStage()
@@ -317,17 +324,40 @@ async function main2() {
           subject = subInfo[i].en_name
         }
       }
-      await generate('--', subject, stage, filename, timer)
-    }
-  })
+      if(subject === 'daode_fazhi'){
+        subject = 'politics';
+      }
+  
+      await generate('--', subject, stage, filename, timer);  
+    });  
+  
+    // 等待所有 generate 调用完成  
+    await Promise.all(generatePromises);  
+  
+    // 最终check 生成物中是否有prob标签  
+    check();  
+  } catch (error) {  
+    console.error('Error:', error);  
+  }  
+}  
 
-  // 最终check 生成物中是否有prob标签
-  check()
-}
+
+/* ***********************  入口  ********************** */
+
+// 直接对目录中原生json打码，生成最终json   // 前提： 文件名上面有学科学段的中文
+// main2()
 
 // 通过工单号 先生成原生json再打码，生成最终生成物json
 // main()
-check()
 
-// 直接对目录中原生json打码，生成最终json
-// main2()
+// 检查result文件夹中文件是否满足打标结果
+// check()
+
+function start() {
+  if (process.argv.slice(2)[0] === 'main') {
+    main();
+  } else if (process.argv.slice(2)[0] === 'main2') {
+    main2();
+  }
+}
+start();
