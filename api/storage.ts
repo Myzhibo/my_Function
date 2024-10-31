@@ -30,6 +30,7 @@ class Storage {
         if (storeValue.expire < Date.now()) {
           console.log(`数据${key}已过期,${storeValue.expire}。 当前：${Date.now()}`)
           this.remove(key)
+          localforage.removeItem(key);
           return null
         }
         return storeValue.value

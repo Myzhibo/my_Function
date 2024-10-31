@@ -1,11 +1,19 @@
 import axios, { AxiosRequestConfig, AxiosAdapter } from 'axios';
 import router from '@/router';
 import storage from './storage';
+import store from '@/store';
 axios.defaults.withCredentials = true;
 
 interface MyAxiosRequestConfig extends AxiosRequestConfig {
   cacheKey?: string;
+  vuexConfig?: IVuexConfig;
 }
+interface IVuexConfig {
+  key: object;
+  getter: string;
+  mutation: string;
+}
+
 // 【缓存适配器】 通常用于缓存数据再利用，可以避免再次请求接口
 const cacheAdapter: AxiosAdapter = async (config: MyAxiosRequestConfig) => {
   // 缓存检查：如果请求配置中包含cacheKey，则会首先尝试从存储中获取缓存的数据。
@@ -16,6 +24,16 @@ const cacheAdapter: AxiosAdapter = async (config: MyAxiosRequestConfig) => {
       return Promise.resolve(cachedResponse)
     }
     return (axios.defaults.adapter as AxiosAdapter)(config)
+  }
+  if (config.vuexConfig) {
+    const response = store.getters[config.vuexConfig.getter];
+    console.log(response.some((item) => item.key === config.vuexConfig.key));
+    
+    if (response.some((item) => item.key === config.vuexConfig.key)) {
+      const r = response.find((item) => item.key === config.vuexConfig.key).data;
+      return Promise.resolve(r);
+    }
+    return (axios.defaults.adapter as AxiosAdapter)(config);
   }
   return (axios.defaults.adapter as AxiosAdapter)(config);
 };
@@ -36,16 +54,22 @@ axiosInstance.interceptors.request.use(
 // 【响应】拦截器 (即使缓存命中并且没有发出网络请求，axios的响应拦截器仍然会被调用。这是因为cacheAdapter返回的是一个“模拟”的响应对象，它会被传递给拦截器链。)
 axiosInstance.interceptors.response.use(
   async (response) => {
-    const { cacheKey } = response.config as MyAxiosRequestConfig
+    const { cacheKey, vuexConfig } = response.config as MyAxiosRequestConfig
     if (response && response.data) {
       const status = response.status
       if (status === 200) {
         if (response.data.code === 2) {
           router.push('/login')
         }
+        // 缓存 (存localforage)
         if (cacheKey) {
           await storage.set(cacheKey, response)
           return response
+        }
+        // 缓存 (存vuex)
+        if (vuexConfig) {
+          store.commit(vuexConfig.mutation, { key: vuexConfig.key, data: response });
+          return response;
         }
         return Promise.resolve(response)
       }

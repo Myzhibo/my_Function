@@ -260,6 +260,7 @@ const convertBlobToBase64 = blob => {
 async function copyImage(image) {
   // console.log(image.image_url + '?x-oss-process=image/interlace,1/format,jpg');
   try {
+    // 图片 url 转 base64;  图片转base64; 
     const imageBlob = await fetchImageAsBlob(image.image_url);
     // console.log(1, imageBlob);
     const base64 = await convertBlobToBase64(imageBlob);
