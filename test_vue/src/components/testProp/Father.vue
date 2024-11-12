@@ -1,19 +1,23 @@
-<template>  
-  <div style="width: 500px; height: 500px; background-color: pink; display: flex; justify-content: center; align-items: center">
-    {{json}}
-     <Child 
-      :json="json"
-     />
-  </div>
-</template>  
-  
-<script>  
-import Child from './Child';
+<template>
+  <div style="width: 80%; height: 500px; background-color: pink; ">
+    <div>{{ json }}</div>
+    <button @click="handleClick">a1 + 1</button>
 
-export default {  
+    <div style="display: flex; justify-content: space-between;">
+      <Child :json="json" @changeJson="changeJson" />
+      <Child2 :json="json" @changeJson="changeJson" />
+    </div>
+  </div>
+</template>
+
+<script>
+import Child from './Child';
+import Child2 from './Child2';
+
+export default {
   name: 'Father',
   components: {
-    Child
+    Child, Child2
   },
   data () {
     return {
@@ -26,8 +30,14 @@ export default {
       }
     };
   },
-  mounted () {},
+  mounted () { },
   methods: {
+    handleClick () {
+      this.json.a1++;
+    },
+    changeJson (updatedJson) {
+      this.json = updatedJson;
+    }
   }
 };
 </script>
