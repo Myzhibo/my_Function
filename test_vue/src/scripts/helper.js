@@ -198,7 +198,7 @@ export function getDPI () {
 export const removeEmpty = (obj) => {
   const o = _.cloneDeep(obj);
   for (const i in o) {
-    if (o[i] === '' || o[i] === null) {
+    if (o[i] === '' || o[i] === null || o[i] === undefined) {
       delete o[i];
     }
   }
