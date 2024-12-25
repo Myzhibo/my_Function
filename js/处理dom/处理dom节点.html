@@ -13,6 +13,8 @@
       //创建一个div节点, 一个span节点
       const div1 = document.createElement('div')
       const span1 = document.createElement('span')
+      //给span节点添加 dataset
+      span1.dataset.regionId = '123';
       //将span节点【插入】到div节点中
       div1.appendChild(span1)
       console.log(div1)
@@ -174,6 +176,30 @@
         * (this.$refs.theBody as HTMLElement).scrollTop = (this.$refs.theBody as HTMLElement).scrollHeight;
         * document.getElementById('page-container').scrollTop = document.getElementById('page-container').scrollHeight;
        */
+
+       // 获取第一个【元素】子节点
+      function getFirstElementChild(node) {
+        return node.firstElementChild || node.children[0]; // 兼容旧版IE浏览器，它们可能不支持firstElementChild
+      }
+      
+      // 获取最后一个【元素】子节点
+      function getLastElementChild(node) {
+        let lastChild = node.lastElementChild; // 尝试获取最后一个元素子节点
+        if (!lastChild && node.children.length > 0) {
+          // 如果lastElementChild不存在（可能是在旧版IE中），则使用children集合
+          lastChild = node.children[node.children.length - 1];
+        }
+        return lastChild;
+      }
+
+      // 判断当前 img 标签是否是 p祖先标签 的最后一个节点 所包含的
+      findParentWithTag(img, 'P').lastChild.querySelector('img')?.src === img.src
+
+      
+      // 使用 DOMParser 解析字符串为 DOM 元素
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlString, 'text/html');
+      console.log(doc);
     </script>
   </body>
 </html>

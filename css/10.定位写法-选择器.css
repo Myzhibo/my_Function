@@ -48,3 +48,12 @@ p:nth-of-type(2n) {  // 只有第二个p标签子元素会变成红色
 p:only-child {
   font-weight: bold;
 }
+
+/*
+  1. 选择.question类的【子孙元素】中的.text类 (空格表示所有后代)
+  2. > 表示 用于选择【直接子元素】
+  3. 选择第二个子元素中包含image-box类的元素
+*/
+.question .text > :nth-child(2).image-box {
+  display: inline-flex !important;
+}
