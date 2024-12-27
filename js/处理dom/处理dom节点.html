@@ -197,6 +197,7 @@
 
       
       // 使用 DOMParser 解析字符串为 DOM 元素
+      const htmlString = '<p><img width="112" data-tif-src="https://book-stable.oss-cn-shanghai.aliyuncs.com/img/668280e9034ffe000a60b5f6/4ca0003.tif" data-filename="4ca0003.tif" data-image-uid="03cc03c74" height="52.5" is_formula="True" ref_font_size="10.5pt" src="http://book-stable.oss-cn-shanghai.aliyuncs.com/img/668280e9034ffe000a60b5f6/4ca0003.jpg?x-oss-process=image&t=1735296383938" style="vertical-align:middle; -aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline" uid="y6faifWOH">倒车雷达利用超声波传递信息</p>'
       const parser = new DOMParser();
       const doc = parser.parseFromString(htmlString, 'text/html');
       console.log(doc);
