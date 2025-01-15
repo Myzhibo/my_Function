@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+    .top {
+      width: 100%;
+      height: 10%;
+    }
+    .button {
+      border: 2px #999 solid;
+      cursor: pointer;
+    }
+    .work-bench {
+      width: 100%;
+      height: 90%;
+    }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <span class="button" id="btn1">创建一个div</span>
+  </div>
+  <div class="work-bench"></div>
+
+  <script>
+    document.getElementById('btn1').addEventListener('click', () => {
+      createDiv()
+    })
+
+    ///////////////////////////////////////////////////////////
+    const createDiv = () => {
+      // 获取工作台 dom
+      const wb = document.querySelector('.work-bench');
+      // 创建 div
+      const div = document.createElement('div');
+      div.style.width = '100px';
+      div.style.height = '100px';
+      div.style.backgroundColor = 'bisque';
+      div.innerHTML = 'div'
+      //将 div 节点【插入】到工作台中
+      wb.appendChild(div);
+    }
+  </script>
+</body>
+
+</html>
