@@ -14,23 +14,32 @@
       height: 10%;
     }
     .button {
+      width: 80px;
+      height: 20px;
       border: 2px #999 solid;
       cursor: pointer;
     }
     .work-bench {
-      width: 100%;
+      width: 99%;
       height: 90%;
+      border: 1px #999 solid;
     }
   </style>
 </head>
 <body>
   <div class="top">
-    <span class="button" id="btn1">创建一个div</span>
+    <div class="button" id="btn1">创建div</div>
+    <div class="button" id="btn2">创建div</div>
   </div>
-  <div class="work-bench"></div>
+  <div style="display: flex; justify-content: center;">
+    <div class="work-bench"></div>
+  </div>
 
   <script>
     document.getElementById('btn1').addEventListener('click', () => {
+      createDiv()
+    })
+    document.getElementById('btn2').addEventListener('click', () => {
       createDiv()
     })
 

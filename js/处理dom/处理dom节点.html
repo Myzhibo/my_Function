@@ -83,7 +83,9 @@
 
       const p2 = document.createElement('p')
       p2.textContent = '插入的节点'
-      // p2是需要插入的节点  将p2插入到div4.firstChild(div4的第一个节点)【之前】的位置
+      // 将p2查到div4里，插入的位置是div4的第一个子元素前。
+      div4.insertBefore(p2, div4.firstChild) 
+      // 将p2查到div4里，插入的位置是div4的第一个子元素前。
       div4.insertBefore(p2, div4.firstChild) 
       // p2是需要插入的节点  将p2插入到div4.firstChild.nextSibling(div4的第二个节点)【之前】的位置， 也就是 div4.firstChild(div4的第一个节点)【之后】的位置
       div4.insertBefore(p2, div4.firstChild.nextSibling) 
