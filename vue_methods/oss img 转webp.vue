@@ -1,18 +1,3 @@
-
-<template>
-  <img
-    v-if="loaded && src"
-    class="c-question-img"
-    :src="imageUrl"
-    :width="imgWidth.includes('px') ? imgWidth : ''"
-    :height="imgHeight.includes('px') ? imgHeight : ''"
-    style="vertical-align: middle"
-    :style="{
-      width: imgWidth.includes('vw') ? imgWidth : '',
-      height: imgHeight.includes('vw') ? imgHeight : ''
-    }"
-  />
-</template>
 <script>
 export default {
   name: 'WebpImage',
@@ -21,14 +6,20 @@ export default {
       type: String,
       required: true
     },
+    // 是否转换 webp
     useWebp: {
       type: Boolean,
       require: false,
       default: false
     },
-    downsize: {
-      type: Boolean,
+    resize: {
+      type: String,
       require: false,
+      default: ''
+    },
+    // 是否开启懒加载
+    useLazy: {
+      type: Boolean,
       default: false
     }
   },
@@ -37,7 +28,8 @@ export default {
       originalUrl: this.src,
       imgHeight: '',
       imgWidth: '',
-      loaded: false
+      loaded: false,
+      lazySrc: ''
     };
   },
   computed: {
@@ -48,13 +40,22 @@ export default {
   watch: {
     src: {
       async handler(n, o) {
-        this.originalUrl = this.src;
-        await this.initImage();
+        if(!this.useLazy) {
+          this.originalUrl = this.src;
+          await this.initImage();
+        }
       },
       immediate: true
     }
   },
-  async mounted() {},
+  async mounted() {
+    this.$nextTick(() => {
+      if (this.useLazy) this.setupIntersectionObserver();
+    });
+  },
+  beforeDestroy() {
+    if (this.intersectionObserver) this.intersectionObserver.disconnect();
+  },
   methods: {
     getImageSize(url) {
       return new Promise((resolve, reject) => {
@@ -78,7 +79,10 @@ export default {
       });
     },
     handleImgFormatConvert(url) {
-      if (!url || (url && !url.includes('http'))) return;
+      if (!url?.includes('http')) {
+        // 防止传入的 src 为空，或不是一个合法的 link
+        return;
+      }
       const newUrl = new URL(url);
       // 检查主机名是否包含阿里云 OSS
       if (!(newUrl.hostname.includes('oss') && newUrl.hostname.includes('aliyuncs.com'))) {
@@ -89,16 +93,19 @@ export default {
       // // 如果有该key
       if (urlSearch.has('x-oss-process')) {
         if (!urlSearch.get('x-oss-process').includes('format,webp')) {
-          // 新增
+          // 在现有的x-oss-process值后面追加 /format/resize 等配置
           urlSearch.set(
             'x-oss-process',
-            `${urlSearch.get('x-oss-process')}/format,webp${this.downsize ? '/resize,l_700' : ''}`
+            `${urlSearch.get('x-oss-process')}/format,webp${this.resize ? `/resize,${this.resize}` : ''}`
           );
         }
       }
       // 配置key
       else {
-        urlSearch.set('x-oss-process', `image/format,webp${this.downsize ? '/resize,l_700' : ''}`);
+        urlSearch.set(
+          'x-oss-process',
+          `image/format,webp${this.resize ? `/resize,${this.resize}` : ''}`
+        );
       }
       // 总是配置为webp
       // 格式化
@@ -127,9 +134,35 @@ export default {
         this.imgWidth = imgSize.width;
       }
       this.loaded = true;
-    }
+    },
+    setupIntersectionObserver() {
+      this.intersectionObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          this.lazySrc = this.imageUrl
+        }
+      }, {
+        rootMargin: '10px',
+      });
+      this.intersectionObserver.observe(this.$refs.imageRef);
+    },
   }
 };
 </script>
+
+<template>
+  <img
+    ref="imageRef"
+    v-if="useLazy || (loaded && src)"
+    class="c-question-img"
+    :src="useLazy ? lazySrc : imageUrl"
+    :width="imgWidth.includes('px') ? imgWidth : ''"
+    :height="imgHeight.includes('px') ? imgHeight : ''"
+    style="vertical-align: middle"
+    :style="{
+      width: imgWidth.includes('vw') ? imgWidth : '',
+      height: imgHeight.includes('vw') ? imgHeight : ''
+    }"
+  />
+</template>
 
 <style scoped lang="scss"></style>

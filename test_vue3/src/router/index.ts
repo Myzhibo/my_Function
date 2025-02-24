@@ -5,6 +5,7 @@ import UploadBook from '../views/UploadBook.vue';
 import ImageDetail from '../views/ImageDetail.vue';
 import Vue3API from '../views/Vue3API.vue';
 import Authority from '../views/Authority.vue';
+import VTable from '../views/VTable.vue';
 import Layout1 from '../views/Layout/Layout1.vue';
 
 import componentsRouter from './componentsRouter.ts'
@@ -34,6 +35,11 @@ const routes = [
     path: '/Authority',
     name: 'Authority',
     component: Authority,
+  },
+  {
+    path: '/VTable',
+    name: 'VTable',
+    component: VTable,
   },
   {
     path: '/Layout1',

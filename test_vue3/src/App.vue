@@ -16,6 +16,7 @@
         <el-menu-item index="UploadBook">上传</el-menu-item>
         <el-menu-item index="ImageDetail">图片详情</el-menu-item>
         <el-menu-item index="Authority">权限管理</el-menu-item>
+        <el-menu-item index="VTable">虚拟列表</el-menu-item>
       </el-sub-menu>
       <!-- <el-sub-menu>
         <template #title>组件</template>
